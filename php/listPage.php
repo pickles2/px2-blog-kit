@@ -329,4 +329,12 @@ class listPage {
 
 		return $path_thumb;
 	}
+
+	/**
+	 * NotFound画面
+	 */
+	private function page_notfound(){
+		$this->px->set_status(404);// 404 NotFound
+		return;
+	}
 }
