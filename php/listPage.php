@@ -4,6 +4,7 @@ class listPage {
 
 	private $px;
 	private $options;
+    private $blog_id;
     private $article_list;
     private $current_page_info;
     private $current_pager_num = 1;
@@ -12,10 +13,13 @@ class listPage {
 	/**
 	 * コンストラクタ
 	 * @param object $px PxFWコアオブジェクト
+     * @param string $blog_id ブログID
+     * @param array $article_list ブログ記事リスト
 	 * @param array $options オプション
 	 */
-	public function __construct($px, $article_list, $options){
+	public function __construct($px, $blog_id, $article_list, $options){
 		$this->px = $px;
+        $this->blog_id = $blog_id;
         $this->article_list = $article_list;
 		$this->options = (object) $options;
 		$this->current_page_info = $this->px->site()->get_current_page_info();
@@ -124,7 +128,7 @@ class listPage {
 	 */
 	private function get_pager_info( $params = null ){
         $params = (object) $params;
-        $total_count = count($this->article_list);
+        $total_count = count($this->article_list[$this->blog_id]);
         $current_page_num = $this->current_pager_num;
         $display_per_page = intval( $params->dpp ?? 1 );
 
@@ -231,8 +235,8 @@ class listPage {
 	public function get_list($params){
 		$pager_info = $this->get_pager_info($params);
 		$rtn = array();
-		for( $i = $pager_info['dpp']*($pager_info['current']-1); $i < $pager_info['dpp']*($pager_info['current']) && ($this->article_list[$i] ?? null); $i++ ){
-			array_push( $rtn, $this->article_list[$i] );
+		for( $i = $pager_info['dpp']*($pager_info['current']-1); $i < $pager_info['dpp']*($pager_info['current']) && ($this->article_list[$this->blog_id][$i] ?? null); $i++ ){
+			array_push( $rtn, $this->article_list[$this->blog_id][$i] );
 		}
 		return $rtn;
 	}
@@ -241,7 +245,7 @@ class listPage {
 	 * リスト配列を全件取得する
 	 */
 	public function get_list_all(){
-		return $this->article_list;
+		return $this->article_list[$this->blog_id];
 	}
 
 	/**

@@ -26,7 +26,7 @@ class blog {
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 
-		foreach($this->options->blogs as $blog_id => $blog_info){
+		foreach($this->options->blogs as $blog_id => $blog_options){
 			$blogmap_array = array();
 
 			$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
@@ -106,18 +106,39 @@ class blog {
 					$tmp_array['path'] .= $this->px->conf()->directory_index[0] ?? 'index.html';
 				}
 				$tmp_array['content'] = $tmp_array['content'] ?? $tmp_array['path'];
-				$tmp_array['logical_path'] = $blog_info->logical_path;
+				$tmp_array['logical_path'] = $blog_options->logical_path;
 				$tmp_array['list_flg'] = 0;
 				$tmp_array['category_top_flg'] = 0;
 
 				$blogmap_array[$tmp_array['path']] = $tmp_array;
-                array_push($this->article_list, $tmp_array);
+                $this->article_list[$blog_id] = $this->article_list[$blog_id] ?? array();
+                array_push($this->article_list[$blog_id], $tmp_array);
 
 				$this->px->site()->set_page_info(
 					$tmp_array['path'],
 					$tmp_array
 				);
 			}
+
+            // 並び替え
+            if( $blog_options->orderby ?? null ){
+                $sort_orderby = $blog_options->orderby;
+                $sort_scending = strtolower($blog_options->scending ?? '');
+                usort($this->article_list[$blog_id], function ($a, $b) use ($sort_orderby, $sort_scending){
+                    if( !isset($a[$sort_orderby]) || !isset($b[$sort_orderby]) ){
+                        return 0;
+                    }
+                    if( $a[$sort_orderby] === $b[$sort_orderby] ){
+                        return 0;
+                    }
+                    if( $a[$sort_orderby] > $b[$sort_orderby] ){
+                        return ($sort_scending == 'asc' ? 1 : -1);
+                    }elseif($a[$sort_orderby] < $b[$sort_orderby]){
+                        return ($sort_scending == 'asc' ? -1 : 1);
+                    }
+                    return 0;
+                });
+            }
 
 			// キャッシュを保存
 			$this->px->fs()->mkdir($path_blog_page_list_cache_dir);
@@ -132,7 +153,8 @@ class blog {
      * ブログ記事の一覧を生成する
      */
     public function generate_list_page( $params ){
-        $listPage = new listPage($this->px, $this->article_list, $this->options);
+        $params = (object) $params;
+        $listPage = new listPage($this->px, $params->blog_id, $this->article_list, $this->options);
         return $listPage->generate_list_page( $params );
     }
 

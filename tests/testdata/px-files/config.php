@@ -283,6 +283,8 @@ return call_user_func( function(){
 		\pickles2\px2BlogKit\register::blog( array(
 			"blogs" => array(
 				"articles" => array(
+					"orderby" => "update_date",
+					"scending" => "desc",
 					"logical_path" => "/articles/{*}",
 				),
 			),
