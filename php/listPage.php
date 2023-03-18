@@ -5,6 +5,7 @@ class listPage {
 	private $px;
 	private $options;
     private $article_list;
+    private $current_page_info;
     private $current_pager_num = 1;
 	private $path_default_thumb_image;
 
@@ -17,6 +18,7 @@ class listPage {
 		$this->px = $px;
         $this->article_list = $article_list;
 		$this->options = (object) $options;
+		$this->current_page_info = $this->px->site()->get_current_page_info();
 
 		$this->path_default_thumb_image = 'data:image/png;base64,'.base64_encode(file_get_contents(__DIR__.'/../resources/images/noimage.png'));
 
@@ -240,6 +242,18 @@ class listPage {
 	 */
 	public function get_list_all(){
 		return $this->article_list;
+	}
+
+	/**
+	 * ページャーごとのURLを生成
+	 */
+	private function href_pager( $page_num ){
+		$bind_param = $page_num.'/';
+		if( $page_num == 1 ){
+			$bind_param = '';
+		}
+		$rtn = $this->px->href( $this->px->site()->bind_dynamic_path_param( $this->current_page_info['path'], array(''=>$bind_param) ) );
+		return $rtn;
 	}
 
 	/**
