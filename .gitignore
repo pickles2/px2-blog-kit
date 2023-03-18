@@ -1,6 +1,31 @@
+# DotEnv
+.env
+
+# Composer
 composer.phar
+composer.lock
 /vendor/
 
-# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
+# npm
+/node_modules/
+package-lock.json
+
+# PHPUnit
+.phpunit.result.cache
+
+# PHP Documentor
+.phpdoc
+
+# Pickles 2
+tests/testdata/px-files/_sys/ram/
+!tests/testdata/px-files/_sys/ram/applock/.gitkeep
+!tests/testdata/px-files/_sys/ram/caches/.gitkeep
+!tests/testdata/px-files/_sys/ram/data/.gitkeep
+!tests/testdata/px-files/_sys/ram/publish/.gitkeep
+tests/testdata/src_px2/common/px_resources/
+!tests/testdata/src_px2/common/px_resources/.gitkeep
+
+# etc...
+.DS_Store
+Thumbs.db
+~$*

@@ -1,0 +1,38 @@
+table.px2-table {
+	border: none;
+	border-collapse: collapse;
+	margin: 0;
+	text-align: left;
+
+	th,
+	td {
+		border: 1px solid #dee2e6;
+		background: #fff;
+		padding: 0.4em 1em;
+	}
+
+	th {
+		background: #f9f9f9;
+	}
+
+	thead th,
+	tfoot th {
+		background: #eee;
+		text-align: center;
+	}
+
+	thead td,
+	tfoot td {
+		background: #eee;
+	}
+
+	&--left{
+		margin: 0 auto 0 0;
+	}
+	&--center{
+		margin: 0 auto 0 auto;
+	}
+	&--right{
+		margin: 0 0 0 auto;
+	}
+}

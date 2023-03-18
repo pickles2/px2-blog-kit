@@ -1,0 +1,23 @@
+{% if _ENV.mode == 'canvas' %}
+
+<div>
+	<div class="anchor_links">
+		<p class="anchor_links-heading">INDEX</p>
+		<ul>
+			<li><a href="javascript:;">ページ内リンク</a></li>
+			<li><a href="javascript:;">ページ内リンク</a>
+			<ul>
+				<li><a href="javascript:;">ページ内リンク</a></li>
+				<li><a href="javascript:;">ページ内リンク</a></li>
+			</ul>
+			</li>
+			<li><a href="javascript:;">ページ内リンク</a></li>
+		</ul>
+	</div><!-- /.anchor_links -->
+</div>
+
+{% else %}
+
+<!-- autoindex -->
+
+{% endif %}
