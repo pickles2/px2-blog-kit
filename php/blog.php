@@ -110,7 +110,6 @@ class blog {
 				$tmp_array['category_top_flg'] = 0;
 
 				$blogmap_array[$tmp_array['path']] = $tmp_array;
-				// array_push($blogmap_array, $tmp_array);
 
 				$this->px->site()->set_page_info(
 					$tmp_array['path'],
@@ -144,4 +143,13 @@ class blog {
 		$rtn .= '?'.'>';
 		return	$rtn;
 	}
+
+
+    /**
+     * ブログ記事の一覧を生成する
+     */
+    public function generate_list_page( $params ){
+        // TODO: 一覧画面を生成する
+        return '<p>---</p>';
+    }
 }
