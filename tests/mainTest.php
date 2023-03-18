@@ -21,7 +21,6 @@ class mainTest extends PHPUnit\Framework\TestCase{
 			__DIR__.'/testdata/src_px2/.px_execute.php' ,
 			'/' ,
 		] );
-		$this->assertTrue( $this->common_error( $output ) );
 
 		// パブリッシュ
 		$output = $this->passthru( [

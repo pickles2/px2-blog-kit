@@ -279,6 +279,15 @@ return call_user_func( function(){
 	 * サイトマップ読み込みの後、コンテンツ実行の前に実行するプラグインを設定します。
 	 */
 	$conf->funcs->before_content = array(
+		// BlogKit
+		\pickles2\px2BlogKit\register::blog( array(
+			"blogs" => array(
+				"articles" => array(
+					"logical_path" => "/articles/{*}",
+				),
+			),
+		) ),
+
 		// PX=api
 		'picklesFramework2\commands\api::register' ,
 
