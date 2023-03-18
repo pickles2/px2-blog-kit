@@ -8,8 +8,8 @@
 	color: var(--theme-textcolor-on-keycolor);
 	border-top: 4px solid var(--theme-subcolor);
 	padding: 1em 15px 1px 15px;
-
 	clear: both;
+
 	&::after{
 		display: block;
 		content: " ";
@@ -20,6 +20,7 @@
 	&__inner{
 		margin: 0 auto;
 		max-width: 1024px;
+		position: relative;
 
 		clear: both;
 		&::after{
@@ -33,18 +34,18 @@
 	/**
 	 * Site Identity
 	 */
-	&__si{
+	&__si {
 		float: left;
 	}
 	&__si,
-	&__si *{
+	&__si * {
 		font-size: xx-large;
 		margin: 0;
 		padding: 0;
 		color: var(--theme-textcolor-on-keycolor);
 		line-height: 1.3;
 	}
-	&__si a:hover{
+	&__si a:hover {
 		color: var(--theme-textcolor-on-keycolor);
 	}
 	&__si img {
@@ -53,13 +54,18 @@
 		margin-right: 5px;
 		vertical-align: top;
 	}
+	&__si {
+		@media all and (max-width: 740px) {
+			margin-right: 60px;
+		}
+	}
 
 	/**
 	 * ショルダーメニュー
 	 */
 	&__shouldernavi{
 		float: right;
-		@media all and (max-width: 580px) {
+		@media all and (max-width: 740px) {
 			display: none;
 		}
 	}
@@ -78,31 +84,28 @@
 		color: var(--theme-textcolor-on-keycolor);
 	}
 
-
 	/**
 	 * グローバルメニュー
 	 */
-	&__globalnavi{
+	&__globalnavi {
 		clear: both;
+		@media all and (max-width: 740px) {
+			display: none;
+		}
 	}
-	&__globalnavi ul{
+	&__globalnavi ul {
 		margin: 0;
 		padding: 0;
 	}
-	&__globalnavi ul li{
+	&__globalnavi ul li {
 		margin: 0.2em 1px 0 1px;
 		padding: 0;
 		list-style-type: none;
 		display: inline-block;
 	}
-	&__globalnavi ul li a{
+	&__globalnavi ul li a {
 		padding: 0.5em 2em;
 		display: block;
 		background-color: #f5f5ff;
-	}
-	@media all and (max-width: 740px) {
-		&__globalnavi{
-			display: none;
-		}
 	}
 }

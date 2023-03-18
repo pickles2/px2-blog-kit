@@ -42,6 +42,7 @@
 		"pickles2/px2-publish-ex": "^2.0",
 		"pickles2/px2style": "~3.0",
 		"tomk79/px2-error-reporter": "~0.1",
+		"tomk79/px2-scss": "~0.1",
 		"tomk79/px2-serve": "^0.1",
 		"vlucas/phpdotenv": "~5.4.0"
     },

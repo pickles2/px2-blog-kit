@@ -1,6 +1,7 @@
 @import "../../../env";
 
-html, body{
+html,
+body {
 	margin: 0;
 	padding: 0;
 	font-size: medium;
@@ -9,45 +10,52 @@ html, body{
 	color: #333;
 	background-color: #eee;
 }
-.current{
+.current {
 	font-weight: bold;
 }
-img, svg, video{
+img,
+svg,
+video {
 	max-width:100%;
 	height:auto;
 }
-pre{
+pre {
 	border: 1px solid #e1e1e8;
 	background-color: #f7f7f9;
 	border-radius: 4px;
-	> code{
+	> code {
 		display: block;
 		padding: 1em;
 		overflow: auto;
 	}
 }
-code{
+code {
 	color: #d44950;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-family: inherit;
 	font-weight: 500;
 	color: inherit;
 }
-a{
+a {
 	color: var(--theme-keycolor);
 	text-decoration: none;
 }
 a:hover {
 	text-decoration: underline;
 }
-p, ul, ol, dl{
+p, ul, ol, dl {
 	margin: 1em 0;
 }
 dl dd {
 	margin-left: 2em;
 }
-p, li, dt, dd{
+p, li, dt, dd {
 	line-height: 1.6;
 }
 
@@ -55,7 +63,7 @@ p, li, dt, dd{
 /**
  * .anchor_links
  */
-.anchor_links{
+.anchor_links {
 	margin:2em 7%;
 }
 
@@ -64,12 +72,12 @@ p, li, dt, dd{
 /**
  * Layout
  */
-.theme-layouts{
+.theme-layouts {
 	background-color: #fff;
-	padding:18px 15px;
-
+	padding: 18px 15px;
 	clear: both;
-	&::after{
+
+	&::after {
 		content: " ";
 		clear: both;
 		float: none;
@@ -78,87 +86,90 @@ p, li, dt, dd{
 	margin: 0 auto;
 	width: auto;
 
-	img{
+	img {
 		max-width: 100%;
 	}
 
 	// ベーススタイル
-	&__header{
+	&__header {
 		border: 3px solid #930;
 	}
-	&__body{
+	&__body {
 		display: flex;
 		max-width: 1024px;
 		margin: 0 auto;
 	}
-	&__content{
+	&__content {
 		width: 100%;
 	}
-	&__lnavi{
+	&__lnavi {
 		margin-right: 20px;
 	}
-	&__rnavi{
+	&__rnavi {
 		margin-left: 20px;
 	}
-	&__footer{
+	&__footer {
 		border: 3px solid #036;
 	}
 
 	// レイアウトごとの拡張
-	&--fluid{
+	&--fluid {
 		padding: 1px 0 0 0;
 		.theme-layouts__body{
 			display: block;
 			max-width: none;
 		}
 	}
-	&--fullcolumn{
+	&--fullcolumn {
 		.theme-layouts__body {
     		display: block;
 		}
 	}
 
-	&--lnavi{
-		.theme-layouts__content{
+	&--lnavi {
+		.theme-layouts__content {
 			width: 75%;
 		}
-		.theme-layouts__lnavi{
+		.theme-layouts__lnavi {
 			width: 25%;
 		}
 	}
-	&--rnavi{
-		.theme-layouts__content{
+	&--rnavi {
+		.theme-layouts__content {
 			width: 75%;
 		}
-		.theme-layouts__rnavi{
+		.theme-layouts__rnavi {
 			width: 25%;
 		}
 	}
-	&--3columns{
-		.theme-layouts__content{
+	&--3columns {
+		.theme-layouts__content {
 			width: 60%;
 		}
-		.theme-layouts__lnavi{
+		.theme-layouts__lnavi {
 			width: 20%;
 		}
-		.theme-layouts__rnavi{
+		.theme-layouts__rnavi {
 			width: 20%;
 		}
 	}
-
 
 	// レスポンシブ拡張
 	@media all and (max-width:740px){
-		.theme-layouts{
-			&__body{
+		.theme-layouts {
+			&__body {
 				display: block;
 			}
 			&__content,
 			&__lnavi,
-			&__rnavi{
+			&__rnavi {
 				width: auto;
 				margin-left: 0;
 				margin-right: 0;
+			}
+			&__lnavi,
+			&__rnavi {
+				margin-top: 30px;
 			}
 		}
 	}

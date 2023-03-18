@@ -1,0 +1,79 @@
+<div class="px2-page-list">
+
+{% if pager.total_page_count > 1 %}
+
+<div class="px2-page-list__pager">
+	<ul>
+		<li class="px2-page-list__pager-first">{% if pager.first %}<a href="{{ href_pager( pager.first ) }}">&lt;&lt;</a>{% else %}<span>&lt;&lt;</span>{% endif %}</li>
+		<li class="px2-page-list__pager-prev">{% if pager.prev %}<a href="{{ href_pager( pager.prev ) }}">&lt;</a>{% else %}<span>&lt;</span>{% endif %}</li>
+{% for i in pager.index_start .. pager.index_end %}
+	{% if i == pager.current %}
+		<li><span class="px2-page-list__pager-current">{{ i }}</span></li>
+	{% else %}
+		<li><a href="{{ href_pager( i ) }}">{{ i }}</a></li>
+	{% endif %}
+{% endfor %}
+		<li class="px2-page-list__pager-next">{% if pager.next %}<a href="{{ href_pager( pager.next ) }}">&gt;</a>{% else %}<span>&gt;</span>{% endif %}</li>
+		<li class="px2-page-list__pager-last">{% if pager.last %}<a href="{{ href_pager( pager.last ) }}">&gt;&gt;</a>{% else %}<span>&gt;&gt;</span>{% endif %}</li>
+	</ul>
+</div><!-- /.pager -->
+
+{% endif %}
+
+
+
+
+<div class="px2-page-list__list">
+	<ul>
+
+{% for row in list %}
+
+		<li class="px2-page-list__list-item">
+			<div class="px2-page-list__list-title">
+				<p><a href="{{ href(row.path) }}">{{ row.title }}</a></p>
+				<div class="px2-page-list__list-release-date">
+					{% if lang == 'ja' %}公開日: {{ row.release_date | date("Y年m月d日(D)") }}{% else %}Release Date: {{ row.release_date | date("Y/m/d (D)") }}{% endif %}
+				</div>
+			</div>
+			<div class="px2-page-list__list-thumb">
+				<a href="{{ href(row.path) }}" style="background-image:url('{{ thumb(row.path) }}');"></a>
+			</div>
+			<div class="px2-page-list__list-body">
+				<div class="px2-page-list__list-summary">
+					<p>{{ row.article_summary }}</p>
+				</div>
+				<p class="px2-page-list__list-link-to-article">
+					<a href="{{ href(row.path) }}" class="px2-page-list__list-a">{% if lang == 'ja' %}記事を読む{% else %}Read More...{% endif %}</a>
+				</p>
+			</div>
+		</li>
+
+{% endfor %}
+
+	</ul>
+</div>
+
+
+
+{% if pager.total_page_count > 1 %}
+
+<div class="px2-page-list__pager">
+	<ul>
+		<li class="px2-page-list__pager-first">{% if pager.first %}<a href="{{ href_pager( pager.first ) }}">&lt;&lt;</a>{% else %}<span>&lt;&lt;</span>{% endif %}</li>
+		<li class="px2-page-list__pager-prev">{% if pager.prev %}<a href="{{ href_pager( pager.prev ) }}">&lt;</a>{% else %}<span>&lt;</span>{% endif %}</li>
+{% for i in pager.index_start .. pager.index_end %}
+	{% if i == pager.current %}
+		<li><span class="px2-page-list__pager-current">{{ i }}</span></li>
+	{% else %}
+		<li><a href="{{ href_pager( i ) }}">{{ i }}</a></li>
+	{% endif %}
+{% endfor %}
+		<li class="px2-page-list__pager-next">{% if pager.next %}<a href="{{ href_pager( pager.next ) }}">&gt;</a>{% else %}<span>&gt;</span>{% endif %}</li>
+		<li class="px2-page-list__pager-last">{% if pager.last %}<a href="{{ href_pager( pager.last ) }}">&gt;&gt;</a>{% else %}<span>&gt;&gt;</span>{% endif %}</li>
+	</ul>
+</div><!-- /.pager -->
+
+{% endif %}
+
+
+</div>

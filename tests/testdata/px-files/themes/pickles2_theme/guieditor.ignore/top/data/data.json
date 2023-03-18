@@ -14,13 +14,11 @@
                                 "src": "h1"
                             },
                             "sitetitle_image": {
-                                "resKey": "2641c244cf1dc60854a0c8712c575b13",
+                                "resKey": "",
                                 "resType": "none",
                                 "webUrl": "",
-                                "path": "./theme_files/layouts/top/resources/2641c244cf1dc60854a0c8712c575b13.unknown"
-                            },
-                            "shouldernavi": [],
-                            "globalnavi": []
+                                "path": ""
+                            }
                         },
                         "anchor": "",
                         "dec": ""
@@ -33,12 +31,12 @@
                                 {
                                     "modId": "themeEditorModules:vars/bowl",
                                     "fields": {
-                                        "bowlName": {
-                                            "src": ""
-                                        }
-                                    },
-                                    "anchor": "",
-                                    "dec": ""
+                                        "bowlName": ""
+                                    }
+                                },
+                                {
+                                    "modId": "themeEditorModules:layouts/backtopagetop",
+                                    "fields": []
                                 }
                             ]
                         }
@@ -53,6 +51,14 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "modId": "themeEditorModules:layouts/hamburger-menu",
+                        "fields": []
+                    },
+                    {
+                        "modId": "themeEditorModules:layouts/backtopagetop-float",
+                        "fields": []
                     }
                 ]
             }

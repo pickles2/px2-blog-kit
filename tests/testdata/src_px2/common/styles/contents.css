@@ -1,0 +1,42 @@
+html, body{
+	font-size: medium;
+	font-family: Meiryo, "Hiragino Kaku Gothic ProN", Verdana, sans-serif;
+}
+.current{
+	font-weight: bold;
+}
+.platform{
+}
+<?php include(__DIR__.'/normalize/normalize-3.0.1.css'); ?>
+<?php
+// include(__DIR__.'/fess/fess-1.2.0.css');
+?>
+<?php
+print (new \tomk79\pickles2\px2dthelper\main($px))->document_modules()->build_css();
+?>
+
+
+/* ライブラリ同士の衝突吸収 */
+.contents p,
+.contents ul,
+.contents ol,
+.contents dl{
+	margin: 1em 0;
+}
+.contents dl
+.contents dd {
+	margin-left: 2em;
+}
+.contents .btn{
+	background-color:#428bca;
+}
+.contents strong,
+.contents em{
+	font-weight: bold;
+	color: inherit;
+}
+
+/* Bootstrap */
+.contents .alert p{
+	margin: 0;
+}

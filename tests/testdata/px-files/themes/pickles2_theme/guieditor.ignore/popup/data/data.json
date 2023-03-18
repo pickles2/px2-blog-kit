@@ -7,19 +7,15 @@
                     {
                         "modId": "themeEditorModules:layouts/header",
                         "fields": {
-                            "sitetitle_linkto": {
-                                "src": ""
-                            },
-                            "sitetitle_htmlElement": {
-                                "src": ""
-                            },
+                            "sitetitle_linkto": "",
+                            "sitetitle_htmlElement": "",
                             "shouldernavi": [],
                             "globalnavi": [],
                             "sitetitle_image": {
-                                "resKey": "6ff0d2c6b0ddec06839219569d0833cb",
+                                "resKey": "",
                                 "resType": "none",
                                 "webUrl": "",
-                                "path": "./theme_files/layouts/popup/resources/6ff0d2c6b0ddec06839219569d0833cb.unknown"
+                                "path": ""
                             }
                         },
                         "anchor": "",
@@ -38,12 +34,8 @@
                                 {
                                     "modId": "themeEditorModules:vars/bowl",
                                     "fields": {
-                                        "bowlName": {
-                                            "src": ""
-                                        }
-                                    },
-                                    "anchor": "",
-                                    "dec": ""
+                                        "bowlName": ""
+                                    }
                                 },
                                 {
                                     "modId": "themeEditorModules:layouts/backtopagetop",
@@ -58,7 +50,7 @@
                         "dec": ""
                     },
                     {
-                        "modId": "themeEditorModules:vars/close_button",
+                        "modId": "themeEditorModules:basics/close_button",
                         "fields": [],
                         "anchor": "",
                         "dec": ""

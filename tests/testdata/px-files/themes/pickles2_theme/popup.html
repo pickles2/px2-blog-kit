@@ -2,9 +2,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title><?= htmlspecialchars($px->site()->get_current_page_info('title_full')); ?></title>
-		<meta name="description" content="<?= htmlspecialchars($px->site()->get_current_page_info('description')); ?>" />
-		<meta name="keywords" content="<?= htmlspecialchars($px->site()->get_current_page_info('keywords')); ?>" />
+		<title><?= htmlspecialchars($px->site()->get_current_page_info('title_full') ?? ''); ?></title>
+		<meta name="description" content="<?= htmlspecialchars($px->site()->get_current_page_info('description') ?? ''); ?>" />
+		<meta name="keywords" content="<?= htmlspecialchars($px->site()->get_current_page_info('keywords') ?? ''); ?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 <?php include(__DIR__.'/inc/headsection.inc'); ?>
 <?= $px->bowl()->get_clean('head'); ?>
 
@@ -13,26 +14,29 @@
 <header class="theme-header">
 	<div class="theme-header__inner">
 		<div class="theme-header__si">
-			<?= htmlspecialchars( $px->conf()->name ) ?>		</div>
-
+			<?= htmlspecialchars( $px->conf()->name ?? '' ) ?>		</div>
 
 	</div>
 </header>
 <div class="theme-layouts theme-layouts--fullcolumn">
 	<div class="theme-layouts__body">
-<h1><?= preg_replace('/\r\n|\r|\n/', '<br />', htmlspecialchars( $px->site()->get_current_page_info('title_h1') )) ?></h1>
+		<div class="theme-layouts__content">
+<h1><?= preg_replace('/\r\n|\r|\n/', '<br />', htmlspecialchars( $px->site()->get_current_page_info('title_h1') ?? '' )) ?></h1>
 
-<div class="contents" <?= htmlspecialchars($theme->get_attr_bowl_name_by())?>="">
+<div class="contents" <?= htmlspecialchars($theme->get_attr_bowl_name_by() ?? '') ?>="">
 <?= $px->bowl()->pull('') ?>
 </div>
 <div class="theme-back-to-pagetop">
 	<p><a href="#pagetop">このページの先頭へ戻る</a></p>
 </div>
+    	</div>
 	</div>
 </div>
-<p style="text-align:center;"><button onclick="window.close();return false;" class="px2-btn">close</button></p>
-<?php if( @strlen($px->conf()->copyright) ){ ?>
-<p style="text-align:center;">&copy;<?= htmlspecialchars($px->conf()->copyright); ?>.</p>
+<p class="theme-text-align-center">
+    <button onclick="window.close();return false;" class="theme-btn theme-btn--primary">閉じる</button>
+</p>
+<?php if( strlen($px->conf()->copyright ?? '') ){ ?>
+<p style="text-align:center;">&copy;<?= htmlspecialchars($px->conf()->copyright ?? ''); ?>.</p>
 <?php } ?>
 
 

@@ -4,6 +4,7 @@ class blog {
 
 	private $px;
 	private $options;
+    private $article_list = array();
 
 	/**
 	 * コンストラクタ
@@ -110,6 +111,7 @@ class blog {
 				$tmp_array['category_top_flg'] = 0;
 
 				$blogmap_array[$tmp_array['path']] = $tmp_array;
+                array_push($this->article_list, $tmp_array);
 
 				$this->px->site()->set_page_info(
 					$tmp_array['path'],
@@ -125,6 +127,14 @@ class blog {
 
 		return true;
 	}
+
+    /**
+     * ブログ記事の一覧を生成する
+     */
+    public function generate_list_page( $params ){
+        $listPage = new listPage($this->px, $this->article_list, $this->options);
+        return $listPage->generate_list_page( $params );
+    }
 
 	/**
 	 * 変数をPHPのソースコードに変換する。
@@ -143,13 +153,4 @@ class blog {
 		$rtn .= '?'.'>';
 		return	$rtn;
 	}
-
-
-    /**
-     * ブログ記事の一覧を生成する
-     */
-    public function generate_list_page( $params ){
-        // TODO: 一覧画面を生成する
-        return '<p>---</p>';
-    }
 }

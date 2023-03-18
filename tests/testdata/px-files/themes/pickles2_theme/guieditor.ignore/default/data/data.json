@@ -7,12 +7,8 @@
                     {
                         "modId": "themeEditorModules:layouts/header",
                         "fields": {
-                            "sitetitle_linkto": {
-                                "src": "/index.html"
-                            },
-                            "sitetitle_htmlElement": {
-                                "src": ""
-                            },
+                            "sitetitle_linkto": "/index.html",
+                            "sitetitle_htmlElement": "",
                             "shouldernavi": [
                                 {
                                     "modId": "themeEditorModules:vars/shouldernavi",
@@ -30,10 +26,10 @@
                                 }
                             ],
                             "sitetitle_image": {
-                                "resKey": "b65e9405adab6577125e26a30dc2e855",
+                                "resKey": "",
                                 "resType": "none",
                                 "webUrl": "",
-                                "path": "./theme_files/layouts/default/resources/b65e9405adab6577125e26a30dc2e855.unknown"
+                                "path": ""
                             }
                         },
                         "anchor": "",
@@ -59,20 +55,10 @@
                                 {
                                     "modId": "themeEditorModules:vars/bowl",
                                     "fields": {
-                                        "bowlName": {
-                                            "src": ""
-                                        }
+                                        "bowlName": ""
                                     },
                                     "anchor": "",
                                     "dec": ""
-                                },
-                                {
-                                    "modId": "themeEditorModules:layouts/backtopagetop",
-                                    "fields": []
-                                },
-                                {
-                                    "modId": "themeEditorModules:vars/breadcrumb",
-                                    "fields": []
                                 }
                             ],
                             "rnavi": [
@@ -89,6 +75,22 @@
                         "dec": ""
                     },
                     {
+                        "modId": "themeEditorModules:layouts/rnavi",
+                        "fields": {
+                            "main": [
+                                {
+                                    "modId": "themeEditorModules:layouts/backtopagetop",
+                                    "fields": []
+                                },
+                                {
+                                    "modId": "themeEditorModules:vars/breadcrumb",
+                                    "fields": []
+                                }
+                            ],
+                            "rnavi": []
+                        }
+                    },
+                    {
                         "modId": "themeEditorModules:layouts/footer",
                         "fields": {
                             "content": [
@@ -102,6 +104,14 @@
                         },
                         "anchor": "",
                         "dec": ""
+                    },
+                    {
+                        "modId": "themeEditorModules:layouts/hamburger-menu",
+                        "fields": []
+                    },
+                    {
+                        "modId": "themeEditorModules:layouts/backtopagetop-float",
+                        "fields": []
                     }
                 ]
             }

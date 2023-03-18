@@ -38,17 +38,22 @@
 
 		<div class="theme-footer__shouldernavi">
 {% if _ENV.mode == 'canvas' %}
-<ul><li><a href="javascript:;">ページ名</a></li><li><a href="javascript:;">ページ名</a></li></ul>
+<ul>
+	<li><a href="javascript:;">ページ名</a></li>
+	<li><a href="javascript:;">ページ名</a></li>
+</ul>
 {% endif %}
 {% if _ENV.mode == 'finalize' %}
 <?php
 	$shoulder_menu = $px->site()->get_shoulder_menu();
-	echo( '<ul>' );
-	echo( '<li>'.$px->mk_link( '', array('current'=>false) ).'</li>' );
-	foreach( $shoulder_menu as $page_id ){
-		echo( '<li>'.$px->mk_link( $page_id ).'</li>' );
+	if( is_array($shoulder_menu) && count($shoulder_menu) ){
+		echo( '<ul>'."\n" );
+		echo( '<li>'.$px->mk_link( '', array('current'=>false) ).'</li>'."\n" );
+		foreach( $shoulder_menu as $page_id ){
+			echo( '<li>'.$px->mk_link( $page_id ).'</li>'."\n" );
+		}
+		echo( '</ul>'."\n" );
 	}
-	echo( '</ul>' );
 ?>
 {% endif %}
 		</div>
