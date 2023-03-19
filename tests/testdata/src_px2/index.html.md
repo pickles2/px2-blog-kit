@@ -15,10 +15,5 @@ px2-blog-kit の開発画面です。
 		'url_home'=>'https://yourdomain.com/',
 		'url_index'=>'https://yourdomain.com/listsample/',
 		'author'=>'Tomoya Koyanagi',
-		'rss'=>array(
-			'atom-1.0'=>$px->get_path_docroot().'rss/atom0100.xml',
-			'rss-1.0'=>$px->get_path_docroot().'rss/rss0100.rdf',
-			'rss-2.0'=>$px->get_path_docroot().'rss/rss0200.xml',
-		),
 	)
 ); ?>

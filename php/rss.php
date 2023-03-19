@@ -39,7 +39,8 @@ class rss{
 		}
 		unset( $tmp_list );
 
-		foreach( $this->params->rss as $rss_version=>$realpath_rss ){
+		foreach( $this->params->rss as $rss_version=>$path_rss ){
+			$realpath_rss = $this->px->get_realpath_docroot().$this->px->get_path_controot().$path_rss;
 			if( !strlen( $realpath_rss ?? '') ){
 				$this->internal_error( 'RSSファイルの保存先が指定されていません。' , __FILE__ , __LINE__ );
 				continue;

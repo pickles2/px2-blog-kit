@@ -15,9 +15,9 @@
 		'url_index'=>'https://yourdomain.com/listsample/',
 		'author'=>'Tomoya Koyanagi',
 		'rss'=>array(
-			'atom-1.0'=>$px->get_path_docroot().'rss/atom0100.xml',
-			'rss-1.0'=>$px->get_path_docroot().'rss/rss0100.rdf',
-			'rss-2.0'=>$px->get_path_docroot().'rss/rss0200.xml',
+			'atom-1.0'=>'/rss/atom0100.xml',
+			'rss-1.0'=>'/rss/rss0100.rdf',
+			'rss-2.0'=>'/rss/rss0200.xml',
 		),
 	)
 ); ?>
