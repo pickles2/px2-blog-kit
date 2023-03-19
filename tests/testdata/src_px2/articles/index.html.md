@@ -14,7 +14,7 @@
 		'url_home'=>'https://yourdomain.com/',
 		'url_index'=>'https://yourdomain.com/listsample/',
 		'author'=>'Tomoya Koyanagi',
-		'rss'=>array(
+		'feeds'=>array(
 			'atom-1.0'=>'/rss/atom0100.xml',
 			'rss-1.0'=>'/rss/rss0100.rdf',
 			'rss-2.0'=>'/rss/rss0200.xml',

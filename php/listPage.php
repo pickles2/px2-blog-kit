@@ -80,7 +80,7 @@ class listPage {
 			)
 		);
 
-		if( isset( $params->rss ) ){
+		if( isset( $params->feeds ) ){
 			// RSSパスのオプションが有効な場合
 			$obj_rss = new rss($this->px, $params, $this->current_blog_article_list);
 			$obj_rss->update_rss_file();
