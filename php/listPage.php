@@ -4,35 +4,36 @@ class listPage {
 
 	private $px;
 	private $options;
-    private $blog_id;
-    private $article_list;
-    private $current_page_info;
-    private $current_pager_num = 1;
+	private $blog_id;
+	private $article_list;
+	private $current_pager_num = 1;
 	private $path_default_thumb_image;
 
 	/**
 	 * コンストラクタ
 	 * @param object $px PxFWコアオブジェクト
-     * @param string $blog_id ブログID
-     * @param array $article_list ブログ記事リスト
+	 * @param string $blog_id ブログID
+	 * @param array $article_list ブログ記事リスト
 	 * @param array $options オプション
 	 */
 	public function __construct($px, $blog_id, $article_list, $options){
 		$this->px = $px;
-        $this->blog_id = $blog_id;
-        $this->article_list = $article_list;
+		$this->blog_id = $blog_id;
+		$this->article_list = $article_list;
 		$this->options = (object) $options;
-		$this->current_page_info = $this->px->site()->get_current_page_info();
 
 		$this->path_default_thumb_image = 'data:image/png;base64,'.base64_encode(file_get_contents(__DIR__.'/../resources/images/noimage.png'));
 
-        $this->parse_request();
+		$this->parse_request();
 	}
 
-    /**
-     * ブログ記事の一覧を生成する
-     */
-    public function generate_list_page( $params ){
+	/**
+	 * ブログ記事の一覧を生成する
+	 * @param object $params パラメータ
+	 * @return string HTMLコード
+	 */
+	public function mk_list_page( $params ){
+		$params = (object) $params;
 		$rtn = '';
 
 		$template = '';
@@ -54,7 +55,7 @@ class listPage {
 		if( $pager['total_page_count'] > 1 ){
 			for( $idx = $pager['index_start']; $idx <= $pager['index_end']; $idx ++ ){
 				if( $idx != $pager['current'] ){
-					$this->px->add_relatedlink( $this->href_pager( $idx ) );
+					$this->px->add_relatedlink( $this->href_pager( $idx, $params ) );
 				}
 			}
 		}
@@ -67,8 +68,8 @@ class listPage {
 				'list' => $list,
 			),
 			array(
-				'href_pager' => function( $page_num ){
-					return $this->href_pager( $page_num );
+				'href_pager' => function( $page_num ) use ($params){
+					return $this->href_pager( $page_num, $params );
 				},
 				'href' => function( $path ){
 					return $this->px->href( $path );
@@ -79,11 +80,18 @@ class listPage {
 			)
 		);
 
+		if( isset( $params->rss ) ){
+			// RSSパスのオプションが有効な場合
+			// $obj_rss = new rss($this->px, $this);
+			// $obj_rss->update_rss_file();
+		}
+
 		return $rtn;
-    }
+	}
 
 	/**
 	 * リクエストの内容を解析する
+	 * @return boolean true
 	 */
 	private function parse_request(){
 		$path_param = $this->px->site()->get_path_param('');
@@ -91,10 +99,6 @@ class listPage {
 
 		$paramlist = array();
 		if( strlen($path_param ?? '') ){
-			// $tmp_binded_path = $this->px->href( $this->px->site()->bind_dynamic_path_param( $this->current_page_info['path'], array(''=>$path_param) ) );
-			// if( is_file($this->px->get_path_controot().$tmp_binded_path) ){
-			// 	return include( $this->px->get_path_controot().$tmp_binded_path );
-			// }
 			if( !preg_match('/^[1-9][0-9]*\/$/si', $path_param??'') ){
 				return $this->page_notfound();
 			}
@@ -127,10 +131,10 @@ class listPage {
 	 * @return array ページャー情報を格納した連想配列
 	 */
 	private function get_pager_info( $params = null ){
-        $params = (object) $params;
-        $total_count = count($this->article_list[$this->blog_id]);
-        $current_page_num = $this->current_pager_num;
-        $display_per_page = intval( $params->dpp ?? 1 );
+		$params = (object) $params;
+		$total_count = count($this->article_list[$this->blog_id]);
+		$current_page_num = $this->current_pager_num;
+		$display_per_page = intval( $params->dpp ?? 1 );
 
 		// 現在のページ番号
 		$current_page_num = intval( $current_page_num );
@@ -251,12 +255,17 @@ class listPage {
 	/**
 	 * ページャーごとのURLを生成
 	 */
-	private function href_pager( $page_num ){
+	private function href_pager( $page_num, $params ){
+		$params = (object) $params;
 		$bind_param = $page_num.'/';
 		if( $page_num == 1 ){
 			$bind_param = '';
 		}
-		$rtn = $this->px->href( $this->px->site()->bind_dynamic_path_param( $this->current_page_info['path'], array(''=>$bind_param) ) );
+		$current_page_info = $this->px->site()->get_current_page_info();
+		if( isset($params->list_page_id) && is_string($params->list_page_id) && strlen($params->list_page_id) ){
+			$current_page_info = $this->px->site()->get_page_info( $params->list_page_id );
+		}
+		$rtn = $this->px->href( $this->px->site()->bind_dynamic_path_param( $current_page_info['path'], array(''=>$bind_param) ) );
 		return $rtn;
 	}
 
@@ -264,6 +273,7 @@ class listPage {
 	 * 記事本文から、サムネイルに使う画像を抽出する
 	 *
 	 * @param object $path ページのパスまたはページID
+	 * @return string 画像のURL
 	 */
 	private function get_article_thumb( $path ){
 		$path_thumb = $this->path_default_thumb_image;

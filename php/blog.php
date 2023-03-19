@@ -4,7 +4,7 @@ class blog {
 
 	private $px;
 	private $options;
-    private $article_list = array();
+	private $article_list = array();
 
 	/**
 	 * コンストラクタ
@@ -15,7 +15,7 @@ class blog {
 		$this->px = $px;
 		$this->options = (object) $options;
 
-        $this->load_blog_page_list();
+		$this->load_blog_page_list();
 	}
 
 	/**
@@ -111,8 +111,8 @@ class blog {
 				$tmp_array['category_top_flg'] = 0;
 
 				$blogmap_array[$tmp_array['path']] = $tmp_array;
-                $this->article_list[$blog_id] = $this->article_list[$blog_id] ?? array();
-                array_push($this->article_list[$blog_id], $tmp_array);
+				$this->article_list[$blog_id] = $this->article_list[$blog_id] ?? array();
+				array_push($this->article_list[$blog_id], $tmp_array);
 
 				$this->px->site()->set_page_info(
 					$tmp_array['path'],
@@ -120,25 +120,25 @@ class blog {
 				);
 			}
 
-            // 並び替え
-            if( $blog_options->orderby ?? null ){
-                $sort_orderby = $blog_options->orderby;
-                $sort_scending = strtolower($blog_options->scending ?? '');
-                usort($this->article_list[$blog_id], function ($a, $b) use ($sort_orderby, $sort_scending){
-                    if( !isset($a[$sort_orderby]) || !isset($b[$sort_orderby]) ){
-                        return 0;
-                    }
-                    if( $a[$sort_orderby] === $b[$sort_orderby] ){
-                        return 0;
-                    }
-                    if( $a[$sort_orderby] > $b[$sort_orderby] ){
-                        return ($sort_scending == 'asc' ? 1 : -1);
-                    }elseif($a[$sort_orderby] < $b[$sort_orderby]){
-                        return ($sort_scending == 'asc' ? -1 : 1);
-                    }
-                    return 0;
-                });
-            }
+			// 並び替え
+			if( $blog_options->orderby ?? null ){
+				$sort_orderby = $blog_options->orderby;
+				$sort_scending = strtolower($blog_options->scending ?? '');
+				usort($this->article_list[$blog_id], function ($a, $b) use ($sort_orderby, $sort_scending){
+					if( !isset($a[$sort_orderby]) || !isset($b[$sort_orderby]) ){
+						return 0;
+					}
+					if( $a[$sort_orderby] === $b[$sort_orderby] ){
+						return 0;
+					}
+					if( $a[$sort_orderby] > $b[$sort_orderby] ){
+						return ($sort_scending == 'asc' ? 1 : -1);
+					}elseif($a[$sort_orderby] < $b[$sort_orderby]){
+						return ($sort_scending == 'asc' ? -1 : 1);
+					}
+					return 0;
+				});
+			}
 
 			// キャッシュを保存
 			$this->px->fs()->mkdir($path_blog_page_list_cache_dir);
@@ -149,14 +149,14 @@ class blog {
 		return true;
 	}
 
-    /**
-     * ブログ記事の一覧を生成する
-     */
-    public function generate_list_page( $params ){
-        $params = (object) $params;
-        $listPage = new listPage($this->px, $params->blog_id, $this->article_list, $this->options);
-        return $listPage->generate_list_page( $params );
-    }
+	/**
+	 * ブログ記事の一覧を生成する
+	 */
+	public function mk_list_page( $params ){
+		$params = (object) $params;
+		$listPage = new listPage($this->px, $params->blog_id, $this->article_list, $this->options);
+		return $listPage->mk_list_page( $params );
+	}
 
 	/**
 	 * 変数をPHPのソースコードに変換する。
