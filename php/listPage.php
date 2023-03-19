@@ -60,6 +60,10 @@ class listPage {
 			}
 		}
 
+		foreach($list as $blog_article_info){
+			$this->px->add_relatedlink( $blog_article_info['path'] );
+		}
+
 		$rtn .= $twigHelper->bind(
 			$template,
 			array(

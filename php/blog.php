@@ -26,11 +26,26 @@ class blog {
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 
-		foreach($this->options->blogs as $blog_id => $blog_options){
-			$blogmap_array = array();
+		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
+		$blogmap_array = array();
+
+		foreach($csv_file_list as $csv_filename){
+			$blog_id = preg_replace('/\..*$/i', '', $csv_filename);
+			$blog_options = ($this->options->blogs->{$blog_id} ?? (object) array());
 
 			$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
 			if( !is_file($realpath_blog_csv) ){
+				// CSVファイルは存在しない
+				continue;
+			}
+
+			$blogmap_array[$blog_id] = array();
+			$this->article_list[$blog_id] = array();
+
+			if( is_file($path_blog_page_list_cache_dir.'blog_'.$blog_id.'/csv_md5.txt') && file_get_contents($path_blog_page_list_cache_dir.'blog_'.$blog_id.'/csv_md5.txt') === md5_file($realpath_blog_csv) ){
+				// キャッシュが有効
+				$blogmap_array[$blog_id] = include($path_blog_page_list_cache_dir.'blog_'.$blog_id.'/blogmap.array');
+				$this->article_list[$blog_id] = include($path_blog_page_list_cache_dir.'blog_'.$blog_id.'/article_list.array');
 				continue;
 			}
 
@@ -100,7 +115,7 @@ class blog {
 				}
 
 				// --------------------------------------
-				// サイトマップに登録
+				// サイトマップ項目を補完する
 				$tmp_array['path'] = $tmp_array['path'] ?? '';
 				if( preg_match('/\/$/', $tmp_array['path']) ){
 					$tmp_array['path'] .= $this->px->conf()->directory_index[0] ?? 'index.html';
@@ -110,14 +125,8 @@ class blog {
 				$tmp_array['list_flg'] = 0;
 				$tmp_array['category_top_flg'] = 0;
 
-				$blogmap_array[$tmp_array['path']] = $tmp_array;
-				$this->article_list[$blog_id] = $this->article_list[$blog_id] ?? array();
+				$blogmap_array[$blog_id][$tmp_array['path']] = $tmp_array;
 				array_push($this->article_list[$blog_id], $tmp_array);
-
-				$this->px->site()->set_page_info(
-					$tmp_array['path'],
-					$tmp_array
-				);
 			}
 
 			// 並び替え
@@ -141,9 +150,27 @@ class blog {
 			}
 
 			// キャッシュを保存
-			$this->px->fs()->mkdir($path_blog_page_list_cache_dir);
-			$this->px->fs()->save_file( $path_blog_page_list_cache_dir.'blog_'.$blog_id.'.array' , self::data2phpsrc($blogmap_array) );
+			$this->px->fs()->mkdir( $path_blog_page_list_cache_dir );
+			$this->px->fs()->mkdir( $path_blog_page_list_cache_dir.'blog_'.$blog_id.'/' );
+			$this->px->fs()->save_file( $path_blog_page_list_cache_dir.'blog_'.$blog_id.'/blogmap.array', self::data2phpsrc($blogmap_array[$blog_id]) );
+			$this->px->fs()->save_file( $path_blog_page_list_cache_dir.'blog_'.$blog_id.'/article_list.array', self::data2phpsrc($this->article_list[$blog_id]) );
+			$this->px->fs()->save_file( $path_blog_page_list_cache_dir.'blog_'.$blog_id.'/csv_md5.txt', md5_file($realpath_blog_csv) );
 			set_time_limit(30); // タイマーリセット
+		}
+
+
+		// --------------------------------------
+		// サイトマップに登録
+		$request_file_path = $this->px->req()->get_request_file_path();
+		foreach($blogmap_array as $blog_id => $blogmap){
+
+			if( isset($blogmap[$request_file_path]) ){
+				$this->px->site()->set_page_info(
+					$request_file_path,
+					$blogmap[$request_file_path]
+				);
+			}
+
 		}
 
 		return true;

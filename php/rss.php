@@ -75,6 +75,9 @@ class rss{
 			if( !$this->px->fs()->save_file( $realpath_rss , $SRC_RSS ) ){
 				$this->internal_error( 'FAILD to save feed RSS '.$rss_version.' ['.$path_rss.']' , __FILE__ , __LINE__ );
 			}
+
+			$this->px->add_relatedlink( $path_rss );
+
 			unset( $path_rss , $SRC_RSS );
 
 		}
