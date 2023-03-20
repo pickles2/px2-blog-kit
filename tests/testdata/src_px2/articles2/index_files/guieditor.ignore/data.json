@@ -1,0 +1,56 @@
+{
+    "bowl": {
+        "main": {
+            "modId": "_sys/root",
+            "fields": {
+                "main": [
+                    {
+                        "modId": "px2style:basics/text",
+                        "fields": {
+                            "main": {
+                                "src": "このブログ記事の一覧は、Broccoli用の記事一覧モジュールを用いて生成しています。\n",
+                                "editor": "markdown"
+                            },
+                            "text-align": {
+                                "src": ""
+                            },
+                            "font-size": {
+                                "src": ""
+                            },
+                            "paragraph": {
+                                "src": "px2-p"
+                            }
+                        },
+                        "anchor": "",
+                        "dec": ""
+                    },
+                    {
+                        "modId": "blog-kit:list-page/article-list",
+                        "fields": {
+                            "blog_id": {
+                                "src": "articles"
+                            },
+                            "description": {
+                                "src": "ブログの説明テキスト"
+                            },
+                            "orderby": {
+                                "src": "update_date"
+                            },
+                            "scending": {
+                                "src": "desc"
+                            },
+                            "path_feeds": {
+                                "src": ""
+                            },
+                            "dpp": {
+                                "src": "5"
+                            }
+                        },
+                        "anchor": "",
+                        "dec": ""
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
 "* path","* content","* id","* title","* title_breadcrumb","* title_h1","* title_label","* title_full","* logical_path","* list_flg","* layout","* orderby","* keywords","* description","* category_top_flg","* role","* proc_type","* **delete_flg"
 "/index.html",,,"ホーム",,,,,,"1","top",,,,,,,
 "/articles/{*}","/articles/index.html",,"記事一覧",,,,,,"1",,,,,"1",,,
+"/articles2/{*}",,,"記事一覧2",,,,,,"1",,,,,"1",,,

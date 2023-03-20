@@ -18,4 +18,5 @@ mix
 	// --------------------------------------
 	// CSS
 	.sass('src_gulp/styles/pagelist.css.scss', 'resources/styles/pagelist.css')
+	.copy('src_gulp/styles/pagelist.css.scss', 'broccoli_modules/list-page/article-list/module.css.scss')
 ;

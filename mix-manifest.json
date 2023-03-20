@@ -1,3 +1,4 @@
 {
-    "/resources/styles/pagelist.css": "/resources/styles/pagelist.css"
+    "/resources/styles/pagelist.css": "/resources/styles/pagelist.css",
+    "/broccoli_modules/list-page/article-list/module.css.scss": "/broccoli_modules/list-page/article-list/module.css.scss"
 }

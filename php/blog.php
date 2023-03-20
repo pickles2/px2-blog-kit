@@ -181,6 +181,9 @@ class blog {
 	 */
 	public function mk_list_page( $params ){
 		$params = (object) $params;
+		if( !strlen($params->blog_id??'') ){
+			return "";
+		}
 		$listPage = new listPage($this->px, $params->blog_id, $this->article_list[$params->blog_id], $this->options);
 		return $listPage->mk_list_page( $params );
 	}

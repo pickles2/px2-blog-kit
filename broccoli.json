@@ -1,0 +1,8 @@
+[
+    {
+        "id": "blog-kit",
+        "name": "Blog Kit",
+        "type": "module",
+        "path": "broccoli_modules/blog-kit/"
+    }
+]

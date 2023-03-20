@@ -1,0 +1,131 @@
+.px2-blog-kit {
+
+	// --------------------------------------
+	// Pager
+	&__pager {
+		display: block;
+		margin: 1em 0;
+
+		ul {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin: 0;
+			padding: 0;
+			li{
+				list-style-type: none;
+				margin: 0 2px;
+				padding: 0;
+			}
+		}
+
+		a,
+		span {
+			display: block;
+			padding: 0.7em 1em;
+			border: 1px solid transparent;
+			border-radius: 5px;
+			line-height: 1;
+		}
+		a:hover {
+			background-color: var(--px2-main-color, #00a0e6);
+			color: #f9f9f9;
+		}
+
+		&-current {
+			background-color: var(--px2-main-color, #00a0e6);
+			color: #f9f9f9;
+			font-weight: bold;
+		}
+	}
+
+
+	// --------------------------------------
+	// List
+	&__list {
+		display: block;
+		margin: 1em 0;
+
+		&::after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			border-top: 1px solid #ddd;
+			li{
+				list-style-type: none;
+				margin: 0;
+				padding: 1.2em 0;
+				clear: both;
+				border-bottom: 1px solid #ddd;
+
+				&::after {
+					content: "";
+					display: block;
+					clear: both;
+				}
+
+			}
+		}
+
+		&-item {
+			display: block;
+
+
+		}
+
+		&-title {
+			width: 70%;
+			float: right;
+			p {
+				font-weight: bold;
+				font-size: 138%;
+				margin: 0;
+			}
+		}
+		&-release-date {
+			font-size: small;
+			color: #999;
+		}
+		&-body {
+			width: 70%;
+			float: right;
+		}
+		&-link-to-article {
+			text-align: right;
+		}
+
+		&-thumb {
+			float: left;
+			width: 25%;
+			height: auto;
+			a {
+				display: block;
+				padding-top: 70%;
+				background-size: cover;
+				background-position: center center;
+				&:hover {
+					opacity: 0.9;
+				}
+			}
+		}
+		&-a {
+			&:before {
+				content:' ';
+				width:0;
+				height:0;
+				display: inline-block;
+				margin-right: 0.2em;
+				border-width: 0.35em 0 0.35em 0.6em;
+				border-style: solid;
+				border-color: var(--px2-main-color, #00a0e6);
+				border-top-color: transparent;
+				border-bottom-color: transparent;
+			}
+		}
+	}
+}
