@@ -5,6 +5,41 @@
             "fields": {
                 "main": [
                     {
+                        "modId": "px2style:basics/image",
+                        "fields": {
+                            "image_src": {
+                                "resKey": "df36a46335d7c9435caa5a81d4fc2831",
+                                "path": "./index_files/resources/tb2bc4045dqnf3tt-1d38d1f859bc7252f550d3c3200f04b8.jpg",
+                                "resType": "",
+                                "webUrl": ""
+                            },
+                            "alt_text": {
+                                "src": ""
+                            },
+                            "caption": {
+                                "src": "",
+                                "editor": "markdown"
+                            },
+                            "framed": {
+                                "src": ""
+                            },
+                            "width": {
+                                "src": "1of1"
+                            },
+                            "align": {
+                                "src": "center"
+                            },
+                            "imagescope": {
+                                "src": ""
+                            },
+                            "paragraph": {
+                                "src": "px2-p"
+                            }
+                        },
+                        "anchor": "",
+                        "dec": ""
+                    },
+                    {
                         "modId": "px2style:basics/text",
                         "fields": {
                             "main": {

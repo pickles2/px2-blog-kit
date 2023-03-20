@@ -283,14 +283,6 @@ class listPage {
 		$path_thumb = $this->path_default_thumb_image;
 
 		$path_content = $path;
-		$target_page_info = $this->px->site()->get_page_info( $path );
-		$path_content = null;
-		if( is_array($target_page_info) && array_key_exists('content', $target_page_info) ){
-			$path_content = $target_page_info['content'];
-		}
-		if( is_null( $path_content ) ){
-			$path_content = $path;
-		}
 
 		foreach( array_keys( get_object_vars( $this->px->conf()->funcs->processor ) ) as $tmp_ext ){
 			if( $this->px->fs()->is_file( './'.$path_content.'.'.$tmp_ext ) ){
@@ -310,7 +302,7 @@ class listPage {
 		$tmp_path_thumb = null;
 		require_once(__DIR__.'/simple_html_dom.php');
 		$html = str_get_html(
-			$src_content ,
+			$src_content,
 			true, // $lowercase
 			true, // $forceTagsClosed
 			DEFAULT_TARGET_CHARSET, // $target_charset
@@ -321,7 +313,6 @@ class listPage {
 		if( $html ){
 			$ret = $html->find('img');
 			foreach( $ret as $retRow ){
-				// var_dump($retRow->src);
 				$tmp_path_thumb = $retRow->src;
 				break;
 			}
@@ -342,6 +333,48 @@ class listPage {
 		}
 
 		return $path_thumb;
+	}
+
+	/**
+	 * ローカルリソースディレクトリのパスを得る。
+	 *
+	 * @param string $localpath_resource ローカルリソースのパス
+	 * @return string ローカルリソースの実際の絶対パス
+	 */
+	private function path_files( $path_content, $localpath_resource = null ){
+		if( is_null($path_content) ){
+			$path_content = $this->px->req()->get_request_file_path();
+		}
+
+		$rtn = '';
+		if( is_callable($this->px->conf()->path_files) ){
+			// コールバック関数が設定された場合
+			$rtn = call_user_func($this->px->conf()->path_files, $this->px->fs()->normalize_path($path_content) );
+		}elseif( is_string($this->px->conf()->path_files) && strpos(trim($this->px->conf()->path_files ?? ""), 'function') === 0 ){
+			// function で始まる文字列が設定された場合
+			$rtn = call_user_func(eval('return '.$this->px->conf()->path_files.';'), $this->px->fs()->normalize_path($path_content) );
+		}else{
+			$rtn = $this->px->conf()->path_files;
+			$data = array(
+				'dirname'=>$this->px->fs()->normalize_path(dirname($path_content)),
+				'filename'=>basename($this->px->fs()->trim_extension($path_content)),
+				'ext'=>strtolower($this->px->fs()->get_extension($path_content)),
+			);
+			$rtn = str_replace( '{$dirname}', $data['dirname'], $rtn );
+			$rtn = str_replace( '{$filename}', $data['filename'], $rtn );
+			$rtn = str_replace( '{$ext}', $data['ext'], $rtn );
+		}
+
+		$rtn = preg_replace( '/^\/*/', '/', $rtn );
+		$rtn = preg_replace( '/\/*$/', '', $rtn ).'/';
+		$rtn = $rtn.$localpath_resource;
+		if( $this->px->fs()->is_dir('./'.$rtn) ){
+			$rtn .= '/';
+		}
+		$rtn = $this->px->href( $rtn );
+		$rtn = $this->px->fs()->normalize_path($rtn);
+		$rtn = preg_replace( '/^\/+/', '/', $rtn );
+		return $rtn;
 	}
 
 	/**
