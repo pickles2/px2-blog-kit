@@ -21,13 +21,13 @@
 <div class="px2-blog-kit__list">
 	<ul>
 
-{% for i in 0..10 %}
+{% for i in 0..(dpp-1) %}
 
 		<li class="px2-blog-kit__list-item">
 			<div class="px2-blog-kit__list-title">
-				<p><a href="#">ブログ記事タイトル</a></p>
+				<p><a href="#">{% if _ENV.lang == 'ja' %}ブログ記事タイトル{% else %}Blog article title{% endif %}</a></p>
 				<div class="px2-blog-kit__list-release-date">
-					公開日: YYYY年MM月DD日
+					{% if _ENV.lang == 'ja' %}公開日: YYYY年MM月DD日{% else %}Release Date: YYYY/MM/DD{% endif %}
 				</div>
 			</div>
 			<div class="px2-blog-kit__list-thumb">
@@ -35,10 +35,14 @@
 			</div>
 			<div class="px2-blog-kit__list-body">
 				<div class="px2-blog-kit__list-summary">
+					{% if _ENV.lang == 'ja' %}
 					<p>記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー記事サマリー。</p>
+					{% else %}
+					<p>Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary Article summary.</p>
+					{% endif %}
 				</div>
 				<p class="px2-blog-kit__list-link-to-article">
-					<a href="#" class="px2-blog-kit__list-a">記事を読む</a>
+					<a href="#" class="px2-blog-kit__list-a">{% if _ENV.lang == 'ja' %}記事を読む{% else %}Read More...{% endif %}</a>
 				</p>
 			</div>
 		</li>
