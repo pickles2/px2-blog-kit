@@ -496,6 +496,11 @@ return call_user_func( function(){
 
 	);
 
+	/** 管理画面拡張 */
+	$conf->plugins->px2dt->custom_console_extensions = array(
+        'blog-kit' => 'pickles2\px2BlogKit\customConsole',
+    );
+
 	// -------- Project Custom Setting --------
 	// プロジェクトが固有に定義する設定を行います。
 	$conf->extra = new stdClass;
