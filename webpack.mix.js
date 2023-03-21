@@ -12,7 +12,32 @@ const mix = require('laravel-mix');
  */
 
 mix
-	.webpackConfig({})
+	.webpackConfig({
+		module: {
+			rules:[
+				{
+					test: /\.txt$/i,
+					use: ['raw-loader'],
+				},
+				{
+					test:/\.twig$/,
+					use:['twig-loader']
+				},
+				{
+					test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+					type: "asset/inline"
+				}
+			]
+		},
+		resolve: {
+			fallback: {
+				"fs": false,
+				"path": false,
+				"crypto": false,
+				"stream": false,
+			}
+		}
+	})
 
 
 	// --------------------------------------

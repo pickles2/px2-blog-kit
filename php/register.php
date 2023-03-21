@@ -3,7 +3,7 @@ namespace pickles2\px2BlogKit;
 class register {
 
 	/**
-	 * ブログを定義する
+	 * ブログ管理を登録する
 	 * @param object $px Picklesオブジェクト
 	 * @param object $options プラグイン設定
 	 */
@@ -23,4 +23,11 @@ class register {
         return;
 	}
 
+    /**
+     * 管理画面拡張を登録する
+	 * @param object $options プラグイン設定
+     */
+    static public function consoleExtension( $options = null ){
+        return 'pickles2\px2BlogKit\consoleExtension('.( json_encode($options) ).')';
+    }
 }

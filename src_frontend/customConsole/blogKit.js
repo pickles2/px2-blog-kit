@@ -1,18 +1,35 @@
 window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
-    let $elm = cceAgent.elm();
+	const it79 = require('iterate79');
+	const $ = require('jquery');
+	let initialState = {
+		"page": null,
+		"blogId": null,
+		"blogList": [],
+		"articleList": {},
+	};
 
-    $elm.innerHTML = `
-        <p>管理画面拡張を読み込みました。</p>
-        <p>GPIを呼び出すテスト</p>
-        <p><button type="button" class="px2-btn">呼び出します。</button></p>
-    `;
+	const state = new (require('./_modules/State.js'))({
+		onSetState: function(){
+			view.refresh();
+		},
+		initialState: initialState,
+	});
+	const view = new (require('./_modules/View.js'))(state, cceAgent);
 
-    $elm.querySelector('button').addEventListener('click', function(){
-        cceAgent.gpi({
-            'command': 'test-gpi-call'
-        }, function(res){
-            console.log('---- res:', res);
-            alert(res);
-        });
-    });
+	it79.fnc({}, [
+		function(it){
+			cceAgent.gpi({
+				'command': 'getBlogList'
+			}, function(res){
+				initialState.blogList = res.blog_list;
+				it.next();
+			});
+		},
+		function(it){
+			it.next();
+		},
+		function(){
+			state.setState(initialState);
+		},
+	]);
 }

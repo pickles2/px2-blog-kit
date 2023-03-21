@@ -6,7 +6,7 @@
 /appveyor.yml           export-ignore
 /tests                  export-ignore
 /phpunit.xml            export-ignore
-/src_gulp               export-ignore
+/src_frontend           export-ignore
 /gulpfile.js            export-ignore
 /package.json           export-ignore
 

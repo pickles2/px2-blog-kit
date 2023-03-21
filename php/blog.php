@@ -177,6 +177,37 @@ class blog {
 	}
 
 	/**
+	 * ブログの一覧を取得する
+	 */
+	public function get_blog_list(){
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
+		$blog_list = array();
+
+		foreach($csv_file_list as $csv_filename){
+			if( !preg_match('/\.csv$/i', $csv_filename) ){
+				continue;
+			}
+			$blog_id = preg_replace('/\.csv$/i', '', $csv_filename);
+			$blog_info = array(
+				"blog_id" => $blog_id,
+				"blog_name" => $blog_id,
+			);
+			array_push($blog_list, $blog_info);
+		}
+		return $blog_list;
+	}
+
+
+	/**
+	 * 記事の一覧を取得する
+	 */
+	public function get_article_list($blog_id){
+		return $this->article_list[$blog_id];
+	}
+
+	/**
 	 * ブログ記事の一覧を生成する
 	 */
 	public function mk_list_page( $params ){

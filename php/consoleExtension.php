@@ -1,6 +1,6 @@
 <?php
 namespace pickles2\px2BlogKit;
-class customConsole {
+class consoleExtension {
 
 
     /** $px */
@@ -12,12 +12,8 @@ class customConsole {
     /** $cceAgent */
     private $cceAgent;
 
-    /**
-     * 登録処理
-     */
-    static public function register( $options = null ){
-        return __CLASS__.'('.( json_encode($options) ).')';
-    }
+    /** Blogオブジェクト */
+    private $blog;
 
     /**
      * コンストラクタ
@@ -29,6 +25,8 @@ class customConsole {
         $this->px = $px;
         $this->options = $options;
         $this->cceAgent = $cceAgent;
+
+        $this->blog = new blog($px, $options);
     }
 
     /**
@@ -72,8 +70,20 @@ class customConsole {
      */
     public function gpi($request){
         switch($request->command){
-            case 'test-gpi-call':
-                return 'Test GPI Call Successful.';
+            case 'getBlogList':
+                $blog_list = $this->blog->get_blog_list();
+                return array(
+                    "result" => true,
+                    "blog_list" => $blog_list,
+                );
+            case 'getArticleList':
+                $blog_id = $request->blog_id;
+                $article_list = $this->blog->get_article_list($blog_id);
+                return array(
+                    "result" => true,
+                    "blog_id" => $blog_id,
+                    "article_list" => $article_list,
+                );
         }
         return false;
     }
