@@ -31,14 +31,18 @@ module.exports = function(state, cceAgent){
 		articleList[blogId].forEach(function(row){
 			html += '<tr>';
 			html += '<td>'+row.title+'</td>';
-			html += '<td><button type="button" class="px2-btn" data-btn-edit-article>編集</button></td>';
-			html += '<td><button type="button" class="px2-btn" data-btn-edit-content>記事編集</button></td>';
+			html += '<td><button type="button" class="px2-btn" data-btn-edit-article="'+row.path+'">編集</button></td>';
+			html += '<td><button type="button" class="px2-btn" data-btn-edit-content="'+row.path+'">記事編集</button></td>';
 			html += '</tr>';
 		});
 		html += '</table>';
 		html += '<p><button type="button" data-back class="px2-btn">戻る</button></p>';
 		$elm.html(html);
 
+		$elm.find('[data-btn-edit-content]').on('click', function(){
+			const path = $(this).attr('data-btn-edit-content');
+			cceAgent.editContent(path);
+		});
 		$elm.find('[data-back]').on('click', function(){
 			const blog_id = $(this).attr('data-blog-id');
 			state.setState({
