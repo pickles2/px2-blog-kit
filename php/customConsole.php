@@ -6,18 +6,28 @@ class customConsole {
     /** $px */
     private $px;
 
-    /** $json */
-    private $json;
+    /** $options */
+    private $options;
 
     /** $cceAgent */
     private $cceAgent;
 
     /**
-     * コンストラクタ
+     * 登録処理
      */
-    public function __construct($px, $json, $cceAgent){
+    static public function register( $options = null ){
+        return __CLASS__.'('.( json_encode($options) ).')';
+    }
+
+    /**
+     * コンストラクタ
+     * @param object $px Pickles 2 オブジェクト
+     * @param object $options 設定オプション
+     * @param object $cceAgent 管理画面拡張エージェントオブジェクト
+     */
+    public function __construct($px, $options, $cceAgent){
         $this->px = $px;
-        $this->json = $json;
+        $this->options = $options;
         $this->cceAgent = $cceAgent;
     }
 
@@ -25,7 +35,10 @@ class customConsole {
      * 管理機能名を取得する
      */
     public function get_label(){
-        return 'サンプル機能拡張';
+        if( $this->px->lang() == 'ja' ){
+            return 'ブログ管理';
+        }
+        return 'Blog';
     }
 
     /**
@@ -60,18 +73,6 @@ class customConsole {
     public function gpi($request){
         switch($request->command){
             case 'test-gpi-call':
-                $this->cceAgent->async(array(
-                    'type'=>'gpi',
-                    'request' => array(
-                        'command' => 'test-async',
-                    ),
-                ));
-                return 'Test GPI Call Successful.';
-
-            case 'test-async':
-                $this->cceAgent->broadcast(array(
-                    'message'=>'Hello Broadcast Message !',
-                ));
                 return 'Test GPI Call Successful.';
         }
         return false;

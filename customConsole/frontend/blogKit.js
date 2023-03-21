@@ -1,12 +1,6 @@
 window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
     let $elm = cceAgent.elm();
 
-    cceAgent.onBroadcast(function(message){
-        console.info('Broadcast recieved:', message);
-        alert(message.message);
-    });
-
-
     $elm.innerHTML = `
         <p>管理画面拡張を読み込みました。</p>
         <p>GPIを呼び出すテスト</p>
