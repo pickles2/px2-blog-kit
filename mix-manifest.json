@@ -1,4 +1,6 @@
 {
+    "/customConsole/frontend/blogKit.js": "/customConsole/frontend/blogKit.js",
+    "/customConsole/frontend/blogKit.css": "/customConsole/frontend/blogKit.css",
     "/resources/styles/pagelist.css": "/resources/styles/pagelist.css",
-    "/broccoli_modules/list-page/article-list/module.css.scss": "/broccoli_modules/list-page/article-list/module.css.scss"
+    "/broccoli_modules/blog-kit/list-page/article-list/module.css.scss": "/broccoli_modules/blog-kit/list-page/article-list/module.css.scss"
 }

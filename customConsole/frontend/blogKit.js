@@ -1,18 +1,1 @@
-window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
-    let $elm = cceAgent.elm();
-
-    $elm.innerHTML = `
-        <p>管理画面拡張を読み込みました。</p>
-        <p>GPIを呼び出すテスト</p>
-        <p><button type="button" class="px2-btn">呼び出します。</button></p>
-    `;
-
-    $elm.querySelector('button').addEventListener('click', function(){
-        cceAgent.gpi({
-            'command': 'test-gpi-call'
-        }, function(res){
-            console.log('---- res:', res);
-            alert(res);
-        });
-    });
-}
+(()=>{var n,e={127:()=>{window.pickles2BlogKitCustomConsoleExtension=function(n){var e=n.elm();e.innerHTML='\n        <p>管理画面拡張を読み込みました。</p>\n        <p>GPIを呼び出すテスト</p>\n        <p><button type="button" class="px2-btn">呼び出します。</button></p>\n    ',e.querySelector("button").addEventListener("click",(function(){n.gpi({command:"test-gpi-call"},(function(n){console.log("---- res:",n),alert(n)}))}))}},872:()=>{},131:()=>{}},o={};function r(n){var t=o[n];if(void 0!==t)return t.exports;var i=o[n]={exports:{}};return e[n](i,i.exports,r),i.exports}r.m=e,n=[],r.O=(e,o,t,i)=>{if(!o){var l=1/0;for(c=0;c<n.length;c++){for(var[o,t,i]=n[c],p=!0,a=0;a<o.length;a++)(!1&i||l>=i)&&Object.keys(r.O).every((n=>r.O[n](o[a])))?o.splice(a--,1):(p=!1,i<l&&(l=i));if(p){n.splice(c--,1);var s=t();void 0!==s&&(e=s)}}return e}i=i||0;for(var c=n.length;c>0&&n[c-1][2]>i;c--)n[c]=n[c-1];n[c]=[o,t,i]},r.o=(n,e)=>Object.prototype.hasOwnProperty.call(n,e),(()=>{var n={136:0,264:0,95:0};r.O.j=e=>0===n[e];var e=(e,o)=>{var t,i,[l,p,a]=o,s=0;if(l.some((e=>0!==n[e]))){for(t in p)r.o(p,t)&&(r.m[t]=p[t]);if(a)var c=a(r)}for(e&&e(o);s<l.length;s++)i=l[s],r.o(n,i)&&n[i]&&n[i][0](),n[i]=0;return r.O(c)},o=self.webpackChunk=self.webpackChunk||[];o.forEach(e.bind(null,0)),o.push=e.bind(null,o.push.bind(o))})(),r.O(void 0,[264,95],(()=>r(127))),r.O(void 0,[264,95],(()=>r(872)));var t=r.O(void 0,[264,95],(()=>r(131)));t=r.O(t)})();

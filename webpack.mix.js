@@ -17,6 +17,11 @@ mix
 
 	// --------------------------------------
 	// CSS
-	.sass('src_gulp/styles/pagelist.css.scss', 'resources/styles/pagelist.css')
-	.copy('src_gulp/styles/pagelist.css.scss', 'broccoli_modules/list-page/article-list/module.css.scss')
+	.sass('src_frontend/styles/pagelist.css.scss', 'resources/styles/pagelist.css')
+	.copy('src_frontend/styles/pagelist.css.scss', 'broccoli_modules/blog-kit/list-page/article-list/module.css.scss')
+
+	// --------------------------------------
+	// Custom Console Extension: blog-kit
+	.js('src_frontend/customConsole/blogKit.js', 'customConsole/frontend/blogKit.js')
+	.sass('src_frontend/customConsole/blogKit.scss', 'customConsole/frontend/blogKit.css')
 ;
