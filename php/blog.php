@@ -213,16 +213,19 @@ class blog {
 		$rtn = (object) array(
 			"result" => true,
 			"message" => null,
+			"errors" => (object) array(),
 		);
 
 		if( !strlen( $blog_id ?? '' ) ){
 			$rtn->result = false;
-			$rtn->message = 'ブログIDを指定してください。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDを指定してください。';
 			return $rtn;
 		}
 		if( !preg_match('/^[a-zA-Z0-9\_\-]+$/', $blog_id) ){
 			$rtn->result = false;
-			$rtn->message = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
 			return $rtn;
 		}
 
@@ -232,7 +235,8 @@ class blog {
 
 		if( $this->px->fs()->is_file( $realpath_blog_csv ) ){
 			$rtn->result = false;
-			$rtn->message = 'すでに存在します。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'すでに存在します。';
 			return $rtn;
 		}
 
@@ -259,16 +263,19 @@ class blog {
 		$rtn = (object) array(
 			"result" => true,
 			"message" => null,
+			"errors" => (object) array(),
 		);
 
 		if( !strlen( $blog_id ?? '' ) ){
 			$rtn->result = false;
-			$rtn->message = 'ブログIDを指定してください。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDを指定してください。';
 			return $rtn;
 		}
 		if( !preg_match('/^[a-zA-Z0-9\_\-]+$/', $blog_id) ){
 			$rtn->result = false;
-			$rtn->message = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
 			return $rtn;
 		}
 
@@ -278,7 +285,8 @@ class blog {
 
 		if( !$this->px->fs()->is_file( $realpath_blog_csv ) ){
 			$rtn->result = false;
-			$rtn->message = '存在しません。';
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = '存在しません。';
 			return $rtn;
 		}
 

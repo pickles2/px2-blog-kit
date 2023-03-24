@@ -77,8 +77,8 @@ module.exports = function(state, cceAgent, options){
 								blog_id: blog_id,
 							},
 							function(result){
-								if( !result ){
-									alert('エラー');
+								if( !result.result ){
+									alert('ERROR: '+result.message);
 									return;
 								}
 								px2style.closeModal();

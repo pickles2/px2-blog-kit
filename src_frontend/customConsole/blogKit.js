@@ -24,9 +24,8 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 					'command': 'createNewBlog',
 					'params': params,
 				}, function(res){
-					console.info('result:', res);
 					if( !res.result ){
-						callback(res.result);
+						callback(res);
 						return;
 					}
 
@@ -36,7 +35,7 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 						newState.blogList = res.blog_list;
 						state.setState(newState);
 
-						callback(res.result);
+						callback(res);
 					});
 				});
 			},
@@ -48,7 +47,7 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 				}, function(res){
 					console.info('result:', res);
 					if( !res.result ){
-						callback(res.result);
+						callback(res);
 						return;
 					}
 
@@ -59,7 +58,7 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 						newState.blogList = res.blog_list;
 						state.setState(newState);
 
-						callback(res.result);
+						callback(res);
 					});
 				});
 			},

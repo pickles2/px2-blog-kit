@@ -89,16 +89,18 @@ class consoleExtension {
 				$result = $this->blog->create_new_blog($params->blog_id);
 				return array(
 					"result" => $result->result,
+					"message" => $result->message,
+					"errors" => $result->errors,
 					"params" => $params,
-					"errors" => null,
 				);
 			case 'deleteBlog':
 				$params = $request->params;
 				$result = $this->blog->delete_blog($params->blog_id);
 				return array(
 					"result" => $result->result,
+					"message" => $result->message,
+					"errors" => $result->errors,
 					"params" => $params,
-					"errors" => null,
 				);
 		}
 		return false;
