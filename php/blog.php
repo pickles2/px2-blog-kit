@@ -199,12 +199,57 @@ class blog {
 		return $blog_list;
 	}
 
-
 	/**
 	 * 記事の一覧を取得する
 	 */
 	public function get_article_list($blog_id){
 		return $this->article_list[$blog_id];
+	}
+
+	/**
+	 * 新しいブログを作成する
+	 */
+	public function create_new_blog( $blog_id ){
+		$rtn = (object) array(
+			"result" => true,
+			"message" => null,
+		);
+
+		if( !strlen( $blog_id ?? '' ) ){
+			$rtn->result = false;
+			$rtn->message = 'ブログIDを指定してください。';
+			return $rtn;
+		}
+		if( !preg_match('/^[a-zA-Z0-9\_\-]+$/', $blog_id) ){
+			$rtn->result = false;
+			$rtn->message = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
+			return $rtn;
+		}
+
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+
+		if( $this->px->fs()->is_file( $realpath_blog_csv ) ){
+			$rtn->result = false;
+			$rtn->message = 'すでに存在します。';
+			return $rtn;
+		}
+
+		$csv = array(
+			array(
+				'* title',
+				'* path',
+				'* release_date',
+				'* update_date',
+				'* article_summary',
+				'* article_keywords',
+			),
+		);
+
+		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+
+		return $rtn;
 	}
 
 	/**

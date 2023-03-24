@@ -1,7 +1,7 @@
 /**
  * ArticleList.js
  */
-module.exports = function(state, cceAgent){
+module.exports = function(state, cceAgent, options){
 	const $ = require('jquery');
 	const it79 = require('iterate79');
 	const $elm = $(cceAgent.elm());
@@ -9,7 +9,6 @@ module.exports = function(state, cceAgent){
 	this.draw = function(){
 		const blogId = state.getState('blogId');
 		const articleList = state.getState('articleList');
-		const articleInfo = state.getState('articleInfo');
 
 		if( !articleList || !articleList[blogId] ){
 			cceAgent.gpi({
@@ -26,37 +25,42 @@ module.exports = function(state, cceAgent){
 			return;
 		}
 
-		if( !articleInfo ){
-			alert('Error');
-			state.setState({
-				"page": 'articleList',
-				"articlePath": null,
-			});
-			return;
-		}
-
 		let html = '';
-		html += '<p>記事詳細: '+blogId+' '+articleInfo.path+'</p>';
-		html += '<p><button type="button" class="px2-btn" data-btn-edit-content="'+articleInfo.path+'">記事編集</button></p>';
+		html += '<p>記事一覧: '+blogId+'</p>';
 		html += '<table class="px2-table">';
-		Object.keys(articleInfo).forEach(function(key){
+		articleList[blogId].forEach(function(row){
 			html += '<tr>';
-			html += '<th>'+key+'</th>';
-			html += '<td>'+articleInfo[key]+'</td>';
+			html += '<td>'+row.title+'</td>';
+			html += '<td><button type="button" class="px2-btn" data-btn-article="'+row.path+'">詳細</button></td>';
+			html += '<td><button type="button" class="px2-btn" data-btn-edit-content="'+row.path+'">記事編集</button></td>';
 			html += '</tr>';
 		});
 		html += '</table>';
 		html += '<p><button type="button" data-back class="px2-btn">戻る</button></p>';
 		$elm.html(html);
 
+		$elm.find('[data-btn-article]').on('click', function(){
+			const path = $(this).attr('data-btn-article');
+			let newState = {
+				"page": "Article",
+			};
+			articleList[blogId].forEach(function(row){
+				if( row.path == path ){
+					newState.articleInfo = row;
+					return;
+				}
+			});
+			state.setState(newState);
+		});
 		$elm.find('[data-btn-edit-content]').on('click', function(){
 			const path = $(this).attr('data-btn-edit-content');
 			cceAgent.editContent(path);
 		});
 		$elm.find('[data-back]').on('click', function(){
+			const blog_id = $(this).attr('data-blog-id');
 			state.setState({
-				"page": 'ArticleList',
-				"articlePath": null,
+				"page": null,
+				"blogId": null,
 			});
 		});
 	}

@@ -1,10 +1,10 @@
 /**
  * View.js
  */
-module.exports = function(state, cceAgent){
-	const blogList = new (require('../_pages/BlogList.js'))(state, cceAgent);
-	const articleList = new (require('../_pages/ArticleList.js'))(state, cceAgent);
-	const article = new (require('../_pages/Article.js'))(state, cceAgent);
+module.exports = function(state, cceAgent, options){
+	const blogList = new (require('../_pages/BlogList/BlogList.js'))(state, cceAgent, options);
+	const articleList = new (require('../_pages/ArticleList/ArticleList.js'))(state, cceAgent, options);
+	const article = new (require('../_pages/Article/Article.js'))(state, cceAgent, options);
 
     this.refresh = function(){
         const page = state.getState('page');

@@ -14,7 +14,34 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 		},
 		initialState: initialState,
 	});
-	const view = new (require('./_modules/View.js'))(state, cceAgent);
+	const view = new (require('./_modules/View.js'))(
+		state,
+		cceAgent,
+		{
+			"onCreateNewBlog": function( params, callback ){
+				let newState = {};
+				cceAgent.gpi({
+					'command': 'createNewBlog',
+					'params': params,
+				}, function(res){
+					console.info('result:', res);
+					if( !res.result ){
+						callback(res.result);
+						return;
+					}
+
+					cceAgent.gpi({
+						'command': 'getBlogList'
+					}, function(res){
+						newState.blogList = res.blog_list;
+						state.setState(newState);
+
+						callback(res.result);
+					});
+				});
+			}
+		}
+	);
 
 	it79.fnc({}, [
 		function(it){

@@ -84,6 +84,14 @@ class consoleExtension {
                     "blog_id" => $blog_id,
                     "article_list" => $article_list,
                 );
+            case 'createNewBlog':
+                $params = $request->params;
+                $result = $this->blog->create_new_blog($params->blog_id);
+                return array(
+                    "result" => $result->result,
+                    "params" => $params,
+                    "errors" => null,
+                );
         }
         return false;
     }
