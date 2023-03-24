@@ -253,6 +253,41 @@ class blog {
 	}
 
 	/**
+	 * ブログを削除する
+	 */
+	public function delete_blog( $blog_id ){
+		$rtn = (object) array(
+			"result" => true,
+			"message" => null,
+		);
+
+		if( !strlen( $blog_id ?? '' ) ){
+			$rtn->result = false;
+			$rtn->message = 'ブログIDを指定してください。';
+			return $rtn;
+		}
+		if( !preg_match('/^[a-zA-Z0-9\_\-]+$/', $blog_id) ){
+			$rtn->result = false;
+			$rtn->message = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
+			return $rtn;
+		}
+
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+
+		if( !$this->px->fs()->is_file( $realpath_blog_csv ) ){
+			$rtn->result = false;
+			$rtn->message = '存在しません。';
+			return $rtn;
+		}
+
+		$this->px->fs()->rm( $realpath_blog_csv );
+
+		return $rtn;
+	}
+
+	/**
 	 * ブログ記事の一覧を生成する
 	 */
 	public function mk_list_page( $params ){

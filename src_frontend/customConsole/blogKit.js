@@ -39,7 +39,30 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 						callback(res.result);
 					});
 				});
-			}
+			},
+			"onDeleteBlog": function( params, callback ){
+				let newState = {};
+				cceAgent.gpi({
+					'command': 'deleteBlog',
+					'params': params,
+				}, function(res){
+					console.info('result:', res);
+					if( !res.result ){
+						callback(res.result);
+						return;
+					}
+
+					cceAgent.gpi({
+						'command': 'getBlogList'
+					}, function(res){
+						newState.page = '';
+						newState.blogList = res.blog_list;
+						state.setState(newState);
+
+						callback(res.result);
+					});
+				});
+			},
 		}
 	);
 
