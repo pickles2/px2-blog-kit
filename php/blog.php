@@ -308,6 +308,18 @@ class blog {
 	}
 
 	/**
+	 * RSSフィードを生成する
+	 */
+	public function generate_feeds( $params ){
+		$params = (object) $params;
+		if( !strlen($params->blog_id??'') ){
+			return false;
+		}
+		$obj_rss = new rss($this->px, $params, $this->article_list[$params->blog_id]);
+		return $obj_rss->update_rss_file();
+	}
+
+	/**
 	 * 変数をPHPのソースコードに変換する。
 	 *
 	 * `include()` に対してそのままの値を返す形になるよう変換する。
