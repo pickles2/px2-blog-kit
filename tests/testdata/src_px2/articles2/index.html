@@ -6,17 +6,11 @@
 <?= $px->blog->mk_list_page(
 	array(
 		"blog_id"=> 'articles',
-		"scheme"=>($px->conf()->scheme ?? 'https'),
-		"domain"=>($px->conf()->domain ?? ''),
-		"title"=>($px->conf()->name ?? ''),
-		"description"=>'ブログの説明テキスト',
 		"orderby" => 'update_date',
 		"scending" => 'desc',
 		"dpp" => 5,
-		"lang"=> $px->lang(),
-		"url_home"=>($px->canonical('/') ?? ''),
-		"url_index"=>($px->canonical() ?? ''),
-		"author"=>($px->conf()->copyright ?? ''),
+		"index_size" => 5,
+		"list_page_id" => null,
 	)
 ); ?>
 <!-- / px2-blog-kit -->

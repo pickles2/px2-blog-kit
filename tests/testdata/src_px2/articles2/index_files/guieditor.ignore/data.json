@@ -44,6 +44,12 @@
                             },
                             "dpp": {
                                 "src": "5"
+                            },
+                            "index_size": {
+                                "src": "5"
+                            },
+                            "list_page_id": {
+                                "src": ""
                             }
                         },
                         "anchor": "",

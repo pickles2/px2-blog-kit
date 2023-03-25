@@ -8,12 +8,6 @@
                 "label": "ブログID",
                 "rows": 1
             },
-            "description": {
-                "fieldType": "input",
-                "type": "text",
-                "label": "ブログの説明",
-                "rows": 1
-            },
             "dpp": {
                 "fieldType": "input",
                 "type": "select",
@@ -54,6 +48,54 @@
                 ],
                 "default": "10"
             },
+            "index_size": {
+                "fieldType": "input",
+                "type": "select",
+                "label": "ページネーションのサイズ",
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "0"
+                    },
+                    {
+                        "value": "3",
+                        "label": "3"
+                    },
+                    {
+                        "value": "5",
+                        "label": "5"
+                    },
+                    {
+                        "value": "10",
+                        "label": "10"
+                    },
+                    {
+                        "value": "15",
+                        "label": "15"
+                    },
+                    {
+                        "value": "20",
+                        "label": "20"
+                    },
+                    {
+                        "value": "30",
+                        "label": "30"
+                    },
+                    {
+                        "value": "40",
+                        "label": "40"
+                    },
+                    {
+                        "value": "50",
+                        "label": "50"
+                    },
+                    {
+                        "value": "100",
+                        "label": "100"
+                    }
+                ],
+                "default": "5"
+            },
             "orderby": {
                 "fieldType": "input",
                 "type": "text",
@@ -77,12 +119,12 @@
                 ],
                 "default": "desc"
             },
-            "path_feeds": {
+             "list_page_id": {
                 "fieldType": "input",
                 "type": "text",
-                "label": "RSSフィードの出力先パス",
+                "label": "リストページID",
                 "rows": 1
             }
-        }
+       }
     }
 }
