@@ -4,7 +4,7 @@ namespace pickles2\px2BlogKit;
 /**
  * RSS Manager
  */
-class rss{
+class feeds{
 	private $px;
 	private $params;
 	private $current_blog_article_list;

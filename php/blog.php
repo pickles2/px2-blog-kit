@@ -315,7 +315,7 @@ class blog {
 		if( !strlen($params->blog_id??'') ){
 			return false;
 		}
-		$obj_rss = new rss($this->px, $params, $this->article_list[$params->blog_id]);
+		$obj_rss = new feeds($this->px, $params, $this->article_list[$params->blog_id]);
 		return $obj_rss->update_rss_file();
 	}
 
