@@ -6,8 +6,8 @@
 		'list_page_id'=>null,
 		'dpp'=>10,
 		'index_size'=>5,
-		"orderby" => "update_date", // 並び替えに用いるサイトマップ項目のキー (v2.2.0 で追加)
-		"scending" => "desc", // 昇順(asc)、または降順(desc)。デフォルトは `desc` です。 orderby と併せて指定します。 (v2.2.0 で追加)
+		"orderby" => "update_date",
+		"scending" => "desc",
 		'template' => null,
 	)
 ); ?>
@@ -15,8 +15,8 @@
 $px->blog->generate_feeds(
 	array(
 		'blog_id'=> 'articles',
-		"orderby" => "update_date", // 並び替えに用いるサイトマップ項目のキー (v2.2.0 で追加)
-		"scending" => "desc", // 昇順(asc)、または降順(desc)。デフォルトは `desc` です。 orderby と併せて指定します。 (v2.2.0 で追加)
+		"orderby" => "update_date",
+		"scending" => "desc",
 		'dpp'=>10,
 		'lang'=>'ja',
 		'scheme'=>'https',
