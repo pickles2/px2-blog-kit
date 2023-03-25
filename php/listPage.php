@@ -294,7 +294,7 @@ class listPage {
 
 		// HTML属性を削除
 		$tmp_path_thumb = null;
-		require_once(__DIR__.'/simple_html_dom.php');
+		require_once(__DIR__.'/simple_html_dom.php'); // TODO: https://packagist.org/packages/simplehtmldom/simplehtmldom に置き換える
 		$html = str_get_html(
 			$src_content,
 			true, // $lowercase

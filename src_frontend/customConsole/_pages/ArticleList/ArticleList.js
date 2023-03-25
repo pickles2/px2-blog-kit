@@ -27,19 +27,33 @@ module.exports = function(state, cceAgent, options){
 
 		let html = '';
 		html += `<p>記事一覧: ${blogId}</p>`;
-		html += `<table class="px2-table">`;
+		html += `<div>`;
+		html += `	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-article="${blogId}">新規記事を追加</button></p>`;
+		html += `</div>`;
+		html += `<div class="px2-p">`;
+		html += `<table class="px2-table" style="width: 100%;">`;
 		articleList[blogId].forEach(function(row){
 			html += `<tr>`;
 			html += `<td>${row.title}</td>`;
-			html += `<td><button type="button" class="px2-btn" data-btn-article="${row.path}">詳細</button></td>`;
-			html += `<td><button type="button" class="px2-btn" data-btn-edit-content="${row.path}">記事編集</button></td>`;
+			html += `<td>${row.update_date}</td>`;
+			html += `<td style="text-align: center;">`;
+			html += `<button type="button" class="px2-btn" data-btn-edit-content="${row.path}">記事編集</button>`;
+			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article="${row.path}">詳細</button>`;
+			html += `</td>`;
 			html += `</tr>`;
 		});
 		html += `</table>`;
+		html += `</div>`;
 		html += `<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-blog="${blogId}">ブログ ${blogId} を削除する</button></p>`;
 		html += `<p><button type="button" class="px2-btn" data-back>戻る</button></p>`;
 		$elm.html(html);
 
+
+
+		// --------------------------------------
+		// Events
+
+		// 記事詳細へ
 		$elm.find('[data-btn-article]').on('click', function(){
 			const path = $(this).attr('data-btn-article');
 			let newState = {
@@ -53,10 +67,48 @@ module.exports = function(state, cceAgent, options){
 			});
 			state.setState(newState);
 		});
+
+		// 記事編集へ
 		$elm.find('[data-btn-edit-content]').on('click', function(){
 			const path = $(this).attr('data-btn-edit-content');
 			cceAgent.editContent(path);
 		});
+
+		// 新規記事作成
+		$elm.find('[data-btn-create-new-article]').on('click', function(){
+			const blog_id = $(this).attr('data-btn-create-new-article');
+			const template = require('./templates/createNewArticle.twig');
+			const $body = $(template({
+				blog_id: blog_id,
+			}));
+			px2style.modal({
+				"title": "ブログを作成する",
+				"body": $body,
+				"buttons": [
+					$('<button type="submit" class="px2-btn px2-btn--primary">').text('作成する'),
+				],
+				"form": {
+					"submit": function(e){
+						const $form = $(this);
+						options.onCreateNewArticle(
+							{
+								blog_id: blog_id,
+								fields: {},
+							},
+							function(result){
+								if( !result.result ){
+									alert('ERROR: '+result.message);
+									return;
+								}
+								px2style.closeModal();
+							}
+						);
+					},
+				},
+			});
+		});
+
+		// ブログ削除
 		$elm.find('[data-delete-blog]').on('click', function(){
 			const blog_id = $(this).attr('data-delete-blog');
 			const template = require('./templates/deleteBlog.twig');
@@ -88,6 +140,8 @@ module.exports = function(state, cceAgent, options){
 				},
 			});
 		});
+
+		// 戻る
 		$elm.find('[data-back]').on('click', function(){
 			const blog_id = $(this).attr('data-blog-id');
 			state.setState({

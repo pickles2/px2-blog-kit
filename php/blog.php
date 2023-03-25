@@ -53,8 +53,7 @@ class blog {
 			}
 
 			$blog_page_list_csv = $this->px->fs()->read_csv($realpath_blog_csv);
-			$tmp_sitemap_definition = array();
-			$sitemap_definition_keys = array();
+			$tmp_blogmap_definition = array();
 			foreach ($blog_page_list_csv as $row_number=>$row) {
 				set_time_limit(30); // タイマー延命
 
@@ -77,7 +76,7 @@ class blog {
 					if( !$is_definition_row ){
 						continue;
 					}
-					$tmp_sitemap_definition = array();
+					$tmp_blogmap_definition = array();
 					$tmp_col_id = 'A';
 					foreach($row as $tmp_col_number=>$cell_value){
 						$col_name = trim( preg_replace('/^\*/si', '', $cell_value) );
@@ -86,7 +85,7 @@ class blog {
 							$tmp_col_id++;
 							continue;
 						}
-						$tmp_sitemap_definition[$col_name] = array(
+						$tmp_blogmap_definition[$col_name] = array(
 							'num'=>$tmp_col_number,
 							'col'=>$tmp_col_id++,
 							'key'=>$col_name,
@@ -99,15 +98,8 @@ class blog {
 					continue;
 				}
 
-				foreach ($tmp_sitemap_definition as $defrow) {
+				foreach ($tmp_blogmap_definition as $defrow) {
 					$tmp_array[$defrow['key']] = $row[$defrow['num']] ?? null;
-					if( array_search( $defrow['key'], $sitemap_definition_keys ) === false && preg_match('/^[a-zA-Z0-9\_]+$/si', $defrow['key']) && !preg_match('/^\_\_\_\_/si', $defrow['key']) ){
-						array_push($sitemap_definition_keys, $defrow['key']);
-						$sitemap_definition[$defrow['key']] = array(
-							'label' => null,
-							'type' => null,
-						);
-					}
 				}
 
 				// 前後の空白文字を削除する
@@ -118,7 +110,7 @@ class blog {
 				}
 
 				// --------------------------------------
-				// サイトマップ項目を補完する
+				// ブログマップ項目を補完する
 				$tmp_array['path'] = $tmp_array['path'] ?? '';
 				if( preg_match('/\/$/', $tmp_array['path']) ){
 					$tmp_array['path'] .= $this->px->conf()->directory_index[0] ?? 'index.html';

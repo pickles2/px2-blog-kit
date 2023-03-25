@@ -19,6 +19,8 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 		cceAgent,
 		{
 			"onCreateNewBlog": function( params, callback ){
+				// --------------------------------------
+				// 新規ブログを作成する
 				let newState = {};
 				cceAgent.gpi({
 					'command': 'createNewBlog',
@@ -39,7 +41,36 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 					});
 				});
 			},
+			"onCreateNewArticle": function(params, callback){
+				// --------------------------------------
+				// 新規記事を作成する
+				// TODO: 開発する
+				let newState = {};
+				cceAgent.gpi({
+					'command': 'createNewArticle',
+					'params': params,
+				}, function(res){
+					if( !res.result ){
+						callback(res);
+						return;
+					}
+
+					cceAgent.gpi({
+						'command': 'getArticleList',
+						'blog_id': blogId,
+					}, function(res){
+						let newState = {
+							"articleList": {},
+						};
+						newState.articleList[blogId] = res.article_list;
+						state.setState(newState);
+						callback(res);
+					});
+				});
+			},
 			"onDeleteBlog": function( params, callback ){
+				// --------------------------------------
+				// ブログを削除する
 				let newState = {};
 				cceAgent.gpi({
 					'command': 'deleteBlog',

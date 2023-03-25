@@ -94,6 +94,16 @@ class consoleExtension {
 					"errors" => $result->errors,
 					"params" => $params,
 				);
+			case 'createNewArticle':
+				$writer = new writer($this->px, $this->blog, $this->options);
+				$params = $request->params;
+				$result = $writer->create_new_article($params->blog_id, $params->article_info??null);
+				return array(
+					"result" => $result->result,
+					"message" => $result->message,
+					"errors" => $result->errors,
+					"params" => $params,
+				);
 			case 'deleteBlog':
 				$writer = new writer($this->px, $this->blog, $this->options);
 				$params = $request->params;

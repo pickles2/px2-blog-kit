@@ -9,22 +9,31 @@ module.exports = function(state, cceAgent, options){
 		const blogList = state.getState('blogList');
 
 		let html = '';
-		html += '<table class="px2-table">';
+		html += `<div>`;
+		html += `	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-blog>新規ブログを追加</button></p>`;
+		html += `</div>`;
+		html += `<div class="px2-p">`;
+		html += `<table class="px2-table" style="width: 100%;">`;
 		blogList.forEach(function(row){
-			html += '<tr>';
-			html += '<td>'+row.blog_id+'</td>';
-			html += '<td><button type="button" class="px2-btn" data-blog-id="'+row.blog_id+'">詳細</button></td>';
-			html += '</tr>';
+			html += `<tr>`;
+			html += `<td>${row.blog_id}</td>`;
+			html += `<td style="text-align: center;">`;
+			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article-list="${row.blog_id}">詳細</button>`;
+			html += `</td>`;
+			html += `</tr>`;
 		});
-		html += '</table>';
-		html += '<div>';
-		html += '	<p><button type="button" class="px2-btn" data-btn-create-new-blog>新規ブログを追加</button></p>';
-		html += '</div>';
+		html += `</table>`;
+		html += `</div>`;
 		$elm.html(html);
 
-		$elm.find('[data-blog-id]')
+
+		// --------------------------------------
+		// Events
+
+		// 記事一覧へ
+		$elm.find('[data-btn-article-list]')
 			.on('click', function(){
-				const blog_id = $(this).attr('data-blog-id');
+				const blog_id = $(this).attr('data-btn-article-list');
 				state.setState({
 					"page": "ArticleList",
 					"blogId": blog_id,
@@ -32,6 +41,7 @@ module.exports = function(state, cceAgent, options){
 				});
 			});
 
+		// 新規ブログ作成
 		$elm.find('[data-btn-create-new-blog]')
 			.on('click', function(){
 				const template = require('./templates/createNewBlog.twig');

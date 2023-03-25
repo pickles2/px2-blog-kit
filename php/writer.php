@@ -70,6 +70,57 @@ class writer {
 	}
 
 	/**
+	 * 新しい記事を作成する
+	 */
+	public function create_new_article( $blog_id, $article_info ){
+		$article_info = (object) $article_info;
+		$rtn = (object) array(
+			"result" => true,
+			"message" => null,
+			"errors" => (object) array(),
+		);
+
+		if( !strlen( $blog_id ?? '' ) ){
+			$rtn->result = false;
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDを指定してください。';
+			return $rtn;
+		}
+		if( !preg_match('/^[a-zA-Z0-9\_\-]+$/', $blog_id) ){
+			$rtn->result = false;
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = 'ブログIDは、半角英数字、アンダースコア、ハイフンを使って構成してください。';
+			return $rtn;
+		}
+
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+
+		if( !$this->px->fs()->is_file( $realpath_blog_csv ) ){
+			$rtn->result = false;
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->blog_id = '指定のブログは存在しません。';
+			return $rtn;
+		}
+
+		// $csv = array(
+		// 	array(
+		// 		'* title',
+		// 		'* path',
+		// 		'* release_date',
+		// 		'* update_date',
+		// 		'* article_summary',
+		// 		'* article_keywords',
+		// 	),
+		// );
+
+		// $this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+
+		return $rtn;
+	}
+
+	/**
 	 * ブログを削除する
 	 */
 	public function delete_blog( $blog_id ){
@@ -106,6 +157,57 @@ class writer {
 		$this->px->fs()->rm( $realpath_blog_csv );
 
 		return $rtn;
+	}
+
+	/**
+	 * ブログマップに定義行が含まれるか調べる
+	 */
+	private function has_blogmap_definition( $csv ){
+		if( !is_array($csv) || !count($csv) || !isset($csv[0]) ){
+			return false;
+		}
+
+		$row = $csv[0];
+		if( !is_array($row) || !count($row) || !isset($row[0]) ){
+			return false;
+		}
+		if( !preg_match('/^\*/', $row[0]) ){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * ブログマップ定義を取得する
+	 */
+	private function parse_blogmap_definition( $csv ){
+		if( !$this->has_blogmap_definition( $csv ) ){
+			return $this->get_default_blogmap_definition();
+		}
+
+		$row = $csv[0];
+		$rtn = array();
+		foreach($row as $col){
+			$def = preg_replace('/^\*\s*/', '', $col);
+			array_push( $rtn, $def );
+		}
+
+		return $rtn;
+	}
+
+	/**
+	 * デフォルトのブログマップ定義を取得する
+	 */
+	public function get_default_blogmap_definition(){
+		$blogmap_definition = array(
+			'title',
+			'path',
+			'release_date',
+			'update_date',
+			'article_summary',
+			'article_keywords',
+		);
+		return $blogmap_definition;
 	}
 
 }
