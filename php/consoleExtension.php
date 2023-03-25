@@ -85,8 +85,9 @@ class consoleExtension {
 					"article_list" => $article_list,
 				);
 			case 'createNewBlog':
+				$writer = new writer($this->px, $this->blog, $this->options);
 				$params = $request->params;
-				$result = $this->blog->create_new_blog($params->blog_id);
+				$result = $writer->create_new_blog($params->blog_id);
 				return array(
 					"result" => $result->result,
 					"message" => $result->message,
@@ -94,8 +95,9 @@ class consoleExtension {
 					"params" => $params,
 				);
 			case 'deleteBlog':
+				$writer = new writer($this->px, $this->blog, $this->options);
 				$params = $request->params;
-				$result = $this->blog->delete_blog($params->blog_id);
+				$result = $writer->delete_blog($params->blog_id);
 				return array(
 					"result" => $result->result,
 					"message" => $result->message,
