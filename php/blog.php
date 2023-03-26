@@ -116,7 +116,7 @@ class blog {
 					$tmp_array['path'] .= $this->px->conf()->directory_index[0] ?? 'index.html';
 				}
 				$tmp_array['content'] = $tmp_array['content'] ?? $tmp_array['path'];
-				$tmp_array['logical_path'] = $blog_options->logical_path;
+				$tmp_array['logical_path'] = $blog_options->logical_path ?? '';
 				$tmp_array['list_flg'] = 0;
 				$tmp_array['category_top_flg'] = 0;
 
@@ -212,7 +212,11 @@ class blog {
 	 * 記事情報を取得する
 	 */
 	public function get_article_info( $path ){
+		$path = $this->normalize_article_path($path);
 		$originated_csv = $this->get_page_originated_csv( $path );
+		if( !$originated_csv ){
+			return false;
+		}
 		return (object) array(
 			"blog_id" => $originated_csv->blog_id,
 			"article_info" => $this->blogmap_array[$originated_csv->blog_id][$path],
@@ -228,12 +232,14 @@ class blog {
 	 * または、`$path` が見つけられない場合に `null` を、失敗した場合(サイトマップキャッシュが作成されていない、など)に `false` を返します。
 	 */
 	public function get_page_originated_csv( $path ){
+		$path = $this->normalize_article_path($path);
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 		$realpath_blog_page_list_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
 
 		$blog_list = $this->get_blog_list();
-		foreach( $blog_list as $blog_id ){
+		foreach( $blog_list as $index=>$blog_info ){
+			$blog_id = $blog_info['blog_id'];
 			if( !is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/'.'blogmap_page_originated_csv.array') ){
 				continue;
 			}
@@ -246,6 +252,15 @@ class blog {
 			return (object) $rtn;
 		}
 		return false;
+	}
+
+	/**
+	 * 記事パス文字列の正規化
+	 */
+	public function normalize_article_path( $path ){
+		$path = preg_replace('/^\/*/', '/', $path);
+		$path = preg_replace('/\/+$/', '/'.$this->px->get_directory_index_primary(), $path);
+		return $path;
 	}
 
 	/**

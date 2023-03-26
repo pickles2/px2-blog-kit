@@ -27,7 +27,6 @@ module.exports = function(state, cceAgent, options){
 		}
 
 		if( !articleInfo ){
-			alert('Error');
 			state.setState({
 				"page": 'articleList',
 				"articlePath": null,
@@ -46,13 +45,56 @@ module.exports = function(state, cceAgent, options){
 			html += '</tr>';
 		});
 		html += '</table>';
+		html += `<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-article>記事を削除する</button></p>`;
 		html += '<p><button type="button" data-back class="px2-btn">戻る</button></p>';
 		$elm.html(html);
 
+
+
+		// --------------------------------------
+		// Events
+
+		// 記事編集へ
 		$elm.find('[data-btn-edit-content]').on('click', function(){
 			const path = $(this).attr('data-btn-edit-content');
 			cceAgent.editContent(path);
 		});
+
+		// 記事削除
+		$elm.find('[data-delete-article]').on('click', function(){
+			const blog_id = blogId;
+			const template = require('./templates/deleteArticle.twig');
+			const $body = $(template({
+				blog_id: blog_id,
+				path: articleInfo.path,
+			}));
+			px2style.modal({
+				"title": "記事を削除する",
+				"body": $body,
+				"buttons": [
+					$('<button type="submit" class="px2-btn px2-btn--danger">').text('削除する'),
+				],
+				"form": {
+					"submit": function(e){
+						options.onDeleteArticle(
+							{
+								blog_id: blog_id,
+								path: articleInfo.path,
+							},
+							function(res){
+								if( !res.result ){
+									alert('ERROR: '+res.message);
+									return;
+								}
+								px2style.closeModal();
+							}
+						);
+					},
+				},
+			});
+		});
+
+		// 戻る
 		$elm.find('[data-back]').on('click', function(){
 			state.setState({
 				"page": 'ArticleList',
