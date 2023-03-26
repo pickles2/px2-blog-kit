@@ -1,28 +1,14 @@
 <div class="px2-form-input-list">
 	<ul class="px2-form-input-list__ul">
+{% for blogmapDefinitionRow in blogmapDefinition %}
 		<li class="px2-form-input-list__li">
-			<div class="px2-form-input-list__label"><label for="title">タイトル</label></div>
+			<div class="px2-form-input-list__label"><label for="{{ blogmapDefinitionRow.key }}">{{ blogmapDefinitionRow.label }}</label></div>
 			<div class="px2-form-input-list__input">
-				<input type="text" id="title" name="title" value="" class="px2-input px2-input--block" />
+			{% if blogmapDefinitionRow.type == "text" %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+			{% endif %}
 			</div>
 		</li>
-		<li class="px2-form-input-list__li">
-			<div class="px2-form-input-list__label"><label for="path">パス</label></div>
-			<div class="px2-form-input-list__input">
-				<input type="text" id="path" name="path" value="" class="px2-input px2-input--block" />
-			</div>
-		</li>
-		<li class="px2-form-input-list__li">
-			<div class="px2-form-input-list__label"><label for="release_date">公開日</label></div>
-			<div class="px2-form-input-list__input">
-				<input type="date" id="release_date" name="release_date" value="" class="px2-input px2-input--block" />
-			</div>
-		</li>
-		<li class="px2-form-input-list__li">
-			<div class="px2-form-input-list__label"><label for="update_date">更新日</label></div>
-			<div class="px2-form-input-list__input">
-				<input type="date" id="update_date" name="update_date" value="" class="px2-input px2-input--block" />
-			</div>
-		</li>
+{% endfor %}
 	</ul>
 </div>

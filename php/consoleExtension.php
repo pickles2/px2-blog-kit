@@ -84,6 +84,23 @@ class consoleExtension {
 					"blog_id" => $blog_id,
 					"article_list" => $article_list,
 				);
+			case 'getArticleInfo':
+				$path = $request->path;
+				$article_info = $this->blog->get_article_info($path);
+				return array(
+					"result" => true,
+					"blog_id" => $article_info->blog_id,
+					"article_info" => $article_info->article_info,
+					"originated_csv" => $article_info->originated_csv,
+				);
+			case 'getBlogmapDefinition':
+				$blog_id = $request->blog_id;
+				$writer = new writer($this->px, $this->blog, $this->options);
+				$blogmap_definition = $writer->get_blogmap_definition($blog_id);
+				return array(
+					"result" => true,
+					"blogmap_definition" => $blogmap_definition,
+				);
 			case 'createNewBlog':
 				$writer = new writer($this->px, $this->blog, $this->options);
 				$params = $request->params;
@@ -97,7 +114,7 @@ class consoleExtension {
 			case 'createNewArticle':
 				$writer = new writer($this->px, $this->blog, $this->options);
 				$params = $request->params;
-				$result = $writer->create_new_article($params->blog_id, $params->article_info??null);
+				$result = $writer->create_new_article($params->blog_id, $params->fields ?? null);
 				return array(
 					"result" => $result->result,
 					"message" => $result->message,

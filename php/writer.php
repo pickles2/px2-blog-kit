@@ -72,8 +72,8 @@ class writer {
 	/**
 	 * 新しい記事を作成する
 	 */
-	public function create_new_article( $blog_id, $article_info ){
-		$article_info = (object) $article_info;
+	public function create_new_article( $blog_id, $fields ){
+		$fields = (object) $fields;
 		$rtn = (object) array(
 			"result" => true,
 			"message" => null,
@@ -104,18 +104,16 @@ class writer {
 			return $rtn;
 		}
 
-		// $csv = array(
-		// 	array(
-		// 		'* title',
-		// 		'* path',
-		// 		'* release_date',
-		// 		'* update_date',
-		// 		'* article_summary',
-		// 		'* article_keywords',
-		// 	),
-		// );
+		$blogmap_definition = $this->get_blogmap_definition( $blog_id );
+		$csv_row = array();
+		foreach( $blogmap_definition as $blogmap_definitionRow ){
+			array_push( $csv_row, $fields->{$blogmap_definitionRow->key} ?? '' );
+		}
 
-		// $this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+		$csv = $this->px->fs()->read_csv( $realpath_blog_csv );
+		array_push( $csv, $csv_row );
+
+		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
 
 		return $rtn;
 	}
@@ -160,6 +158,28 @@ class writer {
 	}
 
 	/**
+	 * ブログマップ定義を取得する
+	 */
+	public function get_blogmap_definition( $blog_id ){
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+
+		$csv = $this->px->fs()->read_csv( $realpath_blog_csv );
+		$blogmap_definition = $this->parse_blogmap_definition( $csv );
+
+		$rtn = array();
+		foreach($blogmap_definition as $blogmap_definition_key){
+			array_push( $rtn, (object) array(
+				"label" => $blogmap_definition_key, // TODO: 仮実装
+				"type" => "text", // TODO: 仮実装
+				"key" => $blogmap_definition_key,
+			) );
+		}
+		return $rtn;
+	}
+
+	/**
 	 * ブログマップに定義行が含まれるか調べる
 	 */
 	private function has_blogmap_definition( $csv ){
@@ -178,7 +198,7 @@ class writer {
 	}
 
 	/**
-	 * ブログマップ定義を取得する
+	 * ブログマップ定義を解析する
 	 */
 	private function parse_blogmap_definition( $csv ){
 		if( !$this->has_blogmap_definition( $csv ) ){
@@ -198,7 +218,7 @@ class writer {
 	/**
 	 * デフォルトのブログマップ定義を取得する
 	 */
-	public function get_default_blogmap_definition(){
+	private function get_default_blogmap_definition(){
 		$blogmap_definition = array(
 			'title',
 			'path',

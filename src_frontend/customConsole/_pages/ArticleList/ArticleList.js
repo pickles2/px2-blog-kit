@@ -78,34 +78,55 @@ module.exports = function(state, cceAgent, options){
 		$elm.find('[data-btn-create-new-article]').on('click', function(){
 			const blog_id = $(this).attr('data-btn-create-new-article');
 			const template = require('./templates/createNewArticle.twig');
-			const $body = $(template({
-				blog_id: blog_id,
-			}));
-			px2style.modal({
-				"title": "ブログを作成する",
-				"body": $body,
-				"buttons": [
-					$('<button type="submit" class="px2-btn px2-btn--primary">').text('作成する'),
-				],
-				"form": {
-					"submit": function(e){
-						const $form = $(this);
-						options.onCreateNewArticle(
-							{
-								blog_id: blog_id,
-								fields: {},
-							},
-							function(result){
-								if( !result.result ){
-									alert('ERROR: '+result.message);
-									return;
-								}
-								px2style.closeModal();
-							}
-						);
-					},
+			let blogmapDefinition;
+			it79.fnc({}, [
+				function(it){
+					cceAgent.gpi({
+						'command': 'getBlogmapDefinition',
+						'blog_id': blogId,
+					}, function(res){
+						blogmapDefinition = res.blogmap_definition;
+						it.next();
+					});
 				},
-			});
+				function(it){
+					const $body = $(template({
+						blog_id: blog_id,
+						blogmapDefinition: blogmapDefinition,
+					}));
+					px2style.modal({
+						"title": "ブログを作成する",
+						"body": $body,
+						"buttons": [
+							$('<button type="submit" class="px2-btn px2-btn--primary">').text('作成する'),
+						],
+						"form": {
+							"submit": function(e){
+								const $form = $(this);
+								let fields = {};
+								for( idx in blogmapDefinition ){
+									const blogmapDefinitionRow = blogmapDefinition[idx];
+									fields[blogmapDefinitionRow.key] = $form.find(`[name=${blogmapDefinitionRow.key}]`).val();
+								}
+								options.onCreateNewArticle(
+									{
+										blog_id: blog_id,
+										fields: fields,
+									},
+									function(result){
+										if( !result.result ){
+											alert('ERROR: '+result.message);
+											return;
+										}
+										px2style.closeModal();
+									}
+								);
+							},
+						},
+					});
+					it.next();
+				},
+			]);
 		});
 
 		// ブログ削除

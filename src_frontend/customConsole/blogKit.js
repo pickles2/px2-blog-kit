@@ -44,8 +44,9 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 			"onCreateNewArticle": function(params, callback){
 				// --------------------------------------
 				// 新規記事を作成する
-				// TODO: 開発する
-				let newState = {};
+				let newState = {
+					"articleList": {},
+				};
 				cceAgent.gpi({
 					'command': 'createNewArticle',
 					'params': params,
@@ -57,12 +58,9 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 
 					cceAgent.gpi({
 						'command': 'getArticleList',
-						'blog_id': blogId,
+						'blog_id': params.blog_id,
 					}, function(res){
-						let newState = {
-							"articleList": {},
-						};
-						newState.articleList[blogId] = res.article_list;
+						newState.articleList[params.blog_id] = res.article_list;
 						state.setState(newState);
 						callback(res);
 					});

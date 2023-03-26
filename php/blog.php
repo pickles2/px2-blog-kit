@@ -124,6 +124,7 @@ class blog {
 				array_push($this->article_list[$blog_id], $tmp_array);
 
 				$blogmap_page_originated_csv[$tmp_array['path']] = array(
+					'blog_id' => $blog_id,
 					'basename'=>$csv_filename,
 					'row'=>$row_number,
 				);
@@ -208,6 +209,18 @@ class blog {
 	}
 
 	/**
+	 * 記事情報を取得する
+	 */
+	public function get_article_info( $path ){
+		$originated_csv = $this->get_page_originated_csv( $path );
+		return (object) array(
+			"blog_id" => $originated_csv->blog_id,
+			"article_info" => $this->blogmap_array[$originated_csv->blog_id][$path],
+			"originated_csv" => $originated_csv,
+		);
+	}
+
+	/**
 	 * ページパスから、そのページ情報が定義されたCSVのファイル名と行番号を得る
 	 *
 	 * @param string $path 取得するページのパス
@@ -230,7 +243,7 @@ class blog {
 				continue;
 			}
 			$rtn = $blogmap_page_originated_csv[$article_info['path']];
-			return $rtn;
+			return (object) $rtn;
 		}
 		return false;
 	}
