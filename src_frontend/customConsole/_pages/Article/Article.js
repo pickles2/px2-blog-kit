@@ -118,6 +118,13 @@ module.exports = function(state, cceAgent, options){
 									function(result){
 										if( !result.result ){
 											alert('ERROR: '+result.message);
+											$body.find('.px2-form-input-list__li').removeClass(`px2-form-input-list__li--error`);
+											$body.find('.px2-error').remove();
+											Object.keys(result.errors).forEach(function(key){
+												const $input = $form.find(`[name=${key}]`);
+												$input.closest(`.px2-form-input-list__li`).addClass(`px2-form-input-list__li--error`);
+												$input.before(`<p class="px2-error">${result.errors[key]}</p>`);
+											});
 											return;
 										}
 										px2style.closeModal();
@@ -126,6 +133,7 @@ module.exports = function(state, cceAgent, options){
 							},
 						},
 					});
+					$body.find('input').on('change', function(){ const $li = $(this).closest(`.px2-form-input-list__li`); $li.removeClass(`px2-form-input-list__li--error`); $li.find('.px2-error').remove(); });
 					it.next();
 				},
 			]);
@@ -186,5 +194,6 @@ module.exports = function(state, cceAgent, options){
 				"articleInfo": null,
 			});
 		});
+
 	}
 };

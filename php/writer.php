@@ -143,6 +143,14 @@ class writer {
 			return $rtn;
 		}
 
+		$validationResult = $this->validate_article( $fields );
+		if( !$validationResult->result ){
+			$rtn->result = false;
+			$rtn->message = $validationResult->message;
+			$rtn->errors = $validationResult->errors;
+			return $rtn;
+		}
+
 		$fields->path = $this->blog->normalize_article_path($fields->path ?? '');
 
 		$blogmap_definition = $this->get_blogmap_definition( $blog_id );
@@ -193,6 +201,14 @@ class writer {
 			$rtn->result = false;
 			$rtn->message = '入力内容を確認してください。';
 			$rtn->errors->blog_id = '指定のブログは存在しません。';
+			return $rtn;
+		}
+
+		$validationResult = $this->validate_article( $fields );
+		if( !$validationResult->result ){
+			$rtn->result = false;
+			$rtn->message = $validationResult->message;
+			$rtn->errors = $validationResult->errors;
 			return $rtn;
 		}
 
@@ -371,5 +387,35 @@ class writer {
 			array_unshift($csv, $definition_row);
 		}
 		return $csv;
+	}
+
+	/**
+	 * バリデーション: 記事情報
+	 */
+	private function validate_article( $fields ){
+		$fields = (object) $fields;
+		$rtn = (object) array(
+			"result" => true,
+			"message" => null,
+			"errors" => (object) array(),
+		);
+
+		// title
+		if( !strlen($fields->title ?? '') ){
+			$rtn->result = false;
+			$rtn->errors->title = 'タイトルを指定してください。';
+		}
+
+		// path
+		if( !strlen($fields->path ?? '') ){
+			$rtn->result = false;
+			$rtn->errors->path = 'パスを指定してください。';
+		}
+
+		if( !$rtn->result ){
+			$rtn->message = '入力内容を確認してください。';
+		}
+
+		return $rtn;
 	}
 }
