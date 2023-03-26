@@ -4,9 +4,28 @@
 		<li class="px2-form-input-list__li">
 			<div class="px2-form-input-list__label"><label for="{{ blogmapDefinitionRow.key }}">{{ blogmapDefinitionRow.label }}</label></div>
 			<div class="px2-form-input-list__input">
-			{% if blogmapDefinitionRow.type == "text" %}
+				{% if ( blogmapDefinitionRow.type == "integer" ) %}
+				<input type="number" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "date" ) %}
+				<input type="date" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "datetime" ) %}
+				<input type="datetime" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "boolean" ) %}
+				<label><input type="radio" name="{{ blogmapDefinitionRow.key }}" value="1" {{ value == "1" ? 'checked="checked"' : '' }} class="px2-input px2-input--block" /> ON</label>
+				<label><input type="radio" name="{{ blogmapDefinitionRow.key }}" value="" {{ value == "" or value == "0" ? 'checked="checked"' : '' }} class="px2-input px2-input--block" /> OFF</label>
+				{% elseif ( blogmapDefinitionRow.type == "path" ) %}
 				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
-			{% endif %}
+				{% elseif ( blogmapDefinitionRow.type == "logical_path" ) %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "page_id" ) %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "layout_id" ) %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% elseif ( blogmapDefinitionRow.type == "text" ) %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% else %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="" class="px2-input px2-input--block" />
+				{% endif %}
 			</div>
 		</li>
 {% endfor %}

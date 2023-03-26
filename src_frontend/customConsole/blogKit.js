@@ -5,7 +5,10 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 		"page": null,
 		"blogId": null,
 		"blogList": [],
+		"articlePath": null,
 		"articleList": {},
+		"articleInfo": null,
+		"sitemapDefinition": null,
 	};
 
 	const state = new (require('./_modules/State.js'))({
@@ -139,14 +142,19 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 	it79.fnc({}, [
 		function(it){
 			cceAgent.gpi({
+				'command': 'getSitemapDefinition'
+			}, function(res){
+				initialState.sitemapDefinition = res.sitemap_definition;
+				it.next();
+			});
+		},
+		function(it){
+			cceAgent.gpi({
 				'command': 'getBlogList'
 			}, function(res){
 				initialState.blogList = res.blog_list;
 				it.next();
 			});
-		},
-		function(it){
-			it.next();
 		},
 		function(){
 			state.setState(initialState);

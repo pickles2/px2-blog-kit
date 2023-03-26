@@ -4,6 +4,7 @@
 module.exports = function(state, cceAgent, options){
 	const $ = require('jquery');
 	const it79 = require('iterate79');
+	const utils = new (require('../../_modules/Utils.js'))();
 	const $elm = $(cceAgent.elm());
 
 	this.draw = function(){
@@ -11,6 +12,7 @@ module.exports = function(state, cceAgent, options){
 		const articlePath = state.getState('articlePath');
 		const articleList = state.getState('articleList');
 		const articleInfo = state.getState('articleInfo');
+		const sitemapDefinition = state.getState('sitemapDefinition');
 
 		if( !articlePath ){
 			state.setState({
@@ -47,8 +49,8 @@ module.exports = function(state, cceAgent, options){
 		let html = '';
 		html += `<p>記事詳細: ${blogId} ${articleInfo.path}</p>`;
 		html += `<p>`;
-		html += `<button type="button" class="px2-btn" data-btn-edit-article="${articleInfo.path}">記事編集</button>`;
-		html += `<button type="button" class="px2-btn" data-btn-edit-content="${articleInfo.path}">コンテンツ編集</button>`;
+		html += `<button type="button" class="px2-btn" data-btn-edit-article="${articleInfo.path}">ページ情報を編集する</button>`;
+		html += `<button type="button" class="px2-btn" data-btn-edit-content="${articleInfo.path}">コンテンツを編集する</button>`;
 		html += `</p>`;
 		html += `<table class="px2-table">`;
 		Object.keys(articleInfo).forEach(function(key){
@@ -94,6 +96,7 @@ module.exports = function(state, cceAgent, options){
 					});
 				},
 				function(it){
+					blogmapDefinition = utils.fixSitemapDefinition(blogmapDefinition, sitemapDefinition);
 					const $body = $(template({
 						blog_id: blog_id,
 						blogmapDefinition: blogmapDefinition,

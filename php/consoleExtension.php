@@ -101,6 +101,12 @@ class consoleExtension {
 					"result" => true,
 					"blogmap_definition" => $blogmap_definition,
 				);
+			case 'getSitemapDefinition':
+				$sitemap_definition = $this->px->site()->get_sitemap_definition();
+				return array(
+					"result" => true,
+					"sitemap_definition" => $sitemap_definition,
+				);
 
 			case 'createNewBlog':
 				$writer = new writer($this->px, $this->blog, $this->options);

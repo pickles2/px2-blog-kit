@@ -4,11 +4,13 @@
 module.exports = function(state, cceAgent, options){
 	const $ = require('jquery');
 	const it79 = require('iterate79');
+	const utils = new (require('../../_modules/Utils.js'))();
 	const $elm = $(cceAgent.elm());
 
 	this.draw = function(){
 		const blogId = state.getState('blogId');
 		const articleList = state.getState('articleList');
+		const sitemapDefinition = state.getState('sitemapDefinition');
 
 		if( !articleList || !articleList[blogId] ){
 			cceAgent.gpi({
@@ -36,7 +38,6 @@ module.exports = function(state, cceAgent, options){
 			html += `<td>${row.title}</td>`;
 			html += `<td>${row.update_date}</td>`;
 			html += `<td style="text-align: center;">`;
-			html += `<button type="button" class="px2-btn" data-btn-edit-content="${row.path}">コンテンツ編集</button>`;
 			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article="${row.path}">詳細</button>`;
 			html += `</td>`;
 			html += `</tr>`;
@@ -68,12 +69,6 @@ module.exports = function(state, cceAgent, options){
 			state.setState(newState);
 		});
 
-		// コンテンツ編集へ
-		$elm.find('[data-btn-edit-content]').on('click', function(){
-			const path = $(this).attr('data-btn-edit-content');
-			cceAgent.editContent(path);
-		});
-
 		// 新規記事作成
 		$elm.find('[data-btn-create-new-article]').on('click', function(){
 			const blog_id = $(this).attr('data-btn-create-new-article');
@@ -90,6 +85,7 @@ module.exports = function(state, cceAgent, options){
 					});
 				},
 				function(it){
+					blogmapDefinition = utils.fixSitemapDefinition(blogmapDefinition, sitemapDefinition);
 					const $body = $(template({
 						blog_id: blog_id,
 						blogmapDefinition: blogmapDefinition,

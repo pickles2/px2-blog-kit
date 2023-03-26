@@ -3,6 +3,7 @@
  */
 module.exports = function(state, cceAgent, options){
 	const $ = require('jquery');
+	const utils = new (require('../../_modules/Utils.js'))();
 	const $elm = $(cceAgent.elm());
 
 	this.draw = function(){
