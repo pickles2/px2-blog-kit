@@ -23,10 +23,10 @@ class consoleExtension {
 	 */
 	public function __construct($px, $options, $cceAgent){
 		$this->px = $px;
-		$this->options = $options;
+		$this->options = ($options ? $options : ($px->blog ? $px->blog->get_options() : (object) array() ));
 		$this->cceAgent = $cceAgent;
 
-		$this->blog = new blog($px, $options);
+		$this->blog = ( $px->blog ? $px->blog : new blog($px, $this->options) );
 	}
 
 	/**

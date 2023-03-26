@@ -41,57 +41,6 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 					});
 				});
 			},
-			"onCreateNewArticle": function(params, callback){
-				// --------------------------------------
-				// 新規記事を作成する
-				let newState = {
-					"articleList": {},
-				};
-				cceAgent.gpi({
-					'command': 'createNewArticle',
-					'params': params,
-				}, function(res){
-					if( !res.result ){
-						callback(res);
-						return;
-					}
-
-					cceAgent.gpi({
-						'command': 'getArticleList',
-						'blog_id': params.blog_id,
-					}, function(res){
-						newState.articleList[params.blog_id] = res.article_list;
-						state.setState(newState);
-						callback(res);
-					});
-				});
-			},
-			"onDeleteArticle": function(params, callback){
-				// --------------------------------------
-				// 新規記事を削除する
-				let newState = {
-					"articleList": {},
-				};
-				cceAgent.gpi({
-					'command': 'deleteArticle',
-					'blog_id': params.blog_id,
-					'path': params.path,
-				}, function(res){
-					if( !res.result ){
-						callback(res);
-						return;
-					}
-
-					cceAgent.gpi({
-						'command': 'getArticleList',
-						'blog_id': params.blog_id,
-					}, function(res){
-						newState.articleList[params.blog_id] = res.article_list;
-						state.setState(newState);
-						callback(res);
-					});
-				});
-			},
 			"onDeleteBlog": function( params, callback ){
 				// --------------------------------------
 				// ブログを削除する
@@ -115,6 +64,50 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 
 						callback(res);
 					});
+				});
+			},
+
+			"onCreateNewArticle": function(params, callback){
+				// --------------------------------------
+				// 新規記事を作成する
+				let newState = {
+					"articleList": {},
+					"articleInfo": null,
+				};
+				cceAgent.gpi({
+					'command': 'createNewArticle',
+					'params': params,
+				}, function(res){
+					if( !res.result ){
+						callback(res);
+						return;
+					}
+
+					newState.page = 'ArticleList';
+					state.setState(newState);
+					callback(res);
+				});
+			},
+			"onDeleteArticle": function(params, callback){
+				// --------------------------------------
+				// 記事を削除する
+				let newState = {
+					"articleList": {},
+					"articleInfo": null,
+				};
+				cceAgent.gpi({
+					'command': 'deleteArticle',
+					'blog_id': params.blog_id,
+					'path': params.path,
+				}, function(res){
+					if( !res.result ){
+						callback(res);
+						return;
+					}
+
+					newState.page = 'ArticleList';
+					state.setState(newState);
+					callback(res);
 				});
 			},
 		}

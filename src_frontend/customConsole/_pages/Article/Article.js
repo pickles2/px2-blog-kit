@@ -99,6 +99,8 @@ module.exports = function(state, cceAgent, options){
 			state.setState({
 				"page": 'ArticleList',
 				"articlePath": null,
+				"articleList": {},
+				"articleInfo": null,
 			});
 		});
 	}

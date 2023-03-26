@@ -13,21 +13,21 @@ class register {
 			return __CLASS__.'::'.__FUNCTION__.'('.( is_array($px) ? json_encode($px) : '' ).')';
 		}
 
-        $request_file_path = $px->req()->get_request_file_path();
-        if( !preg_match('/\.html?$/i', $request_file_path) ){
-            // HTML以外のコンテンツでは実行しない
-            return;
-        }
+		$request_file_path = $px->req()->get_request_file_path();
+		if( !preg_match('/\.html?$/i', $request_file_path) ){
+			// HTML以外のコンテンツでは実行しない
+			return;
+		}
  
-        $px->blog = new blog($px, $options);
-        return;
+		$px->blog = new blog($px, $options);
+		return;
 	}
 
-    /**
-     * 管理画面拡張を登録する
+	/**
+	 * 管理画面拡張を登録する
 	 * @param object $options プラグイン設定
-     */
-    static public function consoleExtension( $options = null ){
-        return 'pickles2\px2BlogKit\consoleExtension('.( json_encode($options) ).')';
-    }
+	 */
+	static public function consoleExtension( $options = null ){
+		return 'pickles2\px2BlogKit\consoleExtension('.( json_encode($options) ).')';
+	}
 }

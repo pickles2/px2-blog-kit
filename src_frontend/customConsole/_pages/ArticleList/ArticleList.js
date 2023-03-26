@@ -16,8 +16,7 @@ module.exports = function(state, cceAgent, options){
 				'blog_id': blogId,
 			}, function(res){
 				let newState = {
-					"articleList": {
-					},
+					"articleList": {},
 				};
 				newState.articleList[blogId] = res.article_list;
 				state.setState(newState);

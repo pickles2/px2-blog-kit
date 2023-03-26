@@ -26,6 +26,7 @@ class blog {
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 		$realpath_blog_page_list_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
+		$realpath_sitemap_cache_dir = $this->px->get_realpath_homedir().'_sys/ram/caches/sitemaps/';
 
 		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
 		$this->blogmap_array = array();
@@ -36,6 +37,7 @@ class blog {
 			$blog_options = ($this->options->blogs->{$blog_id} ?? (object) array());
 
 			$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+			clearstatcache();
 			if( !is_file($realpath_blog_csv) ){
 				// CSVファイルは存在しない
 				continue;
@@ -45,12 +47,48 @@ class blog {
 			$this->article_list[$blog_id] = array();
 			$blogmap_page_originated_csv = array();
 
+			$i = 0;
+			clearstatcache();
+			while( @is_file( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' ) ){
+				if( @filemtime( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' ) < time()-(60*60) ){
+					// 60分以上更新された形跡がなければ、
+					// ロックを解除して再生成を試みる。
+					$this->px->fs()->rm( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' );
+					break;
+				}
+
+				$i ++;
+				if( $i > 60 ){
+					// 他のプロセスがサイトマップキャッシュを作成中。
+					$this->px->error('Sitemap cache generating is now in progress. This page has been incompletely generated.');
+
+					//  古いブログマップキャッシュが存在する場合、ロードする。
+					$this->blogmap_array[$blog_id] = ( $this->px->fs()->is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') ? @include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') : array() );
+					$this->article_list[$blog_id] = ( $this->px->fs()->is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array') ? @include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array'): array() );
+
+					clearstatcache();
+					continue 2;
+				}
+				sleep(1);
+				clearstatcache();
+			}
+
+			clearstatcache();
+
 			if( is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt') && file_get_contents($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt') === md5_file($realpath_blog_csv) ){
 				// キャッシュが有効
 				$this->blogmap_array[$blog_id] = include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array');
 				$this->article_list[$blog_id] = include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array');
 				continue;
 			}
+
+			// サイトマップキャッシュ作成中のアプリケーションロックファイルを作成
+			$lockfile_src = '';
+			$lockfile_src .= 'ProcessID='.getmypid()."\r\n";
+			$lockfile_src .= @date( 'Y-m-d H:i:s' , time() )."\r\n";
+			$this->px->fs()->save_file( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' , $lockfile_src );
+			unset( $lockfile_src );
+
 
 			$blog_page_list_csv = $this->px->fs()->read_csv($realpath_blog_csv);
 			$tmp_blogmap_definition = array();
@@ -157,6 +195,10 @@ class blog {
 			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array', self::data2phpsrc($this->article_list[$blog_id]) );
 			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap_page_originated_csv.array', self::data2phpsrc($blogmap_page_originated_csv) );
 			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt', md5_file($realpath_blog_csv) );
+
+			// サイトマップキャッシュ作成中のアプリケーションロックを解除
+			$this->px->fs()->rm( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' );
+
 			set_time_limit(30); // タイマーリセット
 		}
 
@@ -285,6 +327,13 @@ class blog {
 		}
 		$obj_rss = new feeds($this->px, $params, $this->article_list[$params->blog_id]);
 		return $obj_rss->update_rss_file();
+	}
+
+	/**
+	 * オプションを取得する
+	 */
+	public function get_options(){
+		return $this->options;
 	}
 
 	/**
