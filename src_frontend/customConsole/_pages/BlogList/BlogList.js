@@ -9,22 +9,10 @@ module.exports = function(state, cceAgent, options){
 	this.draw = function(){
 		const blogList = state.getState('blogList');
 
-		let html = '';
-		html += `<div>`;
-		html += `	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-blog>新規ブログを追加</button></p>`;
-		html += `</div>`;
-		html += `<div class="px2-p">`;
-		html += `<table class="px2-table" style="width: 100%;">`;
-		blogList.forEach(function(row){
-			html += `<tr>`;
-			html += `<td>${row.blog_id}</td>`;
-			html += `<td style="text-align: center;">`;
-			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article-list="${row.blog_id}">詳細</button>`;
-			html += `</td>`;
-			html += `</tr>`;
+		const template = require('./templates/main.twig');
+		let html = template({
+			blog_list: blogList,
 		});
-		html += `</table>`;
-		html += `</div>`;
 		$elm.html(html);
 
 

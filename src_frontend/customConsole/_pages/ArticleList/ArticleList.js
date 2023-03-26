@@ -26,26 +26,11 @@ module.exports = function(state, cceAgent, options){
 			return;
 		}
 
-		let html = '';
-		html += `<p>記事一覧: ${blogId}</p>`;
-		html += `<div>`;
-		html += `	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-article="${blogId}">新規記事を追加</button></p>`;
-		html += `</div>`;
-		html += `<div class="px2-p">`;
-		html += `<table class="px2-table" style="width: 100%;">`;
-		articleList[blogId].forEach(function(row){
-			html += `<tr>`;
-			html += `<td>${row.title}</td>`;
-			html += `<td>${row.update_date}</td>`;
-			html += `<td style="text-align: center;">`;
-			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article="${row.path}">詳細</button>`;
-			html += `</td>`;
-			html += `</tr>`;
+		const template = require('./templates/main.twig');
+		let html = template({
+			blog_id: blogId,
+			article_list: articleList,
 		});
-		html += `</table>`;
-		html += `</div>`;
-		html += `<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-blog="${blogId}">ブログ ${blogId} を削除する</button></p>`;
-		html += `<p><button type="button" class="px2-btn" data-back>戻る</button></p>`;
 		$elm.html(html);
 
 

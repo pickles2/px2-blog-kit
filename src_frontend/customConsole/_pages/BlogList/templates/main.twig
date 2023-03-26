@@ -1,0 +1,15 @@
+<div>
+	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-blog>新規ブログを追加</button></p>
+</div>
+<div class="px2-p">
+<table class="px2-table" style="width: 100%;">
+{% for key,row in blog_list %}
+	<tr>
+	<td>{{ row.blog_id }}</td>
+	<td style="text-align: center;">
+	<button type="button" class="px2-btn px2-btn--primary" data-btn-article-list="{{ row.blog_id }}">詳細</button>
+	</td>
+	</tr>
+{% endfor %}
+</table>
+</div>

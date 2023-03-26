@@ -1,0 +1,24 @@
+<p>
+	<button type="button" class="px2-btn" data-btn-edit-article="{{ article_info.path }}">ページ情報を編集する</button>
+	<button type="button" class="px2-btn" data-btn-edit-content="{{ article_info.path }}">コンテンツを編集する</button>
+</p>
+<div class="px2-p">
+	<table class="px2-table" style="width: 100%;">
+		<tr>
+		<th>ブログID</th>
+		<td>{{ blog_id }}</td>
+		</tr>
+	</table>
+</div>
+<div class="px2-p">
+	<table class="px2-table" style="width: 100%;">
+{% for key,value in article_info %}
+		<tr>
+		<th>{{ key }}</th>
+		<td>{{ value }}</td>
+		</tr>
+{% endfor %}
+	</table>
+</div>
+<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-article>記事を削除する</button></p>
+<p><button type="button" data-back class="px2-btn">戻る</button></p>

@@ -46,22 +46,11 @@ module.exports = function(state, cceAgent, options){
 			return;
 		}
 
-		let html = '';
-		html += `<p>記事詳細: ${blogId} ${articleInfo.path}</p>`;
-		html += `<p>`;
-		html += `<button type="button" class="px2-btn" data-btn-edit-article="${articleInfo.path}">ページ情報を編集する</button>`;
-		html += `<button type="button" class="px2-btn" data-btn-edit-content="${articleInfo.path}">コンテンツを編集する</button>`;
-		html += `</p>`;
-		html += `<table class="px2-table">`;
-		Object.keys(articleInfo).forEach(function(key){
-			html += `<tr>`;
-			html += `<th>${key}</th>`;
-			html += `<td>${articleInfo[key]}</td>`;
-			html += `</tr>`;
+		const template = require('./templates/main.twig');
+		let html = template({
+			blog_id: blogId,
+			article_info: articleInfo,
 		});
-		html += `</table>`;
-		html += `<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-article>記事を削除する</button></p>`;
-		html += `<p><button type="button" data-back class="px2-btn">戻る</button></p>`;
 		$elm.html(html);
 
 
