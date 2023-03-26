@@ -154,6 +154,8 @@ class writer {
 		$csv = $this->px->fs()->read_csv( $realpath_blog_csv );
 		array_push( $csv, $csv_row );
 
+		$csv = $this->sort_csv($csv, $blogmap_definition);
+
 		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
 
 		return $rtn;
@@ -206,6 +208,8 @@ class writer {
 
 		$csv = $this->px->fs()->read_csv( $realpath_blog_csv );
 		$csv[$article_info->originated_csv->row] = $csv_row;
+
+		$csv = $this->sort_csv($csv, $blogmap_definition);
 
 		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
 
@@ -330,4 +334,42 @@ class writer {
 		return $blogmap_definition;
 	}
 
+	/**
+	 * ブログマップCSVをソートする
+	 */
+	private function sort_csv( $csv, $blogmap_definition ){
+		$sort_orderby = 0;
+		$sort_scending = "desc";
+		foreach( $blogmap_definition as $index=>$row ){
+			if($row->key == "update_date"){
+				$sort_orderby = $index;
+				break;
+			}
+		}
+
+		$definition_row = null;
+		if( $this->has_blogmap_definition($csv) ){
+			$definition_row = array_shift($csv);
+		}
+
+		usort($csv, function ($a, $b) use ($sort_orderby, $sort_scending){
+			if( !isset($a[$sort_orderby]) || !isset($b[$sort_orderby]) ){
+				return 0;
+			}
+			if( $a[$sort_orderby] === $b[$sort_orderby] ){
+				return 0;
+			}
+			if( $a[$sort_orderby] > $b[$sort_orderby] ){
+				return ($sort_scending == 'asc' ? 1 : -1);
+			}elseif($a[$sort_orderby] < $b[$sort_orderby]){
+				return ($sort_scending == 'asc' ? -1 : 1);
+			}
+			return 0;
+		});
+
+		if( $definition_row ){
+			array_unshift($csv, $definition_row);
+		}
+		return $csv;
+	}
 }
