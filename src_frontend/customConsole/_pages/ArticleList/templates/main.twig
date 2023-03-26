@@ -1,6 +1,11 @@
-<div>
-	<p><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-article="{{ blog_id }}">新規記事を追加</button></p>
+<p><button type="button" class="px2-btn" data-back>戻る</button></p>
+
+<div class="px2-horizontal-list px2-horizontal-list--right">
+	<ul>
+		<li><button type="button" class="px2-btn px2-btn--primary" data-btn-create-new-article="{{ blog_id }}">新規記事を追加</button></li>
+	</ul>
 </div>
+
 <div class="px2-p">
 	<table class="px2-table" style="width: 100%;">
 		<tr>
@@ -9,18 +14,20 @@
 		</tr>
 	</table>
 </div>
-<div class="px2-p">
-	<table class="px2-table" style="width: 100%;">
+
+<div class="px2-linklist">
+	<ul>
 {% for key,row in article_list[blog_id] %}
-		<tr>
-		<td>{{ row.title }}</td>
-		<td>{{ row.update_date }}</td>
-		<td style="text-align: center;">
-			<button type="button" class="px2-btn px2-btn--primary" data-btn-article="{{ row.path }}">詳細</button>
-		</td>
-		</tr>
+		<li>
+			<a href="javascript:;" data-btn-article="{{ row.path }}">
+				<div class="px2cce-blog-kit-article-list-item">
+					<div class="px2cce-blog-kit-article-list-item__title">{{ row.title }}</div>
+					<div class="px2cce-blog-kit-article-list-item__update_date">{{ row.update_date }}</div>
+				</div>
+			</a>
+		</li>
 {% endfor %}
-	</table>
+	</ul>
 </div>
-<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-blog="{{ blog_id }}">ブログ {{ blog_id }} を削除する</button></p>
-<p><button type="button" class="px2-btn" data-back>戻る</button></p>
+
+<p class="px2-text-align-center"><button type="button" class="px2-btn px2-btn--danger" data-delete-blog="{{ blog_id }}">ブログ {{ blog_id }} を削除する</button></p>

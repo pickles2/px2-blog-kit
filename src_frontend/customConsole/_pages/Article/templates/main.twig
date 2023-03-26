@@ -1,7 +1,13 @@
-<p>
-	<button type="button" class="px2-btn" data-btn-edit-article="{{ article_info.path }}">ページ情報を編集する</button>
-	<button type="button" class="px2-btn" data-btn-edit-content="{{ article_info.path }}">コンテンツを編集する</button>
-</p>
+<p><button type="button" data-back class="px2-btn">戻る</button></p>
+
+<div class="px2-horizontal-list px2-horizontal-list--left">
+	<ul>
+		<li><button type="button" class="px2-btn" data-btn-edit-article="{{ article_info.path }}">ページ情報を編集する</button></li>
+		<li><button type="button" class="px2-btn" data-btn-edit-content="{{ article_info.path }}">コンテンツを編集する</button></li>
+		<li><button type="button" class="px2-btn" data-btn-preview="{{ article_info.path }}">プレビューに戻る</button></li>
+	</ul>
+</div>
+
 <div class="px2-p">
 	<table class="px2-table" style="width: 100%;">
 		<tr>
@@ -20,5 +26,4 @@
 {% endfor %}
 	</table>
 </div>
-<p class="px2-text-align-right"><button type="button" class="px2-btn px2-btn--danger" data-delete-article>記事を削除する</button></p>
-<p><button type="button" data-back class="px2-btn">戻る</button></p>
+<p class="px2-text-align-center"><button type="button" class="px2-btn px2-btn--danger" data-delete-article>記事を削除する</button></p>

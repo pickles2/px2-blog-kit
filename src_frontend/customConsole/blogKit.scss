@@ -1,0 +1,13 @@
+.px2cce-blog-kit {
+}
+
+.px2cce-blog-kit-article-list-item {
+	display: flex;
+	gap: 10px;
+	&__title {
+		flex-grow: 10;
+	}
+	&__update_date {
+		flex-grow: 0;
+	}
+}

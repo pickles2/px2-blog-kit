@@ -137,6 +137,12 @@ module.exports = function(state, cceAgent, options){
 			cceAgent.editContent(path);
 		});
 
+		// プレビューへ
+		$elm.find('[data-btn-preview]').on('click', function(){
+			const path = $(this).attr('data-btn-preview');
+			cceAgent.openInBrowser(path);
+		});
+
 		// 記事削除
 		$elm.find('[data-delete-article]').on('click', function(){
 			const blog_id = blogId;
