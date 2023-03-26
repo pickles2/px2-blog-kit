@@ -1,0 +1,14 @@
+<div class="px2-form-input-list">
+	<ul class="px2-form-input-list__ul">
+{% for blogmapDefinitionRow in blogmapDefinition %}
+		<li class="px2-form-input-list__li">
+			<div class="px2-form-input-list__label"><label for="{{ blogmapDefinitionRow.key }}">{{ blogmapDefinitionRow.label }}</label></div>
+			<div class="px2-form-input-list__input">
+			{% if blogmapDefinitionRow.type == "text" %}
+				<input type="text" id="{{ blogmapDefinitionRow.key }}" name="{{ blogmapDefinitionRow.key }}" value="{{ article_info[blogmapDefinitionRow.key] }}" class="px2-input px2-input--block" />
+			{% endif %}
+			</div>
+		</li>
+{% endfor %}
+	</ul>
+</div>

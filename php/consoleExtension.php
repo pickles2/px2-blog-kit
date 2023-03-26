@@ -133,6 +133,16 @@ class consoleExtension {
 					"errors" => $result->errors,
 					"params" => $params,
 				);
+			case 'updateArticle':
+				$writer = new writer($this->px, $this->blog, $this->options);
+				$params = $request->params;
+				$result = $writer->update_article($params->blog_id, $params->path, $params->fields ?? null);
+				return array(
+					"result" => $result->result,
+					"message" => $result->message,
+					"errors" => $result->errors,
+					"params" => $params,
+				);
 			case 'deleteArticle':
 				$writer = new writer($this->px, $this->blog, $this->options);
 				$result = $writer->delete_article($request->blog_id, $request->path);

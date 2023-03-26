@@ -36,7 +36,7 @@ module.exports = function(state, cceAgent, options){
 			html += `<td>${row.title}</td>`;
 			html += `<td>${row.update_date}</td>`;
 			html += `<td style="text-align: center;">`;
-			html += `<button type="button" class="px2-btn" data-btn-edit-content="${row.path}">記事編集</button>`;
+			html += `<button type="button" class="px2-btn" data-btn-edit-content="${row.path}">コンテンツ編集</button>`;
 			html += `<button type="button" class="px2-btn px2-btn--primary" data-btn-article="${row.path}">詳細</button>`;
 			html += `</td>`;
 			html += `</tr>`;
@@ -57,6 +57,7 @@ module.exports = function(state, cceAgent, options){
 			const path = $(this).attr('data-btn-article');
 			let newState = {
 				"page": "Article",
+				"articlePath": path,
 			};
 			articleList[blogId].forEach(function(row){
 				if( row.path == path ){
@@ -67,7 +68,7 @@ module.exports = function(state, cceAgent, options){
 			state.setState(newState);
 		});
 
-		// 記事編集へ
+		// コンテンツ編集へ
 		$elm.find('[data-btn-edit-content]').on('click', function(){
 			const path = $(this).attr('data-btn-edit-content');
 			cceAgent.editContent(path);
@@ -94,7 +95,7 @@ module.exports = function(state, cceAgent, options){
 						blogmapDefinition: blogmapDefinition,
 					}));
 					px2style.modal({
-						"title": "ブログを作成する",
+						"title": "記事を作成する",
 						"body": $body,
 						"buttons": [
 							$('<button type="submit" class="px2-btn px2-btn--primary">').text('作成する'),

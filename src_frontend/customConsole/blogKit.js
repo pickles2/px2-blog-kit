@@ -88,6 +88,29 @@ window.pickles2BlogKitCustomConsoleExtension = function(cceAgent){
 					callback(res);
 				});
 			},
+			"onUpdateArticle": function(params, callback){
+				// --------------------------------------
+				// 記事を更新する
+				let newState = {
+					"articlePath": null,
+					"articleList": {},
+					"articleInfo": null,
+				};
+				cceAgent.gpi({
+					'command': 'updateArticle',
+					'params': params,
+				}, function(res){
+					if( !res.result ){
+						callback(res);
+						return;
+					}
+
+					newState.page = 'Article';
+					newState.articlePath = params.fields.path;
+					state.setState(newState);
+					callback(res);
+				});
+			},
 			"onDeleteArticle": function(params, callback){
 				// --------------------------------------
 				// 記事を削除する
