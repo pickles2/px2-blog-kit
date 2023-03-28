@@ -153,6 +153,13 @@ class writer {
 
 		$fields->path = $this->blog->normalize_article_path($fields->path ?? '');
 
+		if( $this->blog->is_article_exists( $fields->path ) ){
+			$rtn->result = false;
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->path = 'すでに存在します。';
+			return $rtn;
+		}
+
 		$blogmap_definition = $this->get_blogmap_definition( $blog_id );
 		$csv_row = array();
 		foreach( $blogmap_definition as $blogmap_definitionRow ){
@@ -214,6 +221,13 @@ class writer {
 
 		$path = $this->blog->normalize_article_path($path ?? '');
 		$fields->path = $this->blog->normalize_article_path($fields->path ?? '');
+
+		if( $path !== $fields->path && $this->blog->is_article_exists( $fields->path ) ){
+			$rtn->result = false;
+			$rtn->message = '入力内容を確認してください。';
+			$rtn->errors->path = 'すでに存在します。';
+			return $rtn;
+		}
 
 		$blogmap_definition = $this->get_blogmap_definition( $blog_id );
 		$article_info = $this->blog->get_article_info($path);

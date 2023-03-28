@@ -89,9 +89,9 @@ class consoleExtension {
 				$article_info = $this->blog->get_article_info($path);
 				return array(
 					"result" => true,
-					"blog_id" => $article_info->blog_id,
-					"article_info" => $article_info->article_info,
-					"originated_csv" => $article_info->originated_csv,
+					"blog_id" => $article_info->blog_id ?? null,
+					"article_info" => $article_info->article_info ?? null,
+					"originated_csv" => $article_info->originated_csv ?? null,
 				);
 			case 'getBlogmapDefinition':
 				$blog_id = $request->blog_id;
@@ -113,9 +113,9 @@ class consoleExtension {
 				$params = $request->params;
 				$result = $writer->create_new_blog($params->blog_id);
 				return array(
-					"result" => $result->result,
-					"message" => $result->message,
-					"errors" => $result->errors,
+					"result" => $result->result ?? null,
+					"message" => $result->message ?? null,
+					"errors" => $result->errors ?? null,
 					"params" => $params,
 				);
 			case 'deleteBlog':
@@ -123,9 +123,9 @@ class consoleExtension {
 				$params = $request->params;
 				$result = $writer->delete_blog($params->blog_id);
 				return array(
-					"result" => $result->result,
-					"message" => $result->message,
-					"errors" => $result->errors,
+					"result" => $result->result ?? null,
+					"message" => $result->message ?? null,
+					"errors" => $result->errors ?? null,
 					"params" => $params,
 				);
 
@@ -134,9 +134,9 @@ class consoleExtension {
 				$params = $request->params;
 				$result = $writer->create_new_article($params->blog_id, $params->fields ?? null);
 				return array(
-					"result" => $result->result,
-					"message" => $result->message,
-					"errors" => $result->errors,
+					"result" => $result->result ?? null,
+					"message" => $result->message ?? null,
+					"errors" => $result->errors ?? null,
 					"params" => $params,
 				);
 			case 'updateArticle':
@@ -144,20 +144,20 @@ class consoleExtension {
 				$params = $request->params;
 				$result = $writer->update_article($params->blog_id, $params->path, $params->fields ?? null);
 				return array(
-					"result" => $result->result,
-					"message" => $result->message,
-					"errors" => $result->errors,
+					"result" => $result->result ?? null,
+					"message" => $result->message ?? null,
+					"errors" => $result->errors ?? null,
 					"params" => $params,
 				);
 			case 'deleteArticle':
 				$writer = new writer($this->px, $this->blog, $this->options);
 				$result = $writer->delete_article($request->blog_id, $request->path);
 				return array(
-					"result" => $result->result,
-					"message" => $result->message,
-					"errors" => $result->errors,
-					"blog_id" => $request->blog_id,
-					"path" => $request->path,
+					"result" => $result->result ?? null,
+					"message" => $result->message ?? null,
+					"errors" => $result->errors ?? null,
+					"blog_id" => $request->blog_id ?? null,
+					"path" => $request->path ?? null,
 				);
 		}
 		return false;

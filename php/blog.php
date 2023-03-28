@@ -267,6 +267,22 @@ class blog {
 	}
 
 	/**
+	 * 記事が既存か調べる
+	 */
+	public function is_article_exists( $path ){
+		$path = $this->normalize_article_path($path);
+		$blog_list = $this->get_blog_list();
+		foreach( $blog_list as $blog_info ){
+			$blog_info = (object) $blog_info;
+			$blogmap_array = $this->blogmap_array[$blog_info->blog_id] ?? null;
+			if( isset($blogmap_array[$path]) ){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * ページパスから、そのページ情報が定義されたCSVのファイル名と行番号を得る
 	 *
 	 * @param string $path 取得するページのパス
