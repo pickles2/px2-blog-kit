@@ -1,7 +1,7 @@
 <div class="px2-form-input-list">
 	<ul class="px2-form-input-list__ul">
 {% for blogmapDefinitionRow in blogmapDefinition %}
-		<li class="px2-form-input-list__li">
+		<li class="px2-form-input-list__li" data-name="{{ blogmapDefinitionRow.key }}">
 			<div class="px2-form-input-list__label"><label for="{{ blogmapDefinitionRow.key }}">{{ blogmapDefinitionRow.label }}</label></div>
 			<div class="px2-form-input-list__input">
 				{% if ( blogmapDefinitionRow.type == "integer" ) %}

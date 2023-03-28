@@ -45,10 +45,6 @@ module.exports = function(state, cceAgent, options){
 						"submit": function(e){
 							const $form = $(this);
 							const newBlogId = $form.find(`[name=blog_id]`).val();
-							if( !newBlogId ){
-								alert('ブログIDを入力してください。');
-								return false;
-							}
 
 							options.onCreateNewBlog(
 								{
@@ -57,10 +53,8 @@ module.exports = function(state, cceAgent, options){
 								function(result){
 									if( !result.result ){
 										alert('ERROR: '+result.message);
-										Object.keys(result.errors).forEach(function(key){
-											const $input = $form.find(`[name=${key}]`);
-											$input.closest(`.px2-form-input-list__li`).addClass(`px2-form-input-list__li--error`);
-											$input.before(`<p class="px2-error">${result.errors[key]}</p>`);
+										form.reportValidationError({
+											errors: result.errors,
 										});
 										return;
 									}
@@ -70,8 +64,7 @@ module.exports = function(state, cceAgent, options){
 						},
 					},
 				});
-
-				$body.find('input').on('change', function(){ const $li = $(this).closest(`.px2-form-input-list__li`); $li.removeClass(`px2-form-input-list__li--error`); $li.find('.px2-error').remove(); });
+				var form = px2style.form($body);
 			});
 	}
 };
