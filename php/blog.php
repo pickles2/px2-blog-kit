@@ -15,14 +15,18 @@ class blog {
 	public function __construct($px, $options){
 		$this->px = $px;
 		$this->options = (object) $options;
-
-		$this->load_blog_page_list();
 	}
 
 	/**
 	 * ブログページを読み込む
 	 */
 	private function load_blog_page_list(){
+		static $is_loaded = false;
+		if( $is_loaded ){
+			return true;
+		}
+		$is_loaded = true;
+
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 		$realpath_blog_page_list_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
@@ -224,6 +228,8 @@ class blog {
 	 * ブログの一覧を取得する
 	 */
 	public function get_blog_list(){
+		$this->load_blog_page_list();
+
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
@@ -247,6 +253,8 @@ class blog {
 	 * 記事の一覧を取得する
 	 */
 	public function get_article_list($blog_id){
+		$this->load_blog_page_list();
+
 		return $this->article_list[$blog_id];
 	}
 
@@ -254,6 +262,8 @@ class blog {
 	 * 記事情報を取得する
 	 */
 	public function get_article_info( $path ){
+		$this->load_blog_page_list();
+
 		$path = $this->normalize_article_path($path);
 		$originated_csv = $this->get_page_originated_csv( $path );
 		if( !$originated_csv ){
@@ -270,6 +280,8 @@ class blog {
 	 * 記事が既存か調べる
 	 */
 	public function is_article_exists( $path ){
+		$this->load_blog_page_list();
+
 		$path = $this->normalize_article_path($path);
 		$blog_list = $this->get_blog_list();
 		foreach( $blog_list as $blog_info ){
@@ -290,6 +302,8 @@ class blog {
 	 * または、`$path` が見つけられない場合に `null` を、失敗した場合(サイトマップキャッシュが作成されていない、など)に `false` を返します。
 	 */
 	public function get_page_originated_csv( $path ){
+		$this->load_blog_page_list();
+
 		$path = $this->normalize_article_path($path);
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
@@ -325,6 +339,8 @@ class blog {
 	 * ブログ記事の一覧を生成する
 	 */
 	public function mk_list_page( $params ){
+		$this->load_blog_page_list();
+
 		$params = (object) $params;
 		if( !strlen($params->blog_id??'') ){
 			return "";
@@ -337,6 +353,8 @@ class blog {
 	 * RSSフィードを生成する
 	 */
 	public function generate_feeds( $params ){
+		$this->load_blog_page_list();
+
 		$params = (object) $params;
 		if( !strlen($params->blog_id??'') ){
 			return false;

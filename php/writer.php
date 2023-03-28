@@ -23,6 +23,8 @@ class writer {
 	 * 新しいブログを作成する
 	 */
 	public function create_new_blog( $blog_id ){
+		$this->blog->load_blog_page_list();
+
 		$rtn = (object) array(
 			"result" => true,
 			"message" => null,
@@ -73,6 +75,8 @@ class writer {
 	 * ブログを削除する
 	 */
 	public function delete_blog( $blog_id ){
+		$this->blog->load_blog_page_list();
+
 		$rtn = (object) array(
 			"result" => true,
 			"message" => null,
@@ -112,6 +116,8 @@ class writer {
 	 * 新しい記事を作成する
 	 */
 	public function create_new_article( $blog_id, $fields ){
+		$this->blog->load_blog_page_list();
+
 		$fields = (object) $fields;
 		$rtn = (object) array(
 			"result" => true,
@@ -180,6 +186,8 @@ class writer {
 	 * 記事を更新する
 	 */
 	public function update_article( $blog_id, $path, $fields ){
+		$this->blog->load_blog_page_list();
+
 		$fields = (object) $fields;
 		$rtn = (object) array(
 			"result" => true,
@@ -250,6 +258,8 @@ class writer {
 	 * 記事を削除する
 	 */
 	public function delete_article( $blog_id, $path ){
+		$this->blog->load_blog_page_list();
+
 		$path = $this->blog->normalize_article_path($path);
 		$rtn = (object) array(
 			"result" => true,
@@ -295,6 +305,8 @@ class writer {
 	 * ブログマップ定義を取得する
 	 */
 	public function get_blogmap_definition( $blog_id ){
+		$this->blog->load_blog_page_list();
+
 		$realpath_homedir = $this->px->get_realpath_homedir();
 		$realpath_blog_basedir = $realpath_homedir.'blogs/';
 		$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
