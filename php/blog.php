@@ -15,6 +15,15 @@ class blog {
 	public function __construct($px, $options){
 		$this->px = $px;
 		$this->options = (object) $options;
+
+		// リクエストされたパスがサイトマップに定義されていなかったら、
+		// ブログ記事である可能性があるため、ブログマップをロードしておく。
+		// (`set_page_info()` でカレントページを登録するため)
+		$request_file_path = $this->px->req()->get_request_file_path();
+		$current_page_info = $this->px->site()->get_current_page_info();
+		if( $request_file_path != $current_page_info['path'] ){
+			$this->load_blog_page_list();
+		}
 	}
 
 	/**
