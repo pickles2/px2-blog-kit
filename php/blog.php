@@ -29,7 +29,7 @@ class blog {
 	/**
 	 * ブログページを読み込む
 	 */
-	private function load_blog_page_list(){
+	public function load_blog_page_list(){
 		static $is_loaded = false;
 		if( $is_loaded ){
 			return true;
