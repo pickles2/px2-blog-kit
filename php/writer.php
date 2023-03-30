@@ -107,7 +107,13 @@ class writer {
 			return $rtn;
 		}
 
-		$this->px->fs()->rm( $realpath_blog_csv );
+		$files = $this->px->fs()->ls($realpath_blog_basedir);
+		foreach( $files as $basename ){
+			if( !preg_match('/^'.preg_quote($blog_id,'/').'\..*/', $basename) ){
+				continue;
+			}
+			$this->px->fs()->rm( $realpath_blog_basedir.$basename );
+		}
 
 		return $rtn;
 	}
