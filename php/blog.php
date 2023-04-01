@@ -21,7 +21,7 @@ class blog {
 		// (`set_page_info()` でカレントページを登録するため)
 		$request_file_path = $this->px->req()->get_request_file_path();
 		$current_page_info = $this->px->site()->get_current_page_info();
-		if( $request_file_path != $current_page_info['path'] ){
+		if( $request_file_path != ($current_page_info['path'] ?? null) ){
 			$this->load_blog_page_list();
 		}
 	}

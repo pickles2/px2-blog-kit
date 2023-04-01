@@ -105,7 +105,7 @@ module.exports = function(state, cceAgent, options){
 							"submit": function(e){
 								const $form = $(this);
 								let fields = {};
-								for( idx in blogmapDefinition ){
+								for( let idx in blogmapDefinition ){
 									const blogmapDefinitionRow = blogmapDefinition[idx];
 									fields[blogmapDefinitionRow.key] = $form.find(`[name=${blogmapDefinitionRow.key}]`).val();
 								}
