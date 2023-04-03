@@ -37,11 +37,11 @@ class blog {
 		$is_loaded = true;
 
 		$realpath_homedir = $this->px->get_realpath_homedir();
-		$realpath_blog_basedir = $realpath_homedir.'blogs/';
-		$realpath_blog_page_list_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
+		$realpath_blogmap_basedir = $realpath_homedir.'blogs/';
+		$realpath_blogmap_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
 		$realpath_sitemap_cache_dir = $this->px->get_realpath_homedir().'_sys/ram/caches/sitemaps/';
 
-		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
+		$csv_file_list = $this->px->fs()->ls($realpath_blogmap_basedir);
 		$this->blogmap_array = array();
 		$this->article_list = array();
 
@@ -49,7 +49,7 @@ class blog {
 			$blog_id = preg_replace('/\..*$/i', '', $csv_filename);
 			$blog_options = ($this->options->blogs->{$blog_id} ?? (object) array());
 
-			$realpath_blog_csv = $realpath_blog_basedir.$blog_id.'.csv';
+			$realpath_blog_csv = $realpath_blogmap_basedir.$blog_id.'.csv';
 			clearstatcache();
 			if( !is_file($realpath_blog_csv) ){
 				// CSVファイルは存在しない
@@ -76,8 +76,8 @@ class blog {
 					$this->px->error('Sitemap cache generating is now in progress. This page has been incompletely generated.');
 
 					//  古いブログマップキャッシュが存在する場合、ロードする。
-					$this->blogmap_array[$blog_id] = ( $this->px->fs()->is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') ? @include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') : array() );
-					$this->article_list[$blog_id] = ( $this->px->fs()->is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array') ? @include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array'): array() );
+					$this->blogmap_array[$blog_id] = ( $this->px->fs()->is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') ? @include($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array') : array() );
+					$this->article_list[$blog_id] = ( $this->px->fs()->is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array') ? @include($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array'): array() );
 
 					clearstatcache();
 					continue 2;
@@ -88,10 +88,10 @@ class blog {
 
 			clearstatcache();
 
-			if( is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt') && file_get_contents($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt') === md5_file($realpath_blog_csv) ){
+			if( $this->is_blogmap_cache( $blog_id ) ){
 				// キャッシュが有効
-				$this->blogmap_array[$blog_id] = include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array');
-				$this->article_list[$blog_id] = include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array');
+				$this->blogmap_array[$blog_id] = include($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array');
+				$this->article_list[$blog_id] = include($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array');
 				continue;
 			}
 
@@ -202,12 +202,12 @@ class blog {
 			}
 
 			// キャッシュを保存
-			$this->px->fs()->mkdir( $realpath_blog_page_list_cache_dir );
-			$this->px->fs()->mkdir( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/' );
-			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array', self::data2phpsrc($this->blogmap_array[$blog_id]) );
-			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array', self::data2phpsrc($this->article_list[$blog_id]) );
-			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/blogmap_page_originated_csv.array', self::data2phpsrc($blogmap_page_originated_csv) );
-			$this->px->fs()->save_file( $realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt', md5_file($realpath_blog_csv) );
+			$this->px->fs()->mkdir( $realpath_blogmap_cache_dir );
+			$this->px->fs()->mkdir( $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/' );
+			$this->px->fs()->save_file( $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/blogmap.array', self::data2phpsrc($this->blogmap_array[$blog_id]) );
+			$this->px->fs()->save_file( $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/article_list.array', self::data2phpsrc($this->article_list[$blog_id]) );
+			$this->px->fs()->save_file( $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/blogmap_page_originated_csv.array', self::data2phpsrc($blogmap_page_originated_csv) );
+			$this->px->fs()->save_file( $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt', md5_file($realpath_blog_csv) );
 
 			// サイトマップキャッシュ作成中のアプリケーションロックを解除
 			$this->px->fs()->rm( $realpath_sitemap_cache_dir.'making_sitemap_cache.lock.txt' );
@@ -234,14 +234,51 @@ class blog {
 	}
 
 	/**
+	 * ブログマップキャッシュが読み込み可能か調べる。
+	 *
+	 * @param string $blog_id ブログID
+	 * @return bool 読み込み可能な場合に `true`、読み込みできない場合に `false` を返します。
+	 */
+	private function is_blogmap_cache( $blog_id ){
+		$realpath_blogmap_cache_dir = $this->px->get_realpath_homedir().'_sys/ram/caches/blogmaps/';
+		$realpath_blogmap_dir = $this->px->get_realpath_homedir().'blogmaps/';
+		if(
+			!is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'csv_md5.txt') ||
+			!is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'blogmap.array') ||
+			!is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'article_list.array')
+		){
+			return false;
+		}
+
+		if( file_get_contents($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/csv_md5.txt') !== md5_file($realpath_blog_csv) ){
+			return false;
+		}
+
+		$blogmap_csvs = $this->px->fs()->ls( $realpath_blogmap_dir );
+		if( !is_array($blogmap_csvs) ){
+			$blogmap_csvs = array();
+		}
+		foreach( $blogmap_csvs as $filename ){
+			if( !preg_match('/^'.preg_quote($blog_id,'/').'\.csv$/i', $filename) ){
+				// 対象ブログのCSVファイル以外は検査しない
+				continue;
+			}
+			if( $this->px->fs()->is_newer_a_than_b( $realpath_blogmap_dir.$filename, $realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'blogmap.array' ) ){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * ブログの一覧を取得する
 	 */
 	public function get_blog_list(){
 		$this->load_blog_page_list();
 
 		$realpath_homedir = $this->px->get_realpath_homedir();
-		$realpath_blog_basedir = $realpath_homedir.'blogs/';
-		$csv_file_list = $this->px->fs()->ls($realpath_blog_basedir);
+		$realpath_blogmap_basedir = $realpath_homedir.'blogs/';
+		$csv_file_list = $this->px->fs()->ls($realpath_blogmap_basedir);
 		$blog_list = array();
 
 		foreach($csv_file_list as $csv_filename){
@@ -315,16 +352,16 @@ class blog {
 
 		$path = $this->normalize_article_path($path);
 		$realpath_homedir = $this->px->get_realpath_homedir();
-		$realpath_blog_basedir = $realpath_homedir.'blogs/';
-		$realpath_blog_page_list_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
+		$realpath_blogmap_basedir = $realpath_homedir.'blogs/';
+		$realpath_blogmap_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
 
 		$blog_list = $this->get_blog_list();
 		foreach( $blog_list as $index=>$blog_info ){
 			$blog_id = $blog_info['blog_id'];
-			if( !is_file($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/'.'blogmap_page_originated_csv.array') ){
+			if( !is_file($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/'.'blogmap_page_originated_csv.array') ){
 				continue;
 			}
-			$blogmap_page_originated_csv = include($realpath_blog_page_list_cache_dir.'blog_'.urlencode($blog_id).'/'.'blogmap_page_originated_csv.array') ?? null;
+			$blogmap_page_originated_csv = include($realpath_blogmap_cache_dir.'blog_'.urlencode($blog_id).'/'.'blogmap_page_originated_csv.array') ?? null;
 			$article_info = $this->blogmap_array[$blog_id][$path] ?? null;
 			if( !isset($article_info['path']) || !is_array($blogmap_page_originated_csv) || !array_key_exists( $article_info['path'], $blogmap_page_originated_csv ) ){
 				continue;
