@@ -130,7 +130,7 @@ class listPage {
 	 */
 	private function get_pager_info( $params = null ){
 		$params = (object) $params;
-		$total_count = count($this->current_blog_article_list);
+		$total_count = count($this->current_blog_article_list ?? array());
 		$current_page_num = $this->current_pager_num;
 		$display_per_page = intval( $params->dpp ?? 1 );
 

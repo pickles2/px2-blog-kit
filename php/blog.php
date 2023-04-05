@@ -46,6 +46,9 @@ class blog {
 		$this->article_list = array();
 
 		foreach($csv_file_list as $csv_filename){
+			if( !preg_match('/\.csv$/i', $csv_filename) ){
+				continue;
+			}
 			$blog_id = preg_replace('/\..*$/i', '', $csv_filename);
 			$blog_options = ($this->options->blogs->{$blog_id} ?? (object) array());
 
@@ -150,7 +153,7 @@ class blog {
 				}
 
 				foreach ($tmp_blogmap_definition as $defrow) {
-					$tmp_array[$defrow['key']] = $row[$defrow['num']] ?? null;
+					$tmp_array[$defrow['key']] = ($row[$defrow['num']] ?? null);
 				}
 
 				// 前後の空白文字を削除する
@@ -289,7 +292,15 @@ class blog {
 			$blog_info = array(
 				"blog_id" => $blog_id,
 				"blog_name" => $blog_id,
+				"orderby" => null,
+				"scending" => null,
+				"logical_path" => null,
 			);
+			if( isset( $this->options->blogs->{$blog_id} ) ){
+				$blog_info["orderby"] = $this->options->blogs->{$blog_id}->orderby ?? null;
+				$blog_info["scending"] = $this->options->blogs->{$blog_id}->scending ?? null;
+				$blog_info["logical_path"] = $this->options->blogs->{$blog_id}->logical_path ?? null;
+			}
 			array_push($blog_list, $blog_info);
 		}
 		return $blog_list;
@@ -317,7 +328,7 @@ class blog {
 		}
 		return (object) array(
 			"blog_id" => $originated_csv->blog_id,
-			"article_info" => $this->blogmap_array[$originated_csv->blog_id][$path],
+			"article_info" => $this->blogmap_array[$originated_csv->blog_id][$path] ?? null,
 			"originated_csv" => $originated_csv,
 		);
 	}
@@ -391,7 +402,7 @@ class blog {
 		if( !strlen($params->blog_id??'') ){
 			return "";
 		}
-		$listPage = new listPage($this->px, $params->blog_id, $this->article_list[$params->blog_id], $this->options);
+		$listPage = new listPage($this->px, $params->blog_id, $this->article_list[$params->blog_id] ?? null, $this->options);
 		return $listPage->mk_list_page( $params );
 	}
 
@@ -405,7 +416,7 @@ class blog {
 		if( !strlen($params->blog_id??'') ){
 			return false;
 		}
-		$obj_rss = new feeds($this->px, $params, $this->article_list[$params->blog_id]);
+		$obj_rss = new feeds($this->px, $params, $this->article_list[$params->blog_id] ?? null);
 		return $obj_rss->update_rss_file();
 	}
 
