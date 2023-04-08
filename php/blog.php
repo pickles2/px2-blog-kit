@@ -41,6 +41,10 @@ class blog {
 		$realpath_blogmap_cache_dir = $realpath_homedir.'_sys/ram/caches/blogs/';
 		$realpath_sitemap_cache_dir = $this->px->get_realpath_homedir().'_sys/ram/caches/sitemaps/';
 
+		if( !is_dir($realpath_blogmap_basedir) ){
+			return true;
+		}
+
 		$csv_file_list = $this->px->fs()->ls($realpath_blogmap_basedir);
 		$this->blogmap_array = array();
 		$this->article_list = array();
@@ -283,6 +287,9 @@ class blog {
 		$realpath_blogmap_basedir = $realpath_homedir.'blogs/';
 		$csv_file_list = $this->px->fs()->ls($realpath_blogmap_basedir);
 		$blog_list = array();
+		if( !is_dir($realpath_blogmap_basedir) ){
+			return $blog_list;
+		}
 
 		foreach($csv_file_list as $csv_filename){
 			if( !preg_match('/\.csv$/i', $csv_filename) ){
