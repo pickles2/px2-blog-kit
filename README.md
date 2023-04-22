@@ -88,7 +88,7 @@ Broccoli モジュール `Blog Kit` が同梱されています。
 
 ## 更新履歴 - Change log
 
-### pickles2/px2-blog-kit v0.1.0 (リリース日未定)
+### pickles2/px2-blog-kit v0.1.0 (2023年4月22日)
 
 - Initial Release
 
