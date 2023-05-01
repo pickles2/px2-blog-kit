@@ -417,6 +417,28 @@ return call_user_func( function(){
 			),
 		)).')' ,
 
+		// BlogKit: RSS出力
+		\pickles2\px2BlogKit\register::feeds( array(
+			"path_trigger" => "/",
+			"blog_id" => "articles",
+			"orderby" => "update_date",
+			"scending" => "desc",
+			'dpp' => 10,
+			'lang' => 'ja',
+			'scheme' => 'https',
+			'domain' => 'yourdomain.com',
+			'title' => 'test list 1',
+			'description' => 'TEST LIST',
+			'url_home' => 'https://yourdomain.com/',
+			'url_index' => 'https://yourdomain.com/listsample/',
+			'author' => 'Tomoya Koyanagi',
+			'dist' => array(
+				'atom-1.0' => '/rss/atom0100_by_plugin.xml',
+				'rss-1.0' => '/rss/rss0100_by_plugin.rdf',
+				'rss-2.0' => '/rss/rss0200_by_plugin.xml',
+			),
+		) ),
+
 	);
 
 

@@ -85,12 +85,53 @@ Broccoli モジュール `Blog Kit` が同梱されています。
 ここで指定する ブログID は、 ブログCSVのファイル名の拡張子を含まない部分(例: `articles`) です。
 
 
+### 6. RSSの出力設定
+
+設定ファイル `config.php` (通常は `./px-files/config.php`) を編集します。
+`before_output` の任意の位置に設定を追加します。
+
+```php
+<?php
+
+/* 中略 */
+
+/**
+ * funcs: Before output
+ */
+$conf->funcs->before_output = array(
+
+    // BlogKit: RSS出力
+    \pickles2\px2BlogKit\register::feeds( array(
+        "path_trigger" => "/",
+        "blog_id" => "articles",
+        "orderby" => "update_date",
+        "scending" => "desc",
+        'dpp' => 10,
+        'lang' => 'ja',
+        'scheme' => 'https',
+        'domain' => 'yourdomain.com',
+        'title' => 'test list 1',
+        'description' => 'TEST LIST',
+        'url_home' => 'https://yourdomain.com/',
+        'url_index' => 'https://yourdomain.com/listsample/',
+        'author' => 'Tomoya Koyanagi',
+        'dist' => array(
+            'atom-1.0' => '/rss/atom0100.xml',
+            'rss-1.0' => '/rss/rss0100.rdf',
+            'rss-2.0' => '/rss/rss0200.xml',
+        ),
+    ) ),
+
+);
+```
+
 
 ## 更新履歴 - Change log
 
 ### pickles2/px2-blog-kit v0.1.1 (リリース日未定)
 
 - Broccoliモジュールに README を追加。
+- プラグイン `\pickles2\px2BlogKit\register::feeds` を追加。
 
 ### pickles2/px2-blog-kit v0.1.0 (2023年4月22日)
 

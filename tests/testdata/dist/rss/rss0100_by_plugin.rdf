@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel rdf:about="https://yourdomain.com/">
+		<title>test list 1</title>
+		<link>https://yourdomain.com/listsample/</link>
+		<description>TEST LIST</description>
+		<items>
+			<rdf:Seq>
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/28/samplepage_13/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/27/samplepage_12/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/26/samplepage_11/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/25/samplepage_10/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/24/samplepage_9/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/23/samplepage_8/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/22/samplepage_7/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/21/samplepage_6/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/20/samplepage_5/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/19/samplepage_4/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/18/samplepage_3/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/17/samplepage_2/?rss=1" />
+				<rdf:li rdf:resource="https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1" />
+			</rdf:Seq>
+		</items>
+	</channel>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/28/samplepage_13/?rss=1">
+			<title>サンプルブログページ13のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/28/samplepage_13/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-28T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/27/samplepage_12/?rss=1">
+			<title>サンプルブログページ12のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/27/samplepage_12/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-27T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/26/samplepage_11/?rss=1">
+			<title>サンプルブログページ11のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/26/samplepage_11/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-26T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/25/samplepage_10/?rss=1">
+			<title>サンプルブログページ10のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/25/samplepage_10/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-25T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/24/samplepage_9/?rss=1">
+			<title>サンプルブログページ9のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/24/samplepage_9/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-24T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/23/samplepage_8/?rss=1">
+			<title>サンプルブログページ8のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/23/samplepage_8/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-23T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/22/samplepage_7/?rss=1">
+			<title>サンプルブログページ7のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/22/samplepage_7/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-22T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/21/samplepage_6/?rss=1">
+			<title>サンプルブログページ6のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/21/samplepage_6/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-21T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/20/samplepage_5/?rss=1">
+			<title>サンプルブログページ5のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/20/samplepage_5/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-20T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/19/samplepage_4/?rss=1">
+			<title>サンプルブログページ4のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/19/samplepage_4/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-19T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/18/samplepage_3/?rss=1">
+			<title>サンプルブログページ3のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/18/samplepage_3/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-18T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/17/samplepage_2/?rss=1">
+			<title>サンプルブログページ2のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/17/samplepage_2/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-17T00:00:00+09:00</dc:date>
+		</item>
+		<item rdf:about="https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1">
+			<title>サンプルブログページ1のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<dc:date>2023-03-16T00:00:00+09:00</dc:date>
+		</item>
+</rdf:RDF>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>test list 1</title>
+		<link>https://yourdomain.com/listsample/</link>
+		<language>ja</language>
+		<description>TEST LIST</description>
+		<pubDate>2023-03-28T00:00:00+09:00</pubDate>
+		<item>
+			<title>サンプルブログページ13のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/28/samplepage_13/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-28T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/28/samplepage_13/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ12のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/27/samplepage_12/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-27T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/27/samplepage_12/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ11のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/26/samplepage_11/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-26T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/26/samplepage_11/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ10のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/25/samplepage_10/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-25T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/25/samplepage_10/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ9のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/24/samplepage_9/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-24T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/24/samplepage_9/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ8のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/23/samplepage_8/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-23T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/23/samplepage_8/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ7のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/22/samplepage_7/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-22T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/22/samplepage_7/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ6のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/21/samplepage_6/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-21T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/21/samplepage_6/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ5のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/20/samplepage_5/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-20T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/20/samplepage_5/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ4のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/19/samplepage_4/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-19T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/19/samplepage_4/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ3のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/18/samplepage_3/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-18T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/18/samplepage_3/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ2のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/17/samplepage_2/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-17T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/17/samplepage_2/?rss=1</guid>
+		</item>
+		<item>
+			<title>サンプルブログページ1のタイトル</title>
+			<link>https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1</link>
+			<description><![CDATA[]]></description>
+			<pubDate>2023-03-16T00:00:00+09:00</pubDate>
+			<guid isPermaLink="true">https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1</guid>
+		</item>
+	</channel>
+</rss>
