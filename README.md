@@ -128,7 +128,7 @@ $conf->funcs->before_output = array(
 
 ## 更新履歴 - Change log
 
-### pickles2/px2-blog-kit v0.1.1 (リリース日未定)
+### pickles2/px2-blog-kit v0.1.1 (2023年5月1日)
 
 - Broccoliモジュールに README を追加。
 - プラグイン `\pickles2\px2BlogKit\register::feeds` を追加。
