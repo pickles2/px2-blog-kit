@@ -433,7 +433,7 @@ class writer {
 		);
 
 		// title
-		if( !strlen($fields->title ?? '') ){
+		if( !strlen(trim($fields->title ?? '')) ){
 			$rtn->result = false;
 			$rtn->errors->title = 'タイトルを指定してください。';
 		}
@@ -442,6 +442,12 @@ class writer {
 		if( !strlen($fields->path ?? '') ){
 			$rtn->result = false;
 			$rtn->errors->path = 'パスを指定してください。';
+		}elseif( !preg_match('/^\//', $fields->path ?? '') ){
+			$rtn->result = false;
+			$rtn->errors->path = 'パスは、スラッシュ(/)から始まる文字列で指定してください。';
+		}elseif( !preg_match('/(?:\/|\.html?)$/', $fields->path ?? '') ){
+			$rtn->result = false;
+			$rtn->errors->path = 'パスは、スラッシュ(/)または .html で終わる文字列で指定してください。';
 		}
 
 		if( !$rtn->result ){

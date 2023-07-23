@@ -1,6 +1,6 @@
 # pickles2/px2-blog-kit
 
-`px2-blog-kit` は、 Pickles 2 にブログ管理機能を追加します。
+`pickles2/px2-blog-kit` は、 Pickles 2 にブログ管理機能を追加します。
 
 ## 導入手順 - Setup
 
@@ -127,6 +127,10 @@ $conf->funcs->before_output = array(
 
 
 ## 更新履歴 - Change log
+
+### pickles2/px2-blog-kit v0.1.2 (リリース日未定)
+
+- 記事情報編集のバリデーション機能を改善した。
 
 ### pickles2/px2-blog-kit v0.1.1 (2023年5月1日)
 
