@@ -128,7 +128,7 @@ $conf->funcs->before_output = array(
 
 ## 更新履歴 - Change log
 
-### pickles2/px2-blog-kit v0.1.2 (リリース日未定)
+### pickles2/px2-blog-kit v0.1.2 (2023年8月29日)
 
 - 記事情報編集のバリデーション機能を改善した。
 
