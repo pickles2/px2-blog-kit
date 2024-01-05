@@ -314,7 +314,7 @@ class listPage {
 
 		if( preg_match('/^.*\$px\-\>path\_files\((\"|\')(.*?)(\1)\).*$/s', $tmp_path_thumb ?? '', $matched) ){
 			$tmp_localpath_thumb = $matched[2];
-			$tmp_path_thumb = $this->path_files($path_content, $tmp_localpath_thumb);
+			$tmp_path_thumb = $this->path_files($path, $tmp_localpath_thumb);
 		}
 
 		if( strlen($tmp_path_thumb ?? '') ){
