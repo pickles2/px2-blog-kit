@@ -30,7 +30,7 @@ class twigHelper{
 			$loader = new \Twig_Loader_Array(array(
 				'index' => $template,
 			));
-			$twig = new \Twig_Environment($loader, array('debug' => true, 'autoescape' => false));
+			$twig = new \Twig_Environment($loader, array('debug' => false,));
 			$twig->addExtension(new \Twig_Extension_Debug());
 			foreach( $funcs as $fncName=>$callback ){
 				$function = new \Twig_SimpleFunction($fncName, $callback);
@@ -43,7 +43,7 @@ class twigHelper{
 			$loader = new \Twig\Loader\ArrayLoader([
 				'index' => $template,
 			]);
-			$twig = new \Twig\Environment($loader, array('debug' => true, 'autoescape' => false));
+			$twig = new \Twig\Environment($loader, array('debug' => false,));
 			$twig->addExtension(new \Twig\Extension\DebugExtension());
 			foreach( $funcs as $fncName=>$callback ){
 				$function = new \Twig\TwigFunction($fncName, $callback);

@@ -104,11 +104,11 @@
 		<content></content>
 	</entry>
 	<entry>
-		<title>サンプルブログページ1のタイトル</title>
+		<title>サンプルブログページ1の&lt;b&gt;タイトル&lt;/b&gt;</title>
 		<link rel="alternate" href="https://yourdomain.com/articles/2023/03/16/samplepage_1/?rss=1" type="text/html" />
 		<id>37aa0a061ad8e45371da95719a594ceb</id>
 		<updated>2023-03-16T00:00:00+09:00</updated>
-		<summary></summary>
-		<content></content>
+		<summary>これはページ1の&lt;b&gt;サマリテキスト&lt;/b&gt;です。</summary>
+		<content>これはページ1の&lt;b&gt;サマリテキスト&lt;/b&gt;です。</content>
 	</entry>
 </feed>
