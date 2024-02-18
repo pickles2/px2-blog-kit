@@ -128,7 +128,7 @@ $conf->funcs->before_output = array(
 
 ## 更新履歴 - Change log
 
-### pickles2/px2-blog-kit v0.1.3 (リリース日未定)
+### pickles2/px2-blog-kit v0.1.3 (2024年2月18日)
 
 - Markdownの記事からサムネイルを正しく抽出できない不具合を修正。
 - 記事サマリのエスケープ処理が不適切な不具合を修正。
