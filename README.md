@@ -125,6 +125,48 @@ $conf->funcs->before_output = array(
 );
 ```
 
+## PXコマンド
+
+### `PX=blogkit.api.get_blog_list`
+
+ブログの一覧を取得する。
+
+### `PX=blogkit.api.get_article_list`
+
+ブログ記事の一覧を取得する。
+
+### `PX=blogkit.api.get_article_info`
+
+ブログ記事の情報を取得する。
+
+### `PX=blogkit.api.get_blogmap_definition`
+
+ブログマップの列定義を取得する。
+
+### `PX=blogkit.api.get_sitemap_definition`
+
+サイトマップの列定義を取得する。
+
+### `PX=blogkit.api.create_new_blog`
+
+新しいブログを作成する。
+
+### `PX=blogkit.api.delete_blog`
+
+ブログを削除する。
+
+### `PX=blogkit.api.create_new_article`
+
+新しいブログ記事を追加する。
+
+### `PX=blogkit.api.update_article`
+
+ブログ記事情報を更新する。
+
+### `PX=blogkit.api.delete_article`
+
+ブログ記事を削除する。
+
 
 ## 更新履歴 - Change log
 
