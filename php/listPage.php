@@ -70,6 +70,7 @@ class listPage {
 				'lang' => $this->px->lang(),
 				'pager' => $pager,
 				'list' => $list,
+				'params' => $params,
 			),
 			array(
 				'href_pager' => function( $page_num ) use ($params){

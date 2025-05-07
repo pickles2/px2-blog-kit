@@ -173,6 +173,7 @@ $conf->funcs->before_output = array(
 ### pickles2/px2-blog-kit v0.2.0 (リリース日未定)
 
 - PXコマンド `PX=blogkit.api.get_blog_list`, `PX=blogkit.api.get_article_list`, `PX=blogkit.api.get_article_info`, `PX=blogkit.api.get_blogmap_definition`, `PX=blogkit.api.get_sitemap_definition`, `PX=blogkit.api.create_new_blog`, `PX=blogkit.api.delete_blog`, `PX=blogkit.api.create_new_article`, `PX=blogkit.api.update_article`, `PX=blogkit.api.delete_article` を追加。
+- リストテンプレートのデザインを修正。
 
 ### pickles2/px2-blog-kit v0.1.3 (2024年2月18日)
 
