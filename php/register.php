@@ -20,6 +20,13 @@ class register {
 		}
  
 		$px->blog = new blog($px, $options);
+
+		// PX=blogkit
+		// pickles2/px2-blog-kit v0.2.0 で追加
+		$px->pxcmd()->register('blogkit', function($px) use ($options){
+			self::pxcmd_route($px, $options);
+		});
+
 		return;
 	}
 
@@ -80,5 +87,166 @@ class register {
 			)
 		);
 
+	}
+
+	/**
+	 * PX=blogkitをルーティング
+	 *
+	 * px2-clover の `PX=admin.api.blogkit.*` から移管したもの。
+	 * pickles2/px2-blog-kit v0.2.0 で追加
+	 *
+	 * @param object $px Picklesオブジェクト
+	 * @param object $options プラグイン設定
+	 */
+	private static function pxcmd_route($px, $options){
+		$command = $px->get_px_command();
+		$blog = $px->blog ?? null;
+
+		switch( $command[1] ?? '' ){
+			case 'api':
+				$px->header('Content-type: application/json');
+				if( !is_object( $blog ) ){
+					echo json_encode(array(
+						'result' => false,
+						'message' => 'BlogKit is NOT loaded.',
+					));
+					exit;
+				}
+
+				// --------------------------------------
+				// API
+				switch( $command[2] ?? '' ){
+					case 'get_blog_list':
+						$blog_list = $blog->get_blog_list();
+						echo json_encode(array(
+							"result" => true,
+							"blog_list" => $blog_list,
+						));
+						exit;
+						break;
+					case 'get_article_list':
+						$blog_id = $px->req()->get_param('blog_id');
+						$dpp = intval($px->req()->get_param('dpp') ?? 0);
+						if( !$dpp ){
+							$dpp = 50;
+						}
+						$p = intval($px->req()->get_param('p') ?? 0);
+						if( !$p ){
+							$p = 1;
+						}
+						$article_list = $blog->get_article_list($blog_id);
+						$sliced_article_list = array_slice(
+							$article_list,
+							$dpp * ($p-1),
+							$dpp
+						);
+						echo json_encode(array(
+							"result" => true,
+							"blog_id" => $blog_id,
+							"count" => count($article_list),
+							"dpp" => $dpp,
+							"p" => $p,
+							"article_list" => $sliced_article_list,
+						));
+						exit;
+						break;
+					case 'get_article_info':
+						$path = $px->req()->get_param('path');
+						$article_info = $blog->get_article_info($path);
+						echo json_encode(array(
+							"result" => true,
+							"blog_id" => $article_info->blog_id ?? null,
+							"article_info" => $article_info->article_info ?? null,
+							"originated_csv" => $article_info->originated_csv ?? null,
+						));
+						exit;
+						break;
+					case 'get_blogmap_definition':
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$blogmap_definition = $writer->get_blogmap_definition($blog_id);
+						echo json_encode(array(
+							"result" => true,
+							"blogmap_definition" => $blogmap_definition,
+						));
+						exit;
+						break;
+					case 'get_sitemap_definition':
+						$sitemap_definition = $px->site()->get_sitemap_definition();
+						echo json_encode(array(
+							"result" => true,
+							"sitemap_definition" => $sitemap_definition,
+						));
+						exit;
+						break;
+					case 'create_new_blog':
+						$this->clover->allowed_method('post');
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$result = $writer->create_new_blog( $blog_id );
+						echo json_encode(array(
+							"result" => $result->result ?? null,
+							"message" => $result->message ?? null,
+							"errors" => $result->errors ?? null,
+						));
+						exit;
+						break;
+					case 'delete_blog':
+						$this->clover->allowed_method('post');
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$result = $writer->delete_blog( $blog_id );
+						echo json_encode(array(
+							"result" => $result->result ?? null,
+							"message" => $result->message ?? null,
+							"errors" => $result->errors ?? null,
+						));
+						exit;
+						break;
+					case 'create_new_article':
+						$this->clover->allowed_method('post');
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$fields = json_decode($px->req()->get_param('fields'));
+						$result = $writer->create_new_article($blog_id, $fields ?? null);
+						echo json_encode(array(
+							"result" => $result->result ?? null,
+							"message" => $result->message ?? null,
+							"errors" => $result->errors ?? null,
+						));
+						exit;
+						break;
+					case 'update_article':
+						$this->clover->allowed_method('post');
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$path = $px->req()->get_param('path');
+						$fields = json_decode($px->req()->get_param('fields'));
+						$result = $writer->update_article($blog_id, $path, $fields ?? null);
+						echo json_encode(array(
+							"result" => $result->result ?? null,
+							"message" => $result->message ?? null,
+							"errors" => $result->errors ?? null,
+						));
+						exit;
+						break;
+					case 'delete_article':
+						$this->clover->allowed_method('post');
+						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
+						$blog_id = $px->req()->get_param('blog_id');
+						$path = $px->req()->get_param('path');
+						$result = $writer->delete_article($blog_id, $path);
+						echo json_encode(array(
+							"result" => $result->result ?? null,
+							"message" => $result->message ?? null,
+							"errors" => $result->errors ?? null,
+							"blog_id" => $request->blog_id ?? null,
+							"path" => $request->path ?? null,
+						));
+						exit;
+						break;
+				}
+				break;
+		}
 	}
 }
