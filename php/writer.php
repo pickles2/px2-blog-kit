@@ -66,7 +66,12 @@ class writer {
 			),
 		);
 
-		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+		$result = $this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+		if(!$result){
+			$rtn->result = false;
+			$rtn->message = 'Failed to create new blog.';
+			return $rtn;
+		}
 
 		return $rtn;
 	}
