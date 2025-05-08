@@ -180,7 +180,6 @@ class register {
 						exit;
 						break;
 					case 'create_new_blog':
-						$this->clover->allowed_method('post');
 						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
 						$blog_id = $px->req()->get_param('blog_id');
 						$result = $writer->create_new_blog( $blog_id );
@@ -192,7 +191,6 @@ class register {
 						exit;
 						break;
 					case 'delete_blog':
-						$this->clover->allowed_method('post');
 						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
 						$blog_id = $px->req()->get_param('blog_id');
 						$result = $writer->delete_blog( $blog_id );
@@ -204,7 +202,6 @@ class register {
 						exit;
 						break;
 					case 'create_new_article':
-						$this->clover->allowed_method('post');
 						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
 						$blog_id = $px->req()->get_param('blog_id');
 						$fields = json_decode($px->req()->get_param('fields'));
@@ -217,7 +214,6 @@ class register {
 						exit;
 						break;
 					case 'update_article':
-						$this->clover->allowed_method('post');
 						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
 						$blog_id = $px->req()->get_param('blog_id');
 						$path = $px->req()->get_param('path');
@@ -231,7 +227,6 @@ class register {
 						exit;
 						break;
 					case 'delete_article':
-						$this->clover->allowed_method('post');
 						$writer = new \pickles2\px2BlogKit\writer($px, $blog, $blog->get_options());
 						$blog_id = $px->req()->get_param('blog_id');
 						$path = $px->req()->get_param('path');
