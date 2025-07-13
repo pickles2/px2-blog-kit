@@ -170,6 +170,10 @@ $conf->funcs->before_output = array(
 
 ## 更新履歴 - Change log
 
+### pickles2/px2-blog-kit v0.2.1 (リリース日未定)
+
+- ブログマップ項目定義を改善した。
+
 ### pickles2/px2-blog-kit v0.2.0 (2025年5月9日)
 
 - PXコマンド `PX=blogkit.api.get_blog_list`, `PX=blogkit.api.get_article_list`, `PX=blogkit.api.get_article_info`, `PX=blogkit.api.get_blogmap_definition`, `PX=blogkit.api.get_sitemap_definition`, `PX=blogkit.api.create_new_blog`, `PX=blogkit.api.delete_blog`, `PX=blogkit.api.create_new_article`, `PX=blogkit.api.update_article`, `PX=blogkit.api.delete_article` を追加。

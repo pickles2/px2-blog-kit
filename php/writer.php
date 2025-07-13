@@ -325,11 +325,46 @@ class writer {
 		$csv = $this->px->fs()->read_csv( $realpath_blog_csv );
 		$blogmap_definition = $this->parse_blogmap_definition( $csv );
 
+		$default_definition = array(
+			'release_date' => (object) array(
+				"label" => '公開日',
+				'lang' => array(
+					'en' => 'Release date',
+				),
+				"type" => "date",
+				"key" => 'release_date',
+			),
+			'update_date' => (object) array(
+				"label" => '更新日',
+				'lang' => array(
+					'en' => 'Update date',
+				),
+				"type" => "date",
+				"key" => 'update_date',
+			),
+			'article_summary' => (object) array(
+				"label" => '記事サマリー',
+				'lang' => array(
+					'en' => 'Article summary',
+				),
+				"type" => "text",
+				"key" => 'article_summary',
+			),
+			'article_keywords' => (object) array(
+				"label" => 'キーワード',
+				'lang' => array(
+					'en' => 'Keywords',
+				),
+				"type" => "text",
+				"key" => 'article_keywords',
+			),
+		);
+
 		$rtn = array();
 		foreach($blogmap_definition as $blogmap_definition_key){
-			array_push( $rtn, (object) array(
-				"label" => $blogmap_definition_key, // TODO: 仮実装
-				"type" => "text", // TODO: 仮実装
+			array_push( $rtn, $default_definition[$blogmap_definition_key] ?? null ? $default_definition[$blogmap_definition_key] : (object) array(
+				"label" => $blogmap_definition_key,
+				"type" => "text",
 				"key" => $blogmap_definition_key,
 			) );
 		}
