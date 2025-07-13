@@ -326,7 +326,7 @@ class writer {
 		$blogmap_definition = $this->parse_blogmap_definition( $csv );
 
 		$default_definition = array(
-			'release_date' => (object) array(
+			'release_date' => array(
 				"label" => '公開日',
 				'lang' => array(
 					'en' => 'Release date',
@@ -334,7 +334,7 @@ class writer {
 				"type" => "date",
 				"key" => 'release_date',
 			),
-			'update_date' => (object) array(
+			'update_date' => array(
 				"label" => '更新日',
 				'lang' => array(
 					'en' => 'Update date',
@@ -342,7 +342,7 @@ class writer {
 				"type" => "date",
 				"key" => 'update_date',
 			),
-			'article_summary' => (object) array(
+			'article_summary' => array(
 				"label" => '記事サマリー',
 				'lang' => array(
 					'en' => 'Article summary',
@@ -350,7 +350,7 @@ class writer {
 				"type" => "text",
 				"key" => 'article_summary',
 			),
-			'article_keywords' => (object) array(
+			'article_keywords' => array(
 				"label" => 'キーワード',
 				'lang' => array(
 					'en' => 'Keywords',
@@ -360,14 +360,51 @@ class writer {
 			),
 		);
 
-		$rtn = array();
+		$blogmap_definition_detail = array();
 		foreach($blogmap_definition as $blogmap_definition_key){
-			array_push( $rtn, $default_definition[$blogmap_definition_key] ?? null ? $default_definition[$blogmap_definition_key] : (object) array(
-				"label" => $blogmap_definition_key,
-				"type" => "text",
-				"key" => $blogmap_definition_key,
-			) );
+			$blogmap_definition_detail[$blogmap_definition_key] =
+				$default_definition[$blogmap_definition_key] ?? null
+					? $default_definition[$blogmap_definition_key]
+					: array(
+						"label" => $blogmap_definition_key,
+						'lang' => array(),
+						"type" => "text",
+						"key" => $blogmap_definition_key,
+					);
 		}
+
+		// 返却値を生成
+		$rtn = array();
+
+		$lang_full = strtolower($this->px->lang()); // 国コードを含む(または含まない)コード全体 (Insensitive Case)
+		$lang = preg_replace('/^([a-zA-Z0-9]+)(\-.*)$/', '$1', $lang_full); // 国コードを除去した言語コードのみの値
+
+		foreach( $blogmap_definition_detail as $key => $val ){
+			$tmp_row = array(
+				'label' => $val['label'],
+				'type' => $val['type'],
+				'key' => $val['key'],
+			);
+			if( isset($val['lang']) && is_array($val['lang']) ){
+				// 言語コードのみで検索する (Insensitive Case)
+				foreach($val['lang'] as $lang_code => $lang_val){
+					if( $lang == strtolower($lang_code) ){
+						$tmp_row['label'] = $val['lang'][$lang];
+						break;
+					}
+				}
+
+				// 国コードを含む言語コード全体で検索する (Insensitive Case)
+				foreach($val['lang'] as $lang_code => $lang_val){
+					if( $lang_full == strtolower($lang_code) ){
+						$tmp_row['label'] = $val['lang'][$lang_full];
+						break;
+					}
+				}
+			}
+			array_push($rtn, (object) $tmp_row);
+		}
+
 		return $rtn;
 	}
 
