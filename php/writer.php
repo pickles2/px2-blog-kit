@@ -563,12 +563,12 @@ class writer {
 			return false;
 		}
 
-		$realpath_csv = $this->realpath_blogmap_file( $filefullname );
+		$realpath_csv = $this->realpath_blogmap_file( basename($filefullname) );
 		if( !is_file( $realpath_csv ) ){
 			return false;
 		}
 		$filefullname_xlsx = preg_replace('/\.csv$/si', '.xlsx', $filefullname);
-		$realpath_xlsx = $this->realpath_blogmap_file( $filefullname_xlsx );
+		$realpath_xlsx = $this->realpath_blogmap_file( basename($filefullname_xlsx) );
 		if( !is_file( $realpath_xlsx ) ){
 			return false;
 		}
