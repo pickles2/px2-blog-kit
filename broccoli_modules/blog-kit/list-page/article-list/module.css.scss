@@ -127,5 +127,19 @@
 				border-bottom-color: transparent;
 			}
 		}
+
+		@media all and (max-width: 600px) {
+			&-item {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5em;
+			}
+			&-title,
+			&-thumb,
+			&-body {
+				width: auto;
+				float: none;
+			}
+		}
 	}
 }
