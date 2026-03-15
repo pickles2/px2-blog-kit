@@ -170,6 +170,10 @@ $conf->funcs->before_output = array(
 
 ## 更新履歴 - Change log
 
+### pickles2/px2-blog-kit v0.2.2 (リリース日未定)
+
+- `PX=blogkit.api.create_new_article`, `PX=blogkit.api.update_article`, `PX=blogkit.api.delete_article` で、ブログマップCSVを更新したときに、XLSXに同期するようになった。
+
 ### pickles2/px2-blog-kit v0.2.1 (2025年7月29日)
 
 - ブログマップ項目定義を改善した。

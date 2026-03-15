@@ -190,6 +190,9 @@ class writer {
 
 		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
 
+		// NOTE: 暫定処理: CSVを更新したら、xlsx も更新する。
+		$this->csv2xlsx( $realpath_blog_csv );
+
 		return $rtn;
 	}
 
@@ -262,6 +265,9 @@ class writer {
 
 		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
 
+		// NOTE: 暫定処理: CSVを更新したら、xlsx も更新する。
+		$this->csv2xlsx( $realpath_blog_csv );
+
 		return $rtn;
 	}
 
@@ -308,6 +314,9 @@ class writer {
 		unset( $csv[$article_info->originated_csv->row] );
 
 		$this->px->fs()->save_file( $realpath_blog_csv, $this->px->fs()->mk_csv( $csv ) );
+
+		// NOTE: 暫定処理: CSVを更新したら、xlsx も更新する。
+		$this->csv2xlsx( $realpath_blog_csv );
 
 		return $rtn;
 	}
@@ -532,5 +541,70 @@ class writer {
 		}
 
 		return $rtn;
+	}
+
+	/**
+	 * CSV を xlsx に変換する
+	 *
+	 * NOTE: これは暫定的な処理です。サイトマップのページ数が多くなると、この処理は重くなります。
+	 * TODO: CSV全体を変換することはせず、CSVに反映した変更と同じ変更をXlsxにも差分反映させる処理に変更します。
+	 *
+	 * @param string $filefullname 対象ファイル名(拡張子を含む)
+	 * @return array 実行結果
+	 */
+	public function csv2xlsx( $filefullname ){
+		if( !class_exists('\\tomk79\\pickles2\\sitemap_excel\\pickles_sitemap_excel') ){
+			return false;
+		}
+		if( !is_string($filefullname) || !strlen($filefullname) ){
+			return false;
+		}
+		if( !preg_match('/\.csv$/si', $filefullname) ){
+			return false;
+		}
+
+		$realpath_csv = $this->realpath_blogmap_file( $filefullname );
+		if( !is_file( $realpath_csv ) ){
+			return false;
+		}
+		$filefullname_xlsx = preg_replace('/\.csv$/si', '.xlsx', $filefullname);
+		$realpath_xlsx = $this->realpath_blogmap_file( $filefullname_xlsx );
+		if( !is_file( $realpath_xlsx ) ){
+			return false;
+		}
+
+		$px2_sitemapexcel = new \tomk79\pickles2\sitemap_excel\pickles_sitemap_excel($this->px);
+		$result = !!$px2_sitemapexcel->csv2xlsx(
+			$realpath_csv,
+			$realpath_xlsx,
+			(object) array(
+				'target' => 'blogmap',
+			)
+		);
+		return $result;
+	}
+
+	/**
+	 * 実在するファイルの絶対パスを取得する
+	 *
+	 * 大文字・小文字 の区別をせずに検索する。
+	 *
+	 * @param string $filefullname 対象ファイル名(拡張子を含む)
+	 * @return string|boolean ファイルの絶対パスを返す。ファイルが見つからない場合に `false` を返す。
+	 */
+	private function realpath_blogmap_file( $filefullname ){
+		$realpath_homedir = $this->px->get_realpath_homedir();
+		$realpath_blog_basedir = $realpath_homedir.'blogs/';
+		$realpath_blog_csv = $realpath_blog_basedir.$filefullname;
+
+		$filefullname_lower = strtolower($filefullname);
+		$ls = $this->px->fs()->ls($realpath_blog_basedir);
+		foreach( $ls as $basename ){
+			if( strtolower($basename) == $filefullname_lower ){
+				$realpath = $this->px->fs()->get_realpath( $realpath_blog_basedir.$basename );
+				return $realpath;
+			}
+		}
+		return false;
 	}
 }
